@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config
+	baseDir="D:\Rpg\"
+	imageDir="D:\Rpg\images\"
+	battleBackgroundDir="D:\Rpg\images\battleBackgrounds\"
+	tileDir="D:\Rpg\images\tiles\"
+	dataDir="D:\Rpg\data\"
+	tileSetDir="D:\Rpg\data\tilesets\"
+	mapDir="D:\Rpg\data\maps\"
+/>
