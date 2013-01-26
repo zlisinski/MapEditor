@@ -66,7 +66,7 @@
 			this.btnOK.Location = new System.Drawing.Point(58, 120);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
-			this.btnOK.TabIndex = 2;
+			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "&OK";
 			this.btnOK.UseVisualStyleBackColor = true;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -77,7 +77,7 @@
 			this.btnCancel.Location = new System.Drawing.Point(139, 120);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
-			this.btnCancel.TabIndex = 3;
+			this.btnCancel.TabIndex = 5;
 			this.btnCancel.Text = "&Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
 			// 
@@ -96,7 +96,7 @@
             0});
 			this.numWidth.Name = "numWidth";
 			this.numWidth.Size = new System.Drawing.Size(83, 20);
-			this.numWidth.TabIndex = 0;
+			this.numWidth.TabIndex = 1;
 			this.numWidth.Value = new decimal(new int[] {
             16,
             0,
@@ -118,7 +118,7 @@
             0});
 			this.numHeight.Name = "numHeight";
 			this.numHeight.Size = new System.Drawing.Size(83, 20);
-			this.numHeight.TabIndex = 1;
+			this.numHeight.TabIndex = 2;
 			this.numHeight.Value = new decimal(new int[] {
             16,
             0,
@@ -141,7 +141,7 @@
 			this.comboTileSet.Location = new System.Drawing.Point(54, 90);
 			this.comboTileSet.Name = "comboTileSet";
 			this.comboTileSet.Size = new System.Drawing.Size(199, 21);
-			this.comboTileSet.TabIndex = 5;
+			this.comboTileSet.TabIndex = 3;
 			// 
 			// labelName
 			// 
@@ -158,7 +158,7 @@
 			this.textName.MaxLength = 32;
 			this.textName.Name = "textName";
 			this.textName.Size = new System.Drawing.Size(199, 20);
-			this.textName.TabIndex = 7;
+			this.textName.TabIndex = 0;
 			// 
 			// CNewMapForm
 			// 

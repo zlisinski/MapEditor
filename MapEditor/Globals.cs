@@ -18,6 +18,8 @@ namespace MapEditor
 		public static readonly string tileSetDir;
 		public static readonly string mapDir;
 
+		public const string version = "1.0.0";
+
 		public const uint layerCount = 4;
 
 		public const int tileSize = 32;

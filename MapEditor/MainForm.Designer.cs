@@ -48,7 +48,6 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.textStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitLog = new System.Windows.Forms.SplitContainer();
-			this.panelMap = new MapEditor.MapPanel();
 			this.scrollMapV = new System.Windows.Forms.VScrollBar();
 			this.scrollMapH = new System.Windows.Forms.HScrollBar();
 			this.tabTools = new System.Windows.Forms.TabControl();
@@ -58,6 +57,10 @@
 			this.comboLayers = new System.Windows.Forms.ComboBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtLog = new System.Windows.Forms.TextBox();
+			this.mapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.panelMap = new MapEditor.MapPanel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitLog)).BeginInit();
@@ -73,6 +76,7 @@
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
+            this.mapToolStripMenuItem,
             this.layersToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -104,7 +108,7 @@
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
 			this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-			this.openToolStripMenuItem.Text = "&Open";
+			this.openToolStripMenuItem.Text = "&Open...";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
@@ -147,15 +151,15 @@
 			// gridToolStripMenuItem
 			// 
 			this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-			this.gridToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.gridToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
 			this.gridToolStripMenuItem.Text = "&Grid";
 			this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
 			// 
 			// gridColorToolStripMenuItem
 			// 
 			this.gridColorToolStripMenuItem.Name = "gridColorToolStripMenuItem";
-			this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-			this.gridColorToolStripMenuItem.Text = "Grid &Color";
+			this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.gridColorToolStripMenuItem.Text = "Grid &Color...";
 			this.gridColorToolStripMenuItem.Click += new System.EventHandler(this.gridColorToolStripMenuItem_Click);
 			// 
 			// layersToolStripMenuItem
@@ -249,20 +253,6 @@
 			this.splitLog.Size = new System.Drawing.Size(1023, 681);
 			this.splitLog.SplitterDistance = 585;
 			this.splitLog.TabIndex = 3;
-			// 
-			// panelMap
-			// 
-			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
-			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMap.Location = new System.Drawing.Point(0, 0);
-			this.panelMap.Name = "panelMap";
-			this.panelMap.Size = new System.Drawing.Size(864, 568);
-			this.panelMap.TabIndex = 3;
-			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
-			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
-			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
-			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
 			// 
 			// scrollMapV
 			// 
@@ -371,6 +361,43 @@
 			this.txtLog.TabIndex = 0;
 			this.txtLog.TabStop = false;
 			// 
+			// mapToolStripMenuItem
+			// 
+			this.mapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem,
+            this.resizeToolStripMenuItem});
+			this.mapToolStripMenuItem.Name = "mapToolStripMenuItem";
+			this.mapToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+			this.mapToolStripMenuItem.Text = "&Map";
+			// 
+			// renameToolStripMenuItem
+			// 
+			this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+			this.renameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.renameToolStripMenuItem.Text = "&Rename...";
+			this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+			// 
+			// resizeToolStripMenuItem
+			// 
+			this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
+			this.resizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.resizeToolStripMenuItem.Text = "Re&size...";
+			this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
+			// 
+			// panelMap
+			// 
+			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
+			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMap.Location = new System.Drawing.Point(0, 0);
+			this.panelMap.Name = "panelMap";
+			this.panelMap.Size = new System.Drawing.Size(864, 568);
+			this.panelMap.TabIndex = 3;
+			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
+			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
+			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
+			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +460,9 @@
 		private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem gridColorToolStripMenuItem;
 		private System.Windows.Forms.ComboBox comboBrushSize;
+		private System.Windows.Forms.ToolStripMenuItem mapToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem resizeToolStripMenuItem;
     }
 }
 

@@ -32,7 +32,17 @@ namespace MapEditor
 		/// <summary>
 		/// If the map has unsaved changes.
 		/// </summary>
-		protected bool curMapDirty = false;
+		protected bool _curMapDirty = false;
+		protected bool curMapDirty
+		{
+			get { return _curMapDirty; }
+			set
+			{
+				_curMapDirty = value;
+				updateTitleBar();
+				saveToolStripMenuItem.Enabled = value;
+			}
+		}
 
 		/// <summary>
 		/// The current layer being edited.
@@ -68,6 +78,7 @@ namespace MapEditor
 		public MainForm()
 		{
 			InitializeComponent();
+			curMapDirty = false;
 		}
 
 		private void MainForm_Load(object sender, EventArgs e)
@@ -95,9 +106,40 @@ namespace MapEditor
 			if (cancelActionIfDirty() == true)
 				e.Cancel = true;
 		}
+
+		/// <summary>
+		/// Updates the title bar with the map name, filename and whether the current map is dirty.
+		/// </summary>
+		private void updateTitleBar()
+		{
+			StringBuilder newTitle = new StringBuilder();
+			newTitle.AppendFormat("MapEditor v{0}", Globals.version);
+
+			if (curMap != null)
+			{
+				newTitle.AppendFormat(" - {0}", curMap.name);
+
+				if (curMapFilename == "")
+					newTitle.Append(" - unsaved map");
+				else
+					newTitle.AppendFormat(" - {0}", curMapFilename);
+
+				if (curMapDirty == true)
+					newTitle.Append(" *");
+			}
+
+			this.Text = newTitle.ToString();
+		}
 		#endregion
 
 		#region Menu Events
+
+		/// <summary>
+		/// Shows dialog to create a new map.
+		/// Triggered when the File->New menu item is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void newToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (cancelActionIfDirty() == true)
@@ -112,6 +154,12 @@ namespace MapEditor
 			}
 		}
 
+		/// <summary>
+		/// Opens an existing map.
+		/// Triggered when the File->Open menu item is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (cancelActionIfDirty() == true)
@@ -128,6 +176,12 @@ namespace MapEditor
 			}
 		}
 
+		/// <summary>
+		/// Saves the current map.
+		/// Triggered when the File->Save menu item is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Trigger saveAs if map has never been saved before.
@@ -140,6 +194,12 @@ namespace MapEditor
 			saveMap(curMapFilename);
 		}
 
+		/// <summary>
+		/// Saves the current map as a new file.
+		/// Triggered when the File->SaveAs menu item is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog fd = new SaveFileDialog();
@@ -153,11 +213,22 @@ namespace MapEditor
 			}
 		}
 
+		/// <summary>
+		/// Exits the application.
+		/// Triggered when the File->Exit menu item is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
 		}
 
+		/// <summary>
+		/// Toggle layer 1 visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void layer1ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer1ToolStripMenuItem.Checked = !layer1ToolStripMenuItem.Checked;
@@ -166,6 +237,11 @@ namespace MapEditor
 			redrawMap();
 		}
 
+		/// <summary>
+		/// Toggle layer 2 visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void layer2ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer2ToolStripMenuItem.Checked = !layer2ToolStripMenuItem.Checked;
@@ -174,6 +250,11 @@ namespace MapEditor
 			redrawMap();
 		}
 
+		/// <summary>
+		/// Toggle layer 3 visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void layer3ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer3ToolStripMenuItem.Checked = !layer3ToolStripMenuItem.Checked;
@@ -182,6 +263,11 @@ namespace MapEditor
 			redrawMap();
 		}
 
+		/// <summary>
+		/// Toggle layer 4 visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void layer4ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer4ToolStripMenuItem.Checked = !layer4ToolStripMenuItem.Checked;
@@ -190,6 +276,11 @@ namespace MapEditor
 			redrawMap();
 		}
 
+		/// <summary>
+		/// Toggle grid visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void gridToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			gridToolStripMenuItem.Checked = !gridToolStripMenuItem.Checked;
@@ -198,6 +289,11 @@ namespace MapEditor
 			redrawMap();
 		}
 
+		/// <summary>
+		/// Displays a dialog to pick the grid color.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void gridColorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ColorDialog cd = new ColorDialog();
@@ -209,6 +305,33 @@ namespace MapEditor
 				gridColor = cd.Color;
 				redrawMap();
 			}
+		}
+
+		/// <summary>
+		/// Displays the rename map dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CRenameMapForm dialog = new CRenameMapForm(curMap.name);
+			DialogResult res = dialog.ShowDialog();
+
+			if (res == DialogResult.OK)
+			{
+				curMap.name = dialog.name;
+				curMapDirty = true;
+			}
+		}
+
+		/// <summary>
+		/// Displays the resize map dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
 		}
 		#endregion
 
@@ -408,7 +531,6 @@ namespace MapEditor
 				curMapFilename = filename;
 				curMapDirty = false;
 				
-				saveToolStripMenuItem.Enabled = true;
 				saveAsToolStripMenuItem.Enabled = true;
 				
 				displayCurrentMap();
@@ -655,6 +777,8 @@ namespace MapEditor
 
 			txtLog.AppendText(message);
 		}
+
+		
 
     }
 }

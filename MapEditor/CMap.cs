@@ -19,7 +19,7 @@ namespace MapEditor
 		/// <summary>
 		/// Internal map name.
 		/// </summary>
-		public string name { get; protected set; }
+		public string name { get; set; }
 
 		/// <summary>
 		/// Width of the map in tiles.
