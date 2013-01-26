@@ -53,9 +53,9 @@
 			this.scrollMapH = new System.Windows.Forms.HScrollBar();
 			this.tabTools = new System.Windows.Forms.TabControl();
 			this.tabTiles = new System.Windows.Forms.TabPage();
+			this.panelTiles = new System.Windows.Forms.Panel();
 			this.comboBrushSize = new System.Windows.Forms.ComboBox();
 			this.comboLayers = new System.Windows.Forms.ComboBox();
-			this.panelTiles = new System.Windows.Forms.Panel();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
@@ -306,6 +306,15 @@
 			this.tabTiles.Text = "Tiles";
 			this.tabTiles.UseVisualStyleBackColor = true;
 			// 
+			// panelTiles
+			// 
+			this.panelTiles.BackColor = System.Drawing.SystemColors.Control;
+			this.panelTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelTiles.Location = new System.Drawing.Point(3, 45);
+			this.panelTiles.Name = "panelTiles";
+			this.panelTiles.Size = new System.Drawing.Size(128, 511);
+			this.panelTiles.TabIndex = 1;
+			// 
 			// comboBrushSize
 			// 
 			this.comboBrushSize.Dock = System.Windows.Forms.DockStyle.Top;
@@ -341,15 +350,6 @@
 			this.comboLayers.TabIndex = 0;
 			this.comboLayers.SelectedIndexChanged += new System.EventHandler(this.comboLayers_SelectedIndexChanged);
 			// 
-			// panelTiles
-			// 
-			this.panelTiles.BackColor = System.Drawing.SystemColors.Control;
-			this.panelTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelTiles.Location = new System.Drawing.Point(3, 3);
-			this.panelTiles.Name = "panelTiles";
-			this.panelTiles.Size = new System.Drawing.Size(128, 553);
-			this.panelTiles.TabIndex = 1;
-			// 
 			// tabPage2
 			// 
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -383,7 +383,8 @@
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "MapEditor";
-			this.Load += new System.EventHandler(this.Form1_Load);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);

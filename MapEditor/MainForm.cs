@@ -30,6 +30,11 @@ namespace MapEditor
 		protected string curMapFilename = "";
 
 		/// <summary>
+		/// If the map has unsaved changes.
+		/// </summary>
+		protected bool curMapDirty = false;
+
+		/// <summary>
 		/// The current layer being edited.
 		/// </summary>
 		protected int curLayer = 0;
@@ -59,13 +64,13 @@ namespace MapEditor
 		/// </summary>
 		protected Color gridColor = Color.White;
 
-		#region Startup Functions
+		#region Form Functions
 		public MainForm()
 		{
 			InitializeComponent();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		private void MainForm_Load(object sender, EventArgs e)
 		{
 			try
 			{
@@ -83,11 +88,21 @@ namespace MapEditor
 				MessageBox.Show(ex.Message);
 			}
 		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			// Cancel closing if map is dirty and user selects Cancel
+			if (cancelActionIfDirty() == true)
+				e.Cancel = true;
+		}
 		#endregion
 
 		#region Menu Events
 		private void newToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (cancelActionIfDirty() == true)
+				return;
+
 			CNewMapForm dialog = new CNewMapForm();
 			DialogResult res = dialog.ShowDialog();
 
@@ -99,6 +114,9 @@ namespace MapEditor
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (cancelActionIfDirty() == true)
+				return;
+
 			OpenFileDialog fd = new OpenFileDialog();
 			fd.Filter = "Map Files(*.map)|*.map";
 			fd.InitialDirectory = Globals.mapDir;
@@ -370,6 +388,7 @@ namespace MapEditor
 		{
 			curMap = new CMap(name, width, height, tileSet);
 			curMapFilename = "";
+			curMapDirty = true;
 			
 			saveToolStripMenuItem.Enabled = true;
 			saveAsToolStripMenuItem.Enabled = true;
@@ -387,6 +406,7 @@ namespace MapEditor
 			{
 				curMap = new CMap(filename);
 				curMapFilename = filename;
+				curMapDirty = false;
 				
 				saveToolStripMenuItem.Enabled = true;
 				saveAsToolStripMenuItem.Enabled = true;
@@ -409,11 +429,43 @@ namespace MapEditor
 			{
 				curMap.save(filename);
 				curMapFilename = filename;
+				curMapDirty = false;
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
 			}
+		}
+
+		/// <summary>
+		/// Checks if the current map is dirty and prompts to save it before continuing.
+		/// Saves map if user selects Yes.
+		/// </summary>
+		/// <returns>False if map isn't dirty or user selected Yes or No. True if user selected Cancel.</returns>
+		private bool cancelActionIfDirty()
+		{
+			if (curMapDirty == false)
+				return false;
+
+			DialogResult Res = MessageBox.Show("The map has unsaved changes. Do you want to save the map?", "", 
+				MessageBoxButtons.YesNoCancel);
+
+			if (Res == DialogResult.Yes)
+			{
+				saveToolStripMenuItem.PerformClick();
+
+				// User cancelled out of saving a new map
+				if (curMapFilename == "")
+					return true;
+
+				curMapDirty = false;
+
+				return false;
+			}
+			else if (Res == DialogResult.No)
+				return false;
+			else //if (Res == DialogResult.Cancel)
+				return true;
 		}
 
 		/// <summary>
@@ -590,6 +642,8 @@ namespace MapEditor
 				}
 			}
 
+			curMapDirty = true;
+
 			redrawMap();
 		}
 		#endregion
@@ -601,14 +655,6 @@ namespace MapEditor
 
 			txtLog.AppendText(message);
 		}
-
-		
-
-		
-
-		
-
-		
 
     }
 }
