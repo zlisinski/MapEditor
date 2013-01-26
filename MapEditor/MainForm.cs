@@ -218,9 +218,9 @@ namespace MapEditor
 				{
 					PictureBox pic = new PictureBox();
 					pic.Image = tile.image;
-					pic.Width = 32;
-					pic.Height = 32;
-					pic.Location = new Point((i % 4) * 32, (i / 4) * 32);
+					pic.Width = Globals.tileSize;
+					pic.Height = Globals.tileSize;
+					pic.Location = new Point((i % 4) * Globals.tileSize, (i / 4) * Globals.tileSize);
 					pic.Click += new System.EventHandler(this.tile_Click);
 					pic.Tag = tile;
 					panelTiles.Controls.Add(pic);
@@ -252,7 +252,7 @@ namespace MapEditor
 					Pen pen = new Pen(Color.Red, 2);
 
 					// Draw border around current tile
-					graphics.DrawRectangle(pen, 0, 0, 32, 32);
+					graphics.DrawRectangle(pen, 0, 0, Globals.tileSize, Globals.tileSize);
 					pic.Image = img;
 				}
 				else
@@ -317,8 +317,8 @@ namespace MapEditor
 		/// </summary>
 		private void setScrollBarSizes()
 		{
-			int panelTileWidth = panelMap.Size.Width / 32;
-			int panelTileHeight = panelMap.Size.Height / 32;
+			int panelTileWidth = panelMap.Size.Width / Globals.tileSize;
+			int panelTileHeight = panelMap.Size.Height / Globals.tileSize;
 
 			// Move over one full screen, minus one tile
 			scrollMapH.LargeChange = panelTileWidth - 1;
@@ -464,8 +464,8 @@ namespace MapEditor
 			if (curMap != null)
 			{
 				// Number of tiles displayable inside the panel
-				int panelTilesX = (panelMap.Size.Width / 32) + 1;
-				int panelTilesY = (panelMap.Size.Height / 32) + 1;
+				int panelTilesX = (panelMap.Size.Width / Globals.tileSize) + 1;
+				int panelTilesY = (panelMap.Size.Height / Globals.tileSize) + 1;
 
 				// Starting offset, in tiles, in the map to start painting from
 				int offsetX = scrollMapH.Value;
@@ -492,15 +492,16 @@ namespace MapEditor
 							CTile curTile = curMap.tileSet.layers[z].getTileFromId(tileId);
 
 							// Paint tile onto buffer
-							bufferGraphics.DrawImage(curTile.image, x * 32, y * 32, 32, 32);
+							bufferGraphics.DrawImage(curTile.image, x * Globals.tileSize, y * Globals.tileSize, 
+								Globals.tileSize, Globals.tileSize);
 						}
 
 						if (drawGrid)
-							bufferGraphics.DrawLine(gridPen, 0, y * 32, endX * 32, y * 32);
+							bufferGraphics.DrawLine(gridPen, 0, y * Globals.tileSize, endX * Globals.tileSize, y * Globals.tileSize);
 					}
 
 					if (drawGrid)
-						bufferGraphics.DrawLine(gridPen, x * 32, 0, x * 32, endY * 32); 
+						bufferGraphics.DrawLine(gridPen, x * Globals.tileSize, 0, x * Globals.tileSize, endY * Globals.tileSize); 
 				}
 			}
 
@@ -528,13 +529,13 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void panelMap_MouseMove(object sender, MouseEventArgs e)
 		{
-			int tileX = (e.X / 32) + scrollMapH.Value;
-			int tileY = (e.Y / 32) + scrollMapV.Value;
+			int tileX = (e.X / Globals.tileSize) + scrollMapH.Value;
+			int tileY = (e.Y / Globals.tileSize) + scrollMapV.Value;
 
 			/*int brushStartX = tileX - (curBrushSize / 2);
 			int brushStartY = tileY - (curBrushSize / 2);*/
-			int brushStartX = (e.X / 32) - (curBrushSize / 2);
-			int brushStartY = (e.Y / 32) - (curBrushSize / 2);
+			int brushStartX = (e.X / Globals.tileSize) - (curBrushSize / 2);
+			int brushStartY = (e.Y / Globals.tileSize) - (curBrushSize / 2);
 
 			Graphics panelGraphics = panelMap.CreateGraphics();
 			Pen pen = new Pen(Color.Red, 2);
@@ -543,8 +544,8 @@ namespace MapEditor
 			if (curMap != null && tileX < curMap.width && tileY < curMap.height)
 			{
 				// Draw a rectangle around the current brush
-				panelGraphics.DrawRectangle(pen, brushStartX * 32, brushStartY * 32, 
-					curBrushSize * 32, curBrushSize * 32);
+				panelGraphics.DrawRectangle(pen, brushStartX * Globals.tileSize, brushStartY * Globals.tileSize,
+					curBrushSize * Globals.tileSize, curBrushSize * Globals.tileSize);
 
 				// Update status bar with current map coordinates
 				textStatus.Text = string.Format("{0}, {1}", tileX, tileY);
@@ -565,8 +566,8 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void panelMap_MouseClick(object sender, MouseEventArgs e)
 		{
-			int tileX = (e.X / 32) + scrollMapH.Value;
-			int tileY = (e.Y / 32) + scrollMapV.Value;
+			int tileX = (e.X / Globals.tileSize) + scrollMapH.Value;
+			int tileY = (e.Y / Globals.tileSize) + scrollMapV.Value;
 			int curLayer = comboLayers.SelectedIndex;
 
 			int brushStartX = tileX - (curBrushSize / 2);

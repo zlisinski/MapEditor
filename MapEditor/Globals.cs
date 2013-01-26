@@ -20,6 +20,8 @@ namespace MapEditor
 
 		public const uint layerCount = 4;
 
+		public const int tileSize = 32;
+
 		public static readonly Random rand = new Random();
 
 		static Globals()
