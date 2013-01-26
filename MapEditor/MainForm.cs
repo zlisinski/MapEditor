@@ -241,12 +241,26 @@ namespace MapEditor
 		private void tile_Click(object sender, EventArgs e)
 		{
 			PictureBox curPic = (PictureBox)sender;
-			CTile tile = (CTile)curPic.Tag;
-			curBrush = tile;
-			
+			curBrush = (CTile)curPic.Tag;
+
 			foreach (PictureBox pic in panelTiles.Controls)
-				pic.BorderStyle = BorderStyle.None;
-			curPic.BorderStyle = BorderStyle.Fixed3D;
+			{
+				if (pic == curPic)
+				{
+					Bitmap img = (Bitmap)((CTile)pic.Tag).image.Clone();
+					Graphics graphics = Graphics.FromImage(img);
+					Pen pen = new Pen(Color.Red, 2);
+
+					// Draw border around current tile
+					graphics.DrawRectangle(pen, 0, 0, 32, 32);
+					pic.Image = img;
+				}
+				else
+				{
+					// Redraw image to remove border
+					pic.Image = ((CTile)pic.Tag).image;
+				}
+			}
 		}
 
 		/// <summary>
