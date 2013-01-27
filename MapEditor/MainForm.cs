@@ -331,7 +331,8 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			CResizeMapForm dialog = new CResizeMapForm(curMap);
+			dialog.ShowDialog(this);
 		}
 		#endregion
 
@@ -600,6 +601,9 @@ namespace MapEditor
 
 			// Enable brush size dropdown
 			comboBrushSize.Enabled = true;
+
+			// Enable Map menu item
+			mapToolStripMenuItem.Enabled = true;
 
 			// Reset layer palette. If current layer is 0, trigger change event manually because setting the index 
 			// to itself doesn't trigger a change event.

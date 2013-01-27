@@ -39,6 +39,9 @@
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.gridColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.mapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.layersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.layer1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.layer2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,9 +60,6 @@
 			this.comboLayers = new System.Windows.Forms.ComboBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtLog = new System.Windows.Forms.TextBox();
-			this.mapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelMap = new MapEditor.MapPanel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -161,6 +161,30 @@
 			this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
 			this.gridColorToolStripMenuItem.Text = "Grid &Color...";
 			this.gridColorToolStripMenuItem.Click += new System.EventHandler(this.gridColorToolStripMenuItem_Click);
+			// 
+			// mapToolStripMenuItem
+			// 
+			this.mapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem,
+            this.resizeToolStripMenuItem});
+			this.mapToolStripMenuItem.Enabled = false;
+			this.mapToolStripMenuItem.Name = "mapToolStripMenuItem";
+			this.mapToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+			this.mapToolStripMenuItem.Text = "&Map";
+			// 
+			// renameToolStripMenuItem
+			// 
+			this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+			this.renameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.renameToolStripMenuItem.Text = "&Rename...";
+			this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+			// 
+			// resizeToolStripMenuItem
+			// 
+			this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
+			this.resizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.resizeToolStripMenuItem.Text = "Re&size...";
+			this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
 			// 
 			// layersToolStripMenuItem
 			// 
@@ -360,29 +384,6 @@
 			this.txtLog.Size = new System.Drawing.Size(1023, 92);
 			this.txtLog.TabIndex = 0;
 			this.txtLog.TabStop = false;
-			// 
-			// mapToolStripMenuItem
-			// 
-			this.mapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.renameToolStripMenuItem,
-            this.resizeToolStripMenuItem});
-			this.mapToolStripMenuItem.Name = "mapToolStripMenuItem";
-			this.mapToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-			this.mapToolStripMenuItem.Text = "&Map";
-			// 
-			// renameToolStripMenuItem
-			// 
-			this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-			this.renameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.renameToolStripMenuItem.Text = "&Rename...";
-			this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
-			// 
-			// resizeToolStripMenuItem
-			// 
-			this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
-			this.resizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.resizeToolStripMenuItem.Text = "Re&size...";
-			this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
 			// 
 			// panelMap
 			// 
