@@ -43,7 +43,7 @@ namespace MapEditor
 					}
 
 					//if (drawGrid)
-						//bufferGraphics.DrawLine(gridPen, 0, y * Globals.tileSize, endX * Globals.tileSize, y * Globals.tileSize);*/
+						//bufferGraphics.DrawLine(gridPen, 0, y * Globals.tileSize, endX * Globals.tileSize, y * Globals.tileSize);
 				}
 
 				//if (drawGrid)

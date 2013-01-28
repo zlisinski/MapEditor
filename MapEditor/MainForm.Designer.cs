@@ -60,6 +60,7 @@
 			this.comboLayers = new System.Windows.Forms.ComboBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtLog = new System.Windows.Forms.TextBox();
+			this.walkLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelMap = new MapEditor.MapPanel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -175,14 +176,14 @@
 			// renameToolStripMenuItem
 			// 
 			this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-			this.renameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.renameToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.renameToolStripMenuItem.Text = "&Rename...";
 			this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
 			// 
 			// resizeToolStripMenuItem
 			// 
 			this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
-			this.resizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.resizeToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.resizeToolStripMenuItem.Text = "Re&size...";
 			this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
 			// 
@@ -192,7 +193,8 @@
             this.layer1ToolStripMenuItem,
             this.layer2ToolStripMenuItem,
             this.layer3ToolStripMenuItem,
-            this.layer4ToolStripMenuItem});
+            this.layer4ToolStripMenuItem,
+            this.walkLayerToolStripMenuItem});
 			this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
 			this.layersToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
 			this.layersToolStripMenuItem.Text = "&Layers";
@@ -202,8 +204,9 @@
 			this.layer1ToolStripMenuItem.Checked = true;
 			this.layer1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer1ToolStripMenuItem.Name = "layer1ToolStripMenuItem";
-			this.layer1ToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+			this.layer1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.layer1ToolStripMenuItem.Text = "Layer &1";
+			this.layer1ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer1ToolStripMenuItem_CheckedChanged);
 			this.layer1ToolStripMenuItem.Click += new System.EventHandler(this.layer1ToolStripMenuItem_Click);
 			// 
 			// layer2ToolStripMenuItem
@@ -211,8 +214,9 @@
 			this.layer2ToolStripMenuItem.Checked = true;
 			this.layer2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer2ToolStripMenuItem.Name = "layer2ToolStripMenuItem";
-			this.layer2ToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+			this.layer2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.layer2ToolStripMenuItem.Text = "Layer &2";
+			this.layer2ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer2ToolStripMenuItem_CheckedChanged);
 			this.layer2ToolStripMenuItem.Click += new System.EventHandler(this.layer2ToolStripMenuItem_Click);
 			// 
 			// layer3ToolStripMenuItem
@@ -220,8 +224,9 @@
 			this.layer3ToolStripMenuItem.Checked = true;
 			this.layer3ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer3ToolStripMenuItem.Name = "layer3ToolStripMenuItem";
-			this.layer3ToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+			this.layer3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.layer3ToolStripMenuItem.Text = "Layer &3";
+			this.layer3ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer3ToolStripMenuItem_CheckedChanged);
 			this.layer3ToolStripMenuItem.Click += new System.EventHandler(this.layer3ToolStripMenuItem_Click);
 			// 
 			// layer4ToolStripMenuItem
@@ -229,8 +234,9 @@
 			this.layer4ToolStripMenuItem.Checked = true;
 			this.layer4ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer4ToolStripMenuItem.Name = "layer4ToolStripMenuItem";
-			this.layer4ToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+			this.layer4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.layer4ToolStripMenuItem.Text = "Layer &4";
+			this.layer4ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer4ToolStripMenuItem_CheckedChanged);
 			this.layer4ToolStripMenuItem.Click += new System.EventHandler(this.layer4ToolStripMenuItem_Click);
 			// 
 			// toolStrip1
@@ -357,7 +363,8 @@
             "Layer 1",
             "Layer 2",
             "Layer 3",
-            "Layer 4"});
+            "Layer 4",
+            "Walk Layer"});
 			this.comboLayers.Location = new System.Drawing.Point(3, 3);
 			this.comboLayers.Name = "comboLayers";
 			this.comboLayers.Size = new System.Drawing.Size(128, 21);
@@ -384,6 +391,16 @@
 			this.txtLog.Size = new System.Drawing.Size(1023, 92);
 			this.txtLog.TabIndex = 0;
 			this.txtLog.TabStop = false;
+			// 
+			// walkLayerToolStripMenuItem
+			// 
+			this.walkLayerToolStripMenuItem.Checked = true;
+			this.walkLayerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.walkLayerToolStripMenuItem.Name = "walkLayerToolStripMenuItem";
+			this.walkLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.walkLayerToolStripMenuItem.Text = "&Walk Layer";
+			this.walkLayerToolStripMenuItem.CheckedChanged += new System.EventHandler(this.walkLayerToolStripMenuItem_CheckedChanged);
+			this.walkLayerToolStripMenuItem.Click += new System.EventHandler(this.walkLayerToolStripMenuItem_Click);
 			// 
 			// panelMap
 			// 
@@ -464,6 +481,7 @@
 		private System.Windows.Forms.ToolStripMenuItem mapToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem resizeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem walkLayerToolStripMenuItem;
     }
 }
 

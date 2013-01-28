@@ -65,6 +65,11 @@ namespace MapEditor
 		protected bool[] layersVisible = new bool[] {true, true, true, true};
 
 		/// <summary>
+		/// Is the walkType layer visible.
+		/// </summary>
+		protected bool walkLayerVisible = true;
+
+		/// <summary>
 		/// Whether or not to draw the grid.
 		/// </summary>
 		protected bool drawGrid = false;
@@ -73,6 +78,11 @@ namespace MapEditor
 		/// The color of the grid.
 		/// </summary>
 		protected Color gridColor = Color.White;
+
+		/// <summary>
+		/// Tile images for walk types.
+		/// </summary>
+		protected CTile[] walkTypeTiles = new CTile[Enum.GetNames(typeof(EWalkType)).Length];
 
 		#region Form Functions
 		public MainForm()
@@ -85,18 +95,27 @@ namespace MapEditor
 		{
 			try
 			{
+				// Load tileSets
 				tileSets = TileSets.instance;
 				foreach (CTileSet ts in tileSets)
 				{
 					logString("Loaded tileset " + ts);
 				}
 
+				// Load walkType tiles
+				string walkImagesFilename = Globals.tileDir + "walktypes.png";
+				for (ushort i = 0; i < Enum.GetNames(typeof(EWalkType)).Length; i++)
+				{
+					string tileName = Enum.GetNames(typeof(EWalkType))[i];
+					walkTypeTiles[i] = new CTile(i, tileName, walkImagesFilename, i, 0);
+				}
+				
 				comboLayers.SelectedIndex = 0;
 				comboBrushSize.SelectedIndex = 0;
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
 			}
 		}
 
@@ -232,8 +251,11 @@ namespace MapEditor
 		private void layer1ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer1ToolStripMenuItem.Checked = !layer1ToolStripMenuItem.Checked;
-			layersVisible[0] = layer1ToolStripMenuItem.Checked;
+		}
 
+		private void layer1ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			layersVisible[0] = layer1ToolStripMenuItem.Checked;
 			redrawMap();
 		}
 
@@ -245,8 +267,11 @@ namespace MapEditor
 		private void layer2ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer2ToolStripMenuItem.Checked = !layer2ToolStripMenuItem.Checked;
-			layersVisible[1] = layer2ToolStripMenuItem.Checked;
+		}
 
+		private void layer2ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			layersVisible[1] = layer2ToolStripMenuItem.Checked;
 			redrawMap();
 		}
 
@@ -258,8 +283,11 @@ namespace MapEditor
 		private void layer3ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer3ToolStripMenuItem.Checked = !layer3ToolStripMenuItem.Checked;
-			layersVisible[2] = layer3ToolStripMenuItem.Checked;
+		}
 
+		private void layer3ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			layersVisible[2] = layer3ToolStripMenuItem.Checked;
 			redrawMap();
 		}
 
@@ -271,8 +299,27 @@ namespace MapEditor
 		private void layer4ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			layer4ToolStripMenuItem.Checked = !layer4ToolStripMenuItem.Checked;
-			layersVisible[3] = layer1ToolStripMenuItem.Checked;
+		}
 
+		private void layer4ToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			layersVisible[3] = layer1ToolStripMenuItem.Checked;
+			redrawMap();
+		}
+
+		/// <summary>
+		/// Toggle walk layer visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void walkLayerToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			walkLayerToolStripMenuItem.Checked = !walkLayerToolStripMenuItem.Checked;
+		}
+		
+		private void walkLayerToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			walkLayerVisible = walkLayerToolStripMenuItem.Checked;
 			redrawMap();
 		}
 
@@ -345,33 +392,91 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void comboLayers_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int i = 0;
-			
-			curLayer = comboLayers.SelectedIndex;
-
-			panelTiles.Controls.Clear();
-
 			if (curMap == null)
 				return;
 
-			foreach (CTileSetGroup group in curMap.tileSet.layers[curLayer].groups)
+			try
 			{
-				foreach (CTile tile in group.tiles)
+				int i = 0;
+
+				curLayer = comboLayers.SelectedIndex;
+
+				// Enable visibility for the selected layer
+				switch (curLayer)
 				{
-					PictureBox pic = new PictureBox();
-					pic.Image = tile.image;
-					pic.Width = Globals.tileSize;
-					pic.Height = Globals.tileSize;
-					pic.Location = new Point((i % 4) * Globals.tileSize, (i / 4) * Globals.tileSize);
-					pic.Click += new System.EventHandler(this.tile_Click);
-					pic.Tag = tile;
-					panelTiles.Controls.Add(pic);
-					i++;
+					case 0:
+						layer1ToolStripMenuItem.Checked = true;
+						break;
+					case 1:
+						layer2ToolStripMenuItem.Checked = true;
+						break;
+					case 2:
+						layer3ToolStripMenuItem.Checked = true;
+						break;
+					case 3:
+						layer4ToolStripMenuItem.Checked = true;
+						break;
+					case 4:
+						walkLayerToolStripMenuItem.Checked = true;
+						break;
 				}
+
+				// Remove all tiles from previous layer
+				panelTiles.Controls.Clear();	
+
+				// Add tiles from current layer
+				if (curLayer < Globals.layerCount)
+				{
+					foreach (CTileSetGroup group in curMap.tileSet.layers[curLayer].groups)
+					{
+						foreach (CTile tile in group.tiles)
+						{
+							PictureBox pic = createPictureBoxFromTile(tile, i);
+							panelTiles.Controls.Add(pic);
+							i++;
+						}
+					}
+				}
+				else if (curLayer == Globals.layerCount)
+				{
+					foreach (CTile tile in walkTypeTiles)
+					{
+						PictureBox pic = createPictureBoxFromTile(tile, i);
+						panelTiles.Controls.Add(pic);
+						i++;
+					}
+				}
+
+				// Select the first tile when changing layers
+				tile_Click(panelTiles.Controls[0], EventArgs.Empty);
 			}
-			
-			// Select the first tile when changing layers
-			tile_Click(panelTiles.Controls[0], EventArgs.Empty);
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
+			}
+		}
+
+		/// <summary>
+		/// Creates a PictureBox for the tile palette.
+		/// </summary>
+		/// <param name="tile">The tile to create from.</param>
+		/// <param name="index">The index used for positioning.</param>
+		/// <returns></returns>
+		private PictureBox createPictureBoxFromTile(CTile tile, int index)
+		{
+			try
+			{
+				PictureBox pic = new PictureBox();
+				pic.Image = tile.image;
+				pic.Width = Globals.tileSize;
+				pic.Height = Globals.tileSize;
+				pic.Location = new Point((index % 4) * Globals.tileSize, (index / 4) * Globals.tileSize);
+				pic.Click += new System.EventHandler(this.tile_Click);
+				pic.Tag = tile;
+
+				return pic;
+			}
+			catch { throw; }
 		}
 
 		/// <summary>
@@ -631,6 +736,9 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void panelMap_Paint(object sender, PaintEventArgs e)
 		{
+			// Local var to save some typing
+			int tileSize = Globals.tileSize;
+
 			// Create an image to paint on. Painting is double buffered.
 			Bitmap buffer = new Bitmap(panelMap.Size.Width, panelMap.Size.Height);
 			Graphics bufferGraphics = Graphics.FromImage(buffer);
@@ -642,8 +750,8 @@ namespace MapEditor
 			if (curMap != null)
 			{
 				// Number of tiles displayable inside the panel
-				int panelTilesX = (panelMap.Size.Width / Globals.tileSize) + 1;
-				int panelTilesY = (panelMap.Size.Height / Globals.tileSize) + 1;
+				int panelTilesX = (panelMap.Size.Width / tileSize) + 1;
+				int panelTilesY = (panelMap.Size.Height / tileSize) + 1;
 
 				// Starting offset, in tiles, in the map to start painting from
 				int offsetX = scrollMapH.Value;
@@ -662,6 +770,7 @@ namespace MapEditor
 					{
 						for (int z = 0; z < Globals.layerCount; z++)
 						{
+							// Skip this layer if its visibility is turned off
 							if (!layersVisible[z])
 								continue;
 
@@ -670,16 +779,26 @@ namespace MapEditor
 							CTile curTile = curMap.tileSet.layers[z].getTileFromId(tileId);
 
 							// Paint tile onto buffer
-							bufferGraphics.DrawImage(curTile.image, x * Globals.tileSize, y * Globals.tileSize, 
-								Globals.tileSize, Globals.tileSize);
+							bufferGraphics.DrawImage(curTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
+						}
+
+						// Draw the walk layer if it is visible
+						if (walkLayerVisible)
+						{
+							// Get the tile to paint
+							ushort walkTileId = (ushort)curMap.cells[x + offsetX, y + offsetY].walkType;
+							CTile walkTile = walkTypeTiles[walkTileId];
+
+							// Paint tile onto buffer
+							bufferGraphics.DrawImage(walkTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
 						}
 
 						if (drawGrid)
-							bufferGraphics.DrawLine(gridPen, 0, y * Globals.tileSize, endX * Globals.tileSize, y * Globals.tileSize);
+							bufferGraphics.DrawLine(gridPen, 0, y * tileSize, endX * tileSize, y * tileSize);
 					}
 
 					if (drawGrid)
-						bufferGraphics.DrawLine(gridPen, x * Globals.tileSize, 0, x * Globals.tileSize, endY * Globals.tileSize); 
+						bufferGraphics.DrawLine(gridPen, x * tileSize, 0, x * tileSize, endY * tileSize); 
 				}
 			}
 
@@ -700,18 +819,18 @@ namespace MapEditor
 
 		/// <summary>
 		/// Event called when the mouse moves over the map.
-		/// Updated the coordinates in the status bar.
+		/// Updates the coordinates in the status bar.
 		/// If left mouse button is down, trigger a mouse click event on the cell.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void panelMap_MouseMove(object sender, MouseEventArgs e)
 		{
+			// The tile position of the mouse, relative to the start of the map
 			int tileX = (e.X / Globals.tileSize) + scrollMapH.Value;
 			int tileY = (e.Y / Globals.tileSize) + scrollMapV.Value;
 
-			/*int brushStartX = tileX - (curBrushSize / 2);
-			int brushStartY = tileY - (curBrushSize / 2);*/
+			// The tile position of the start of the brush, relative to the start of the panel
 			int brushStartX = (e.X / Globals.tileSize) - (curBrushSize / 2);
 			int brushStartY = (e.Y / Globals.tileSize) - (curBrushSize / 2);
 
@@ -744,26 +863,37 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void panelMap_MouseClick(object sender, MouseEventArgs e)
 		{
+			// The tile position of the mouse, relative to the start of the map
 			int tileX = (e.X / Globals.tileSize) + scrollMapH.Value;
 			int tileY = (e.Y / Globals.tileSize) + scrollMapV.Value;
+
+			// The layer to operate on
 			int curLayer = comboLayers.SelectedIndex;
 
+			// Calculate the tiles contained within the current brush size
 			int brushStartX = tileX - (curBrushSize / 2);
 			int brushEndX = tileX + (curBrushSize / 2);
 			int brushStartY = tileY - (curBrushSize / 2);
 			int brushEndY = tileY + (curBrushSize / 2);
 
+			// Bail if there is no map, or the mouse is located off the map
 			if (curMap == null || tileX >= curMap.width || tileY >= curMap.height)
 				return;
 
+			// Update all tiles with the current brush
 			for (int x = brushStartX; x <= brushEndX; x++)
 			{
 				for (int y = brushStartY; y <= brushEndY; y++)
 				{
+					// Only draw if the coordinates are within the map
 					if (x >= 0 && y >= 0 && x < curMap.width && y < curMap.height)
 					{
 						CMapCell cell = curMap.cells[x, y];
-						cell.tiles[curLayer] = curBrush.id;
+
+						if (curLayer < Globals.layerCount)
+							cell.tiles[curLayer] = curBrush.id;
+						else if (curLayer == Globals.layerCount)
+							cell.walkType = (EWalkType)curBrush.id;
 					}
 				}
 			}
@@ -781,8 +911,5 @@ namespace MapEditor
 
 			txtLog.AppendText(message);
 		}
-
-		
-
     }
 }
