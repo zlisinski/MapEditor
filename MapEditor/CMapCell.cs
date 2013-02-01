@@ -35,8 +35,8 @@ namespace MapEditor
 		public CMapCell()
 		{
 			tiles[0] = 1;
-			tiles[1] = (Globals.rand.Next() % 3 == 0) ? (ushort)1 : (ushort)0;
-			for (int i = 2; i < Globals.layerCount; i++)
+			//tiles[1] = (Globals.rand.Next() % 3 == 0) ? (ushort)1 : (ushort)0;
+			for (int i = 1; i < Globals.layerCount; i++)
 				tiles[i] = 0;
 			
 			walkType = EWalkType.NormalWalk;
