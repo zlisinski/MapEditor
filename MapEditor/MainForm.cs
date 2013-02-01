@@ -9,9 +9,12 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace MapEditor
 {
+	public delegate void DLogString(string message);
+
     public partial class MainForm : Form
     {
 		/// <summary>
@@ -470,7 +473,7 @@ namespace MapEditor
 				pic.Image = tile.image;
 				pic.Width = Globals.tileSize;
 				pic.Height = Globals.tileSize;
-				pic.Location = new Point((index % 4) * Globals.tileSize, (index / 4) * Globals.tileSize);
+				pic.Location = new Point((index % 5) * Globals.tileSize, (index / 5) * Globals.tileSize);
 				pic.Click += new System.EventHandler(this.tile_Click);
 				pic.Tag = tile;
 
@@ -724,9 +727,14 @@ namespace MapEditor
 			resetScrollBars();
 		}
 
-		private void redrawMap()
+		private void redrawMap(bool redrawMiniMap = true)
 		{
 			panelMap.Refresh();
+
+			if (redrawMiniMap == true)
+			{
+				updateMiniMap();
+			}
 		}
 
 		/// <summary>
@@ -837,7 +845,9 @@ namespace MapEditor
 			Graphics panelGraphics = panelMap.CreateGraphics();
 			Pen pen = new Pen(Color.Red, 2);
 
-			redrawMap();
+			// Redraw map to remove old brush outline, but don't update minimap
+			redrawMap(false);
+
 			if (curMap != null && tileX < curMap.width && tileY < curMap.height)
 			{
 				// Draw a rectangle around the current brush
@@ -901,6 +911,16 @@ namespace MapEditor
 			curMapDirty = true;
 
 			redrawMap();
+		}
+		#endregion
+
+		#region MiniMap Functions
+		/// <summary>
+		/// Updates the minimap image
+		/// </summary>
+		private void updateMiniMap(object threadContext)
+		{
+			
 		}
 		#endregion
 
