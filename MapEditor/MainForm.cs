@@ -586,14 +586,23 @@ namespace MapEditor
 		/// </summary>
 		private void setScrollBarSizes()
 		{
+			// Bail if there is no current map
+			if (curMap == null)
+				return;
+
+			// Calculate how many tiles are displayable in the panel
 			int panelTileWidth = panelMap.Size.Width / Globals.tileSize;
 			int panelTileHeight = panelMap.Size.Height / Globals.tileSize;
 
+			// Enable the scrollbar
+			scrollMapH.Enabled = true;
 			// Move over one full screen, minus one tile
 			scrollMapH.LargeChange = panelTileWidth - 1;
 			// Needs adjusting, scrolls too far past the end
 			scrollMapH.Maximum = Math.Max(0, curMap.width - panelTileWidth + scrollMapH.LargeChange);
 
+			// Enable the scrollbar
+			scrollMapV.Enabled = true;
 			// Move over one full screen, minus one tile
 			scrollMapV.LargeChange = panelTileHeight - 1;
 			// Needs adjusting, scrolls too far past the end

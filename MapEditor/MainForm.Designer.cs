@@ -56,14 +56,14 @@
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.splitMap = new System.Windows.Forms.SplitContainer();
 			this.splitLog = new System.Windows.Forms.SplitContainer();
-			this.picMiniMap = new System.Windows.Forms.PictureBox();
+			this.panelMap = new MapEditor.MapPanel();
 			this.tabTools = new System.Windows.Forms.TabControl();
 			this.tabTiles = new System.Windows.Forms.TabPage();
 			this.panelTiles = new System.Windows.Forms.Panel();
 			this.comboBrushSize = new System.Windows.Forms.ComboBox();
 			this.comboLayers = new System.Windows.Forms.ComboBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.panelMap = new MapEditor.MapPanel();
+			this.picMiniMap = new System.Windows.Forms.PictureBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitMap)).BeginInit();
@@ -74,9 +74,9 @@
 			this.splitLog.Panel1.SuspendLayout();
 			this.splitLog.Panel2.SuspendLayout();
 			this.splitLog.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
 			this.tabTools.SuspendLayout();
 			this.tabTiles.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -282,6 +282,7 @@
 			// scrollMapV
 			// 
 			this.scrollMapV.Dock = System.Windows.Forms.DockStyle.Right;
+			this.scrollMapV.Enabled = false;
 			this.scrollMapV.Location = new System.Drawing.Point(783, 0);
 			this.scrollMapV.Name = "scrollMapV";
 			this.scrollMapV.Size = new System.Drawing.Size(17, 566);
@@ -291,6 +292,7 @@
 			// scrollMapH
 			// 
 			this.scrollMapH.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.scrollMapH.Enabled = false;
 			this.scrollMapH.Location = new System.Drawing.Point(0, 549);
 			this.scrollMapH.Name = "scrollMapH";
 			this.scrollMapH.Size = new System.Drawing.Size(783, 17);
@@ -349,14 +351,19 @@
 			this.splitLog.SplitterDistance = 566;
 			this.splitLog.TabIndex = 0;
 			// 
-			// picMiniMap
+			// panelMap
 			// 
-			this.picMiniMap.Dock = System.Windows.Forms.DockStyle.Top;
-			this.picMiniMap.Location = new System.Drawing.Point(0, 0);
-			this.picMiniMap.Name = "picMiniMap";
-			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
-			this.picMiniMap.TabIndex = 1;
-			this.picMiniMap.TabStop = false;
+			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
+			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMap.Location = new System.Drawing.Point(0, 0);
+			this.panelMap.Name = "panelMap";
+			this.panelMap.Size = new System.Drawing.Size(783, 566);
+			this.panelMap.TabIndex = 3;
+			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
+			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
+			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
+			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
 			// 
 			// tabTools
 			// 
@@ -439,19 +446,14 @@
 			this.tabPage2.Text = "tabPage2";
 			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
-			// panelMap
+			// picMiniMap
 			// 
-			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
-			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMap.Location = new System.Drawing.Point(0, 0);
-			this.panelMap.Name = "panelMap";
-			this.panelMap.Size = new System.Drawing.Size(783, 566);
-			this.panelMap.TabIndex = 3;
-			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
-			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
-			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
-			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
+			this.picMiniMap.Dock = System.Windows.Forms.DockStyle.Top;
+			this.picMiniMap.Location = new System.Drawing.Point(0, 0);
+			this.picMiniMap.Name = "picMiniMap";
+			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
+			this.picMiniMap.TabIndex = 1;
+			this.picMiniMap.TabStop = false;
 			// 
 			// MainForm
 			// 
@@ -480,10 +482,10 @@
 			this.splitLog.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitLog)).EndInit();
 			this.splitLog.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
 			this.tabTools.ResumeLayout(false);
 			this.tabTiles.ResumeLayout(false);
 			this.tabTiles.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
