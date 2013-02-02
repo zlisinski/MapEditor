@@ -12,7 +12,7 @@ namespace MapEditor
 	/// <summary>
 	/// Represents a tile image.
 	/// </summary>
-	public class CTile
+	public class CTile : ICloneable
 	{
 		/// <summary>
 		/// The id of the tile.
@@ -106,5 +106,17 @@ namespace MapEditor
 		{
 			return name;
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CTile newTile = new CTile(id, name, filename, xOffset, yOffset);
+			newTile._image = (Bitmap)image.Clone();
+
+			return newTile;
+		}
+
+		#endregion
 	}
 }

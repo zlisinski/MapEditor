@@ -9,7 +9,7 @@ namespace MapEditor
 	/// <summary>
 	/// Represents a group of tiles within one layer
 	/// </summary>
-	public class CTileSetGroup
+	public class CTileSetGroup : ICloneable
 	{
 		/// <summary>
 		/// The name of the tile group.
@@ -30,5 +30,19 @@ namespace MapEditor
 		public CTile[] tiles { get; set; }
 
 		public CTileSetGroup() { }
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CTileSetGroup newGroup = new CTileSetGroup();
+			newGroup.name = name;
+			newGroup.battleBackgroundId = battleBackgroundId;
+			newGroup.tiles = tiles.Select(x => (CTile)x.Clone()).ToArray();
+
+			return newGroup;
+		}
+
+		#endregion
 	}
 }

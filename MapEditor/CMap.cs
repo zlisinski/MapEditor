@@ -9,7 +9,7 @@ namespace MapEditor
 	/// <summary>
 	/// Represents a map
 	/// </summary>
-	public class CMap
+	public class CMap : ICloneable
 	{
 		/// <summary>
 		/// Map file format version.
@@ -40,6 +40,8 @@ namespace MapEditor
 		/// Two dimensional array of cells in the map.
 		/// </summary>
 		public CMapCell[,] cells { get; set; }
+
+		protected CMap() { }
 
 		/// <summary>
 		/// Creates a new map instance with the provided information.
@@ -139,5 +141,25 @@ namespace MapEditor
 		{
 			return name;
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CMap newMap = new CMap();
+			newMap.version = version;
+			newMap.name = name;
+			newMap.width = width;
+			newMap.height = height;
+			newMap.tileSet = (CTileSet)tileSet.Clone();
+			newMap.cells = new CMapCell[width, height];
+			for (int x = 0; x < width; x++)
+				for (int y = 0; y < height; y++)
+					newMap.cells[x, y] = (CMapCell)cells[x, y].Clone();
+
+			return newMap;
+		}
+
+		#endregion
 	}
 }

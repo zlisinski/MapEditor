@@ -11,7 +11,7 @@ namespace MapEditor
 	/// Represents a map tileset.
 	/// </summary>
 	[XmlRoot("tileSet")]
-	public class CTileSet
+	public class CTileSet : ICloneable
 	{
 		/// <summary>
 		/// Tile set file format version.
@@ -49,6 +49,22 @@ namespace MapEditor
 		{
 			return name;
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CTileSet newTileSet = new CTileSet();
+			newTileSet.version = version;
+			newTileSet.id = id;
+			newTileSet.name = name;
+			newTileSet.battleBackgrounds = battleBackgrounds.Select(x => (CBattleBackground)x.Clone()).ToArray();
+			newTileSet.layers = layers.Select(x => (CTileSetLayer)x.Clone()).ToArray();
+
+			return newTileSet;
+		}
+
+		#endregion
 	}
 
 

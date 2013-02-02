@@ -17,7 +17,7 @@ namespace MapEditor
 	/// <summary>
 	/// Represents one cell(stack of tiles and walk type) on the map.
 	/// </summary>
-	public class CMapCell
+	public class CMapCell : ICloneable
 	{
 		/// <summary>
 		/// Array of tiles layers.
@@ -47,10 +47,10 @@ namespace MapEditor
 		/// </summary>
 		/// <param name="tiles">Array of tiles.</param>
 		/// <param name="walkType"></param>
-		public CMapCell(ushort[] tiles, EWalkType cellType)
+		public CMapCell(ushort[] tiles, EWalkType walkType)
 		{
-			this.tiles = tiles;
-			this.walkType = cellType;
+			this.tiles = (ushort[])tiles.Clone();
+			this.walkType = walkType;
 		}
 
 		/// <summary>
@@ -93,5 +93,16 @@ namespace MapEditor
 			}
 			catch { throw; }
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CMapCell newCell = new CMapCell(tiles, walkType);
+
+			return newCell;
+		}
+
+		#endregion
 	}
 }

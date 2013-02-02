@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace MapEditor
 {
-	public class CBattleBackground
+	public class CBattleBackground : ICloneable
 	{
 		[XmlAttributeAttribute("id")]
 		public uint id { get; set; }
@@ -23,5 +23,19 @@ namespace MapEditor
 		{
 			return name;
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CBattleBackground newBackground = new CBattleBackground();
+			newBackground.id = id;
+			newBackground.name = name;
+			newBackground.filename = filename;
+
+			return newBackground;
+		}
+
+		#endregion
 	}
 }

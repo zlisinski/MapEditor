@@ -9,7 +9,7 @@ namespace MapEditor
 	/// <summary>
 	/// Represents tiles of a single layer in a tile set.
 	/// </summary>
-	public class CTileSetLayer
+	public class CTileSetLayer : ICloneable
 	{
 		/// <summary>
 		/// The id of this layer.
@@ -40,9 +40,22 @@ namespace MapEditor
 
 		public CTileSetLayer() { }
 
-		public override string  ToString()
+		public override string ToString()
 		{
 			return string.Format("Layer {0}", id);
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			CTileSetLayer newLayer = new CTileSetLayer();
+			newLayer.id = id;
+			newLayer.groups = groups.Select(x => (CTileSetGroup)x.Clone()).ToArray();
+
+			return newLayer;
+		}
+
+		#endregion
 	}
 }
