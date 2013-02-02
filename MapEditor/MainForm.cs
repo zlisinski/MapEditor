@@ -87,6 +87,16 @@ namespace MapEditor
 		/// </summary>
 		protected CTile[] walkTypeTiles = new CTile[Enum.GetNames(typeof(EWalkType)).Length];
 
+		/// <summary>
+		/// Worker thread for updating the minimap.
+		/// </summary>
+		protected Thread updateMiniMapThread;
+
+		/// <summary>
+		/// Queue of copies of the current map to be used to update the minimap.
+		/// </summary>
+		protected Queue<CMap> updateMiniMapQueue = new Queue<CMap>();
+
 		#region Form Functions
 		public MainForm()
 		{
@@ -115,6 +125,12 @@ namespace MapEditor
 				
 				comboLayers.SelectedIndex = 0;
 				comboBrushSize.SelectedIndex = 0;
+
+				// Start worker thread for updating the minimap
+				updateMiniMapThread = new Thread(new ThreadStart(updateMiniMapThreadFunc));
+				updateMiniMapThread.Start();
+
+				//openMap(Globals.mapDir + "overworld1.map");
 			}
 			catch (Exception ex)
 			{
@@ -127,6 +143,9 @@ namespace MapEditor
 			// Cancel closing if map is dirty and user selects Cancel
 			if (cancelActionIfDirty() == true)
 				e.Cancel = true;
+
+			// Stop the minimap worker thread
+			updateMiniMapThread.Abort();
 		}
 
 		/// <summary>
@@ -733,7 +752,8 @@ namespace MapEditor
 
 			if (redrawMiniMap == true)
 			{
-				updateMiniMap();
+				// Queue a minimap update with a copy of the current map
+				updateMiniMapQueue.Enqueue((CMap)curMap.Clone());
 			}
 		}
 
@@ -916,11 +936,120 @@ namespace MapEditor
 
 		#region MiniMap Functions
 		/// <summary>
-		/// Updates the minimap image
+		/// Background thread function to update the minimap.
+		/// Only runs if there is a copy of the map in the updateMiniMapQueue.
+		/// This implementation is probably not the best way to do it, but I'm just
+		/// interested in getting things up and running quickly for now.
 		/// </summary>
-		private void updateMiniMap(object threadContext)
+		private void updateMiniMapThreadFunc()
 		{
-			
+			int i = 0;
+
+			while (true)
+			{
+				if (updateMiniMapQueue.Count() > 0)
+				{
+					Console.WriteLine("{0} {1}", i++, DateTime.Now);
+
+					CMap curMapCopy = updateMiniMapQueue.Dequeue();
+					updateMiniMap(curMapCopy);
+				}
+
+				Thread.Sleep(10);
+			}
+		}
+
+		/// <summary>
+		/// Updates the minimap image.
+		/// This is horribly inefficient right now.
+		/// </summary>
+		private void updateMiniMap(CMap curMapCopy)
+		{
+			try
+			{
+				// Draw blank image if map is null
+				if (curMapCopy == null)
+				{
+					Console.WriteLine("Updating minimap without a map");
+					Bitmap bmp = new Bitmap(picMiniMap.Size.Width, picMiniMap.Size.Height);
+					Graphics bmpGraphics = Graphics.FromImage(bmp);
+					bmpGraphics.Clear(System.Drawing.SystemColors.Control);
+
+					this.Invoke((MethodInvoker)delegate
+					{
+						picMiniMap.Image = bmp;
+					});
+
+					return;
+				}
+
+				// Local var to save some typing
+				int tileSize = Globals.tileSize;
+
+				// Get pixel dimensions of full map
+				int mapWidth = curMapCopy.width * tileSize;
+				int mapHeight = curMapCopy.height * tileSize;
+
+				// Create a full sized image to paint on
+				Bitmap buffer = new Bitmap(mapWidth, mapHeight);
+				Graphics bufferGraphics = Graphics.FromImage(buffer);
+				bufferGraphics.Clear(System.Drawing.SystemColors.Control);
+
+				for (int x = 0; x < curMapCopy.width; x++)
+				{
+					for (int y = 0; y < curMapCopy.height; y++)
+					{
+						for (int z = 0; z < Globals.layerCount; z++)
+						{
+							// Skip this layer if its visibility is turned off
+							if (!layersVisible[z])
+								continue;
+
+							// Get the tile to paint
+							ushort tileId = curMapCopy.cells[x, y].tiles[z];
+							CTile curTile = curMapCopy.tileSet.layers[z].getTileFromId(tileId);
+							Bitmap curTileImage = curTile.image;
+
+							// Paint tile onto buffer
+							bufferGraphics.DrawImage(curTileImage, x * tileSize, y * tileSize, tileSize, tileSize);
+						}
+					}
+				}
+
+				int newWidth = 0;
+				int newHeight = 0;
+
+				// Calculate the scaled down size of the map within the minimap image
+				if (mapWidth > mapHeight)
+				{
+					newWidth = picMiniMap.Size.Width;
+					newHeight = (int)Math.Floor(((double)mapHeight / mapWidth) * picMiniMap.Size.Width);
+				}
+				else
+				{
+					newHeight = picMiniMap.Size.Height;
+					newWidth = (int)Math.Floor(((double)mapWidth / mapHeight) * picMiniMap.Size.Height);
+				}
+
+				// Create blank image that is the same size as the minimap
+				Bitmap newBmp = new Bitmap(picMiniMap.Size.Width, picMiniMap.Size.Height);
+				Graphics newBmpGraphics = Graphics.FromImage(newBmp);
+				newBmpGraphics.Clear(System.Drawing.SystemColors.Control);
+
+				// Draw map centered on newBmp
+				newBmpGraphics.DrawImage(buffer, (picMiniMap.Size.Width / 2) - (newWidth / 2), 
+					(picMiniMap.Size.Height / 2) - (newHeight / 2), newWidth, newHeight);
+
+				// Update minimp
+				this.Invoke((MethodInvoker)delegate
+				{
+					picMiniMap.Image = newBmp;
+				});
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
+			}
 		}
 		#endregion
 
