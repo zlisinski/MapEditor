@@ -781,9 +781,6 @@ namespace MapEditor
 			Graphics bufferGraphics = Graphics.FromImage(buffer);
 			bufferGraphics.Clear(System.Drawing.SystemColors.Control);
 
-			// Get the Graphics object for the panel
-			Graphics panelGraphics = panelMap.CreateGraphics();
-
 			if (curMap != null)
 			{
 				// Number of tiles displayable inside the panel
@@ -811,8 +808,14 @@ namespace MapEditor
 							if (!layersVisible[z])
 								continue;
 
-							// Get the tile to paint
+							// Get the tile id to paint
 							ushort tileId = curMap.cells[x + offsetX, y + offsetY].tiles[z];
+							
+							// Skip drawing if the tile is fully transparent
+							if (tileId == 0)
+								continue;
+
+							// Get the tile to paint
 							CTile curTile = curMap.tileSet.layers[z].getTileFromId(tileId);
 
 							// Paint tile onto buffer
@@ -822,8 +825,14 @@ namespace MapEditor
 						// Draw the walk layer if it is visible
 						if (walkLayerVisible)
 						{
-							// Get the tile to paint
+							// Get the tile id to paint
 							ushort walkTileId = (ushort)curMap.cells[x + offsetX, y + offsetY].walkType;
+
+							// Skip drawing if the tile is fully transparent
+							if ((EWalkType)walkTileId == EWalkType.NormalWalk)
+								continue;
+
+							// Get the tile to paint
 							CTile walkTile = walkTypeTiles[walkTileId];
 
 							// Paint tile onto buffer
@@ -837,10 +846,14 @@ namespace MapEditor
 					if (drawGrid)
 						bufferGraphics.DrawLine(gridPen, x * tileSize, 0, x * tileSize, endY * tileSize); 
 				}
+
+				gridPen.Dispose();
 			}
 
+			bufferGraphics.Dispose();
+			
 			// Copy image from buffer to panel
-			panelGraphics.DrawImage(buffer, 0, 0, panelMap.Size.Width, panelMap.Size.Height);
+			e.Graphics.DrawImage(buffer, 0, 0, panelMap.Size.Width, panelMap.Size.Height);
 		}
 
 		/// <summary>
