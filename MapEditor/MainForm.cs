@@ -191,7 +191,7 @@ namespace MapEditor
 
 			if (res == DialogResult.OK)
 			{
-				newMap(dialog.name, dialog.width, dialog.height, dialog.tileSet);
+				newMap(dialog.name, dialog.width, dialog.height, dialog.tileSet, dialog.monsterRegion);
 			}
 		}
 
@@ -644,9 +644,9 @@ namespace MapEditor
 		/// <param name="width">Map width in tiles.</param>
 		/// <param name="height">Map height in tiles.</param>
 		/// <param name="tileSet">Map tileset.</param>
-		private void newMap(string name, int width, int height, CTileSet tileSet)
+		private void newMap(string name, int width, int height, CTileSet tileSet, CMonsterRegion region)
 		{
-			curMap = new CMap(name, width, height, tileSet);
+			curMap = new CMap(name, width, height, tileSet, region);
 			curMapFilename = "";
 			curMapDirty = true;
 			

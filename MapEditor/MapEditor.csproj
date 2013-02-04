@@ -51,6 +51,7 @@
     <Compile Include="CBattleBackground.cs" />
     <Compile Include="CMap.cs" />
     <Compile Include="CMapCell.cs" />
+    <Compile Include="CMonsterRegion.cs" />
     <Compile Include="CResizeMapForm.cs">
       <SubType>Form</SubType>
     </Compile>

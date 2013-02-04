@@ -7,4 +7,5 @@
 	dataDir="D:\Rpg\data\"
 	tileSetDir="D:\Rpg\data\tilesets\"
 	mapDir="D:\Rpg\data\maps\"
+	monsterRegionDir="D:\Rpg\data\monsterregions\"
 />

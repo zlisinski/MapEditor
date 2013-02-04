@@ -15,6 +15,7 @@ namespace MapEditor
 		public int width;
 		public int height;
 		public CTileSet tileSet;
+		public CMonsterRegion monsterRegion;
 
 		public CNewMapForm()
 		{
@@ -25,7 +26,13 @@ namespace MapEditor
 				comboTileSet.Items.Add(tileSet);
 			}
 
+			foreach (CMonsterRegion region in MonsterRegions.instance)
+			{
+				comboMonsterRegion.Items.Add(region);
+			}
+
 			comboTileSet.SelectedIndex = 0;
+			comboMonsterRegion.SelectedIndex = 0;
 		}
 
 		private void btnOK_Click(object sender, EventArgs e)
@@ -41,6 +48,7 @@ namespace MapEditor
 			width = Convert.ToInt32(numWidth.Value);
 			height = Convert.ToInt32(numHeight.Value);
 			tileSet = (CTileSet)comboTileSet.SelectedItem;
+			monsterRegion = (CMonsterRegion)comboMonsterRegion.SelectedItem;
 		}
 	}
 }

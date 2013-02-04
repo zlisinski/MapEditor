@@ -38,6 +38,8 @@
 			this.comboTileSet = new System.Windows.Forms.ComboBox();
 			this.labelName = new System.Windows.Forms.Label();
 			this.textName = new System.Windows.Forms.TextBox();
+			this.labelMonsterRegion = new System.Windows.Forms.Label();
+			this.comboMonsterRegion = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numHeight)).BeginInit();
 			this.SuspendLayout();
@@ -63,7 +65,7 @@
 			// btnOK
 			// 
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnOK.Location = new System.Drawing.Point(58, 120);
+			this.btnOK.Location = new System.Drawing.Point(80, 150);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 4;
@@ -74,7 +76,7 @@
 			// btnCancel
 			// 
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(139, 120);
+			this.btnCancel.Location = new System.Drawing.Point(161, 150);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 5;
@@ -83,7 +85,7 @@
 			// 
 			// numWidth
 			// 
-			this.numWidth.Location = new System.Drawing.Point(54, 38);
+			this.numWidth.Location = new System.Drawing.Point(101, 38);
 			this.numWidth.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -105,7 +107,7 @@
 			// 
 			// numHeight
 			// 
-			this.numHeight.Location = new System.Drawing.Point(54, 64);
+			this.numHeight.Location = new System.Drawing.Point(101, 64);
 			this.numHeight.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -138,7 +140,7 @@
 			// 
 			this.comboTileSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboTileSet.FormattingEnabled = true;
-			this.comboTileSet.Location = new System.Drawing.Point(54, 90);
+			this.comboTileSet.Location = new System.Drawing.Point(101, 90);
 			this.comboTileSet.Name = "comboTileSet";
 			this.comboTileSet.Size = new System.Drawing.Size(199, 21);
 			this.comboTileSet.TabIndex = 3;
@@ -154,11 +156,29 @@
 			// 
 			// textName
 			// 
-			this.textName.Location = new System.Drawing.Point(54, 12);
+			this.textName.Location = new System.Drawing.Point(101, 12);
 			this.textName.MaxLength = 32;
 			this.textName.Name = "textName";
 			this.textName.Size = new System.Drawing.Size(199, 20);
 			this.textName.TabIndex = 0;
+			// 
+			// labelMonsterRegion
+			// 
+			this.labelMonsterRegion.AutoSize = true;
+			this.labelMonsterRegion.Location = new System.Drawing.Point(10, 120);
+			this.labelMonsterRegion.Name = "labelMonsterRegion";
+			this.labelMonsterRegion.Size = new System.Drawing.Size(85, 13);
+			this.labelMonsterRegion.TabIndex = 7;
+			this.labelMonsterRegion.Text = "Monster Region:";
+			// 
+			// comboMonsterRegion
+			// 
+			this.comboMonsterRegion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboMonsterRegion.FormattingEnabled = true;
+			this.comboMonsterRegion.Location = new System.Drawing.Point(101, 117);
+			this.comboMonsterRegion.Name = "comboMonsterRegion";
+			this.comboMonsterRegion.Size = new System.Drawing.Size(199, 21);
+			this.comboMonsterRegion.TabIndex = 8;
 			// 
 			// CNewMapForm
 			// 
@@ -166,7 +186,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(262, 155);
+			this.ClientSize = new System.Drawing.Size(317, 187);
+			this.Controls.Add(this.comboMonsterRegion);
+			this.Controls.Add(this.labelMonsterRegion);
 			this.Controls.Add(this.textName);
 			this.Controls.Add(this.labelName);
 			this.Controls.Add(this.comboTileSet);
@@ -202,5 +224,7 @@
 		private System.Windows.Forms.ComboBox comboTileSet;
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.TextBox textName;
+		private System.Windows.Forms.Label labelMonsterRegion;
+		private System.Windows.Forms.ComboBox comboMonsterRegion;
 	}
 }

@@ -17,6 +17,7 @@ namespace MapEditor
 		public static readonly string dataDir;
 		public static readonly string tileSetDir;
 		public static readonly string mapDir;
+		public static readonly string monsterRegionDir;
 
 		public const string version = "1.0.0";
 
@@ -55,6 +56,7 @@ namespace MapEditor
 						dataDir = reader.GetAttribute("dataDir");
 						tileSetDir = reader.GetAttribute("tileSetDir");
 						mapDir = reader.GetAttribute("mapDir");
+						monsterRegionDir = reader.GetAttribute("monsterRegionDir");
 					}
 				}
 
@@ -73,6 +75,8 @@ namespace MapEditor
 					throw new Exception("Error reading tileSetDir from config file");
 				if (mapDir == null)
 					throw new Exception("Error reading mapDir from config file");
+				if (monsterRegionDir == null)
+					throw new Exception("Error reading monsterRegionDir from config file");
 			}
 			catch (Exception ex)
 			{

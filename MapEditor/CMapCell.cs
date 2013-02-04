@@ -30,6 +30,11 @@ namespace MapEditor
 		public EWalkType walkType;
 
 		/// <summary>
+		/// Index into the monster region table for the map.
+		/// </summary>
+		public ushort monsterRegionId;
+
+		/// <summary>
 		/// Creates new cell instance with default values.
 		/// </summary>
 		public CMapCell()
@@ -40,33 +45,26 @@ namespace MapEditor
 				tiles[i] = 0;
 			
 			walkType = EWalkType.NormalWalk;
-		}
 
-		/// <summary>
-		/// Creates a new cell instance with the provided values.
-		/// </summary>
-		/// <param name="tiles">Array of tiles.</param>
-		/// <param name="walkType"></param>
-		public CMapCell(ushort[] tiles, EWalkType walkType)
-		{
-			this.tiles = (ushort[])tiles.Clone();
-			this.walkType = walkType;
+			monsterRegionId = 0;
 		}
 
 		/// <summary>
 		/// Creates a new cell instance and loads from a file
 		/// </summary>
 		/// <param name="reader">Reader linked to the file stream to load from.</param>
-		public CMapCell(BinaryReader reader)
+		/// <param name="version">The version of the map to load from.</param>
+		public CMapCell(BinaryReader reader, int version)
 		{
-			load(reader);
+			load(reader, version);
 		}
 
 		/// <summary>
 		/// Loads the cell from the provided file.
 		/// </summary>
 		/// <param name="reader">Reader linked to the file stream to load from.</param>
-		public void load(BinaryReader reader)
+		/// <param name="version">The version of the map to load from.</param>
+		public void load(BinaryReader reader, int version)
 		{
 			try
 			{
@@ -74,6 +72,12 @@ namespace MapEditor
 					tiles[i] = reader.ReadUInt16();
 
 				walkType = (EWalkType)reader.ReadUInt16();
+
+				// monster region was added in map version 2
+				if (version == 1)
+					monsterRegionId = 0;
+				else
+					monsterRegionId = reader.ReadUInt16();
 			}
 			catch { throw; }
 		}
@@ -90,6 +94,8 @@ namespace MapEditor
 					writer.Write(tiles[i]);
 
 				writer.Write((ushort)walkType);
+
+				writer.Write(monsterRegionId);
 			}
 			catch { throw; }
 		}
@@ -98,7 +104,10 @@ namespace MapEditor
 
 		public object Clone()
 		{
-			CMapCell newCell = new CMapCell(tiles, walkType);
+			CMapCell newCell = new CMapCell();
+			newCell.tiles = (ushort[])tiles.Clone();
+			newCell.walkType = walkType;
+			newCell.monsterRegionId = monsterRegionId;
 
 			return newCell;
 		}
