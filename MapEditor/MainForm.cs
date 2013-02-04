@@ -14,6 +14,7 @@ using System.Threading;
 namespace MapEditor
 {
 	public delegate void DLogString(string message);
+	public delegate CMap DCloneCurMap();
 
     public partial class MainForm : Form
     {
@@ -93,9 +94,9 @@ namespace MapEditor
 		protected Thread updateMiniMapThread;
 
 		/// <summary>
-		/// Queue of copies of the current map to be used to update the minimap.
+		/// If the minimap needs to be updated.
 		/// </summary>
-		protected Queue<CMap> updateMiniMapQueue = new Queue<CMap>();
+		protected bool miniMapNeedsUpdate = false;
 
 		#region Form Functions
 		public MainForm()
@@ -761,8 +762,8 @@ namespace MapEditor
 
 			if (redrawMiniMap == true)
 			{
-				// Queue a minimap update with a copy of the current map
-				updateMiniMapQueue.Enqueue((CMap)curMap.Clone());
+				// Tell the minimap update thread there is a change waiting
+				miniMapNeedsUpdate = true;
 			}
 		}
 
@@ -958,6 +959,16 @@ namespace MapEditor
 
 		#region MiniMap Functions
 		/// <summary>
+		/// Clones the current map.
+		/// Needs to be called on the main thread through an Invoke() call.
+		/// </summary>
+		/// <returns>A clone of the current map</returns>
+		private CMap cloneCurMap()
+		{
+			return (CMap)curMap.Clone();
+		}
+
+		/// <summary>
 		/// Background thread function to update the minimap.
 		/// Only runs if there is a copy of the map in the updateMiniMapQueue.
 		/// This implementation is probably not the best way to do it, but I'm just
@@ -969,15 +980,20 @@ namespace MapEditor
 
 			while (true)
 			{
-				if (updateMiniMapQueue.Count() > 0)
+				if (miniMapNeedsUpdate == true)
 				{
+					miniMapNeedsUpdate = false;
+
 					Console.WriteLine("{0} {1}", i++, DateTime.Now);
 
-					CMap curMapCopy = updateMiniMapQueue.Dequeue();
+					// Copy the current map on the main thread
+					CMap curMapCopy = (CMap)this.Invoke(new DCloneCurMap(cloneCurMap));
+
+					// Update the minimap
 					updateMiniMap(curMapCopy);
 				}
-
-				Thread.Sleep(10);
+				else
+					Thread.Sleep(100);
 			}
 		}
 
