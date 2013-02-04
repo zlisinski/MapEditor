@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -90,26 +91,26 @@ namespace MapEditor
 		{
 			try
 			{
-				string[] filenames = Directory.GetFiles(Globals.tileSetDir, "*.xml");
-
-				foreach (string filename in filenames)
+				XmlTextReader reader = new XmlTextReader(Globals.tileSetDir + "tilesets.xml");
+				while (reader.Read())
 				{
-					CTileSet newTileSet = null;
-					XmlSerializer serializer = new XmlSerializer(typeof(CTileSet));
-					StreamReader reader = new StreamReader(filename);
-					
-					try
+					if (reader.NodeType == XmlNodeType.Element && reader.Name == "tileSet")
 					{
-						newTileSet = (CTileSet)serializer.Deserialize(reader);
-						tileSets.Add(newTileSet.id, newTileSet);
-						//logString("Loaded " + filename + "\n\n");
-					}
-					catch (InvalidOperationException)
-					{
-						//logString("Error loading " + filename);
-					}
+						int id = Convert.ToInt32(reader.GetAttribute("id"));
+						string name = reader.GetAttribute("name");
 
-					reader.Close();
+						XmlSerializer serializer = new XmlSerializer(typeof(CTileSet));
+						StreamReader tileSetReader = new StreamReader(Globals.tileSetDir + name + ".xml");
+
+						CTileSet newTileSet = (CTileSet)serializer.Deserialize(tileSetReader);
+
+						if (newTileSet.id != id)
+							throw new Exception(string.Format("The tileset ids don't match. {0} != {1}", newTileSet.id, id));
+						if (newTileSet.name != name)
+							throw new Exception(string.Format("The tileset names don't match. {0} != {1}", newTileSet.name, name));
+
+						tileSets.Add(id, newTileSet);
+					}
 				}
 			}
 			catch (Exception ex)
