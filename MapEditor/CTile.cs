@@ -45,6 +45,12 @@ namespace MapEditor
 		public int yOffset { get; set; }
 
 		/// <summary>
+		/// The transparency color of the tile. Defaults to Magenta(#FF00FF) if not present.
+		/// </summary>
+		[XmlAttribute("trans")]
+		public string transColor { get; set; }
+
+		/// <summary>
 		/// Bitmap image.
 		/// </summary>
 		private Bitmap _image = null;
@@ -83,7 +89,14 @@ namespace MapEditor
 					graphics.DrawImage(srcImage, destRect, srcRect, GraphicsUnit.Pixel);
 
 					// Set transparency color
-					_image.MakeTransparent(Color.Magenta);
+					Color transparent = Color.Magenta;
+					try
+					{
+						if (transColor != null && transColor != "")
+							transparent = Color.FromArgb(Convert.ToInt32(transColor, 16));
+					}
+					catch { }
+					_image.MakeTransparent(transparent);
 
 					return _image;
 				}
