@@ -64,6 +64,11 @@ namespace MapEditor
 		protected int curBrushSize = 1;
 
 		/// <summary>
+		/// The current tab in the tools tab control.
+		/// </summary>
+		protected TabPage curToolsPage = null;
+
+		/// <summary>
 		/// Which layers are currently visible.
 		/// </summary>
 		protected bool[] layersVisible = new bool[] {true, true, true, true};
@@ -72,6 +77,11 @@ namespace MapEditor
 		/// Is the walkType layer visible.
 		/// </summary>
 		protected bool walkLayerVisible = true;
+
+		/// <summary>
+		/// Is the entrance and exit layer visible.
+		/// </summary>
+		protected bool entranceExitLayerVisible = true;
 
 		/// <summary>
 		/// Whether or not to draw the grid.
@@ -109,6 +119,9 @@ namespace MapEditor
 		{
 			try
 			{
+				// Set reference to the current selected tab
+				curToolsPage = tabTools.SelectedTab;
+
 				// Load tileSets
 				tileSets = TileSets.instance;
 				foreach (CTileSet ts in tileSets)
@@ -171,6 +184,23 @@ namespace MapEditor
 			}
 
 			this.Text = newTitle.ToString();
+		}
+
+		/// <summary>
+		/// Triggered when tools tab changes
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tabTools_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			curToolsPage = tabTools.SelectedTab;
+
+			if (curToolsPage == tabTiles)
+				tabTilesSelected();
+			else if (curToolsPage == tabEntrances)
+				tabEntrancesSelected();
+			else if (curToolsPage == tabExits)
+				tabExitsSelected();
 		}
 		#endregion
 
@@ -347,6 +377,22 @@ namespace MapEditor
 		}
 
 		/// <summary>
+		/// Toggle entrances and exits visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void entrancesExitsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			entrancesExitsToolStripMenuItem.Checked = !entrancesExitsToolStripMenuItem.Checked;
+		}
+
+		private void entrancesExitsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			entranceExitLayerVisible = entrancesExitsToolStripMenuItem.Checked;
+			redrawMap();
+		}
+
+		/// <summary>
 		/// Toggle grid visibility.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -407,6 +453,15 @@ namespace MapEditor
 		#endregion
 
 		#region Tile Palette Functions
+		/// <summary>
+		/// Called when the tiles tab is selected.
+		/// </summary>
+		private void tabTilesSelected()
+		{
+			// Set brush size
+			comboBrushSize_SelectedIndexChanged(comboBrushSize, EventArgs.Empty);
+		}
+
 		/// <summary>
 		/// Redraws the tile palette with the tiles from the current layer. 
 		/// Triggered when the layer dropdown is changed.
@@ -558,6 +613,28 @@ namespace MapEditor
 					curBrushSize = 9;
 					break;
 			}
+		}
+		#endregion
+
+		#region Map Entrances Function
+		/// <summary>
+		/// Called when the entrances tab is selected.
+		/// </summary>
+		private void tabEntrancesSelected()
+		{
+			// Set brush size
+			curBrushSize = 1;
+		}
+		#endregion
+
+		#region Map Exits Function
+		/// <summary>
+		/// Called when the exits tab is selected.
+		/// </summary>
+		private void tabExitsSelected()
+		{
+			// Set brush size
+			curBrushSize = 1;
 		}
 		#endregion
 
@@ -796,9 +873,10 @@ namespace MapEditor
 				int endX = Math.Min(curMap.width - offsetX, panelTilesX);
 				int endY = Math.Min(curMap.height - offsetY, panelTilesY);
 
-				// Pen for drawing grid
-				Pen gridPen = new Pen(gridColor);
+				// Pen for drawing lines and squares
+				Pen pen = new Pen(gridColor);
 
+				// Draw map tiles
 				for (int x = 0; x < endX; x++)
 				{
 					for (int y = 0; y < endY; y++)
@@ -841,14 +919,51 @@ namespace MapEditor
 						}
 
 						if (drawGrid)
-							bufferGraphics.DrawLine(gridPen, 0, y * tileSize, endX * tileSize, y * tileSize);
+							bufferGraphics.DrawLine(pen, 0, y * tileSize, endX * tileSize, y * tileSize);
 					}
 
 					if (drawGrid)
-						bufferGraphics.DrawLine(gridPen, x * tileSize, 0, x * tileSize, endY * tileSize); 
+						bufferGraphics.DrawLine(pen, x * tileSize, 0, x * tileSize, endY * tileSize); 
 				}
 
-				gridPen.Dispose();
+				// Draw entrance and exit squares
+				if (entranceExitLayerVisible)
+				{
+					pen = new Pen(Color.Aqua);
+					foreach (int i in curMap.entrances.Keys)
+					{
+						CMapEntrance ent = curMap.entrances[i];
+
+						// Skip if tile is off screen
+						if (ent.tileX < offsetX || ent.tileX >= endX || ent.tileY < offsetY || ent.tileY >= endY)
+							continue;
+
+						// Draw entrance
+						bufferGraphics.DrawRectangle(pen, (ent.tileX - offsetX) * tileSize, (ent.tileY - offsetY) * tileSize,
+							tileSize, tileSize);
+
+						Font font = new Font("Arial", 10);
+						SolidBrush brush = new SolidBrush(Color.Aqua);
+						RectangleF rect = new RectangleF((ent.tileX - offsetX) * tileSize, (ent.tileY - offsetY) * tileSize,
+							tileSize, tileSize);
+
+						bufferGraphics.DrawString(i.ToString(), font, brush, rect);
+					}
+
+					pen = new Pen(Color.Blue);
+					foreach (CMapExit exit in curMap.exits)
+					{
+						// Skip if tile is off screen
+						if (exit.tileX < offsetX || exit.tileX >= endX || exit.tileY < offsetY || exit.tileY >= endY)
+							continue;
+
+						// Draw entrance
+						bufferGraphics.DrawRectangle(pen, (exit.tileX - offsetX) * tileSize, (exit.tileY - offsetY) * tileSize,
+							tileSize, tileSize);
+					}
+				}
+
+				pen.Dispose();
 			}
 
 			bufferGraphics.Dispose();
@@ -941,12 +1056,44 @@ namespace MapEditor
 					// Only draw if the coordinates are within the map
 					if (x >= 0 && y >= 0 && x < curMap.width && y < curMap.height)
 					{
-						CMapCell cell = curMap.cells[x, y];
+						if (curToolsPage == tabTiles)
+						{
+							CMapCell cell = curMap.cells[x, y];
 
-						if (curLayer < Globals.layerCount)
-							cell.tiles[curLayer] = curBrush.id;
-						else if (curLayer == Globals.layerCount)
-							cell.walkType = (EWalkType)curBrush.id;
+							if (curLayer < Globals.layerCount)
+								cell.tiles[curLayer] = curBrush.id;
+							else if (curLayer == Globals.layerCount)
+								cell.walkType = (EWalkType)curBrush.id;
+						}
+						else if (curToolsPage == tabEntrances)
+						{
+							CMapEntrance entrance = curMap.getEntranceAt(tileX, tileY);
+							if (entrance != null)
+							{
+								logString(string.Format("Entrance exists at {0},{1}", tileX, tileY));
+							}
+							else
+							{
+								int newId = 1;
+								if (curMap.entrances.Count > 0)
+									newId = curMap.entrances.Keys.Max() + 1;
+								CMapEntrance newEntrance = new CMapEntrance(newId, tileX, tileY);
+								curMap.entrances.Add(newId, newEntrance);
+							}
+						}
+						else if (curToolsPage == tabExits)
+						{
+							CMapExit exit = curMap.getExitAt(tileX, tileY);
+							if (exit != null)
+							{
+								logString(string.Format("Exit exists at {0},{1}", tileX, tileY));
+							}
+							else
+							{
+								CMapExit newExit = new CMapExit(new Guid(), 0, tileX, tileY);
+								curMap.exits.Add(newExit);
+							}
+						}
 					}
 				}
 			}

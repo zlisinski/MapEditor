@@ -56,14 +56,16 @@
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.splitMap = new System.Windows.Forms.SplitContainer();
 			this.splitLog = new System.Windows.Forms.SplitContainer();
-			this.panelMap = new MapEditor.MapPanel();
 			this.tabTools = new System.Windows.Forms.TabControl();
 			this.tabTiles = new System.Windows.Forms.TabPage();
 			this.panelTiles = new System.Windows.Forms.Panel();
 			this.comboBrushSize = new System.Windows.Forms.ComboBox();
 			this.comboLayers = new System.Windows.Forms.ComboBox();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabEntrances = new System.Windows.Forms.TabPage();
 			this.picMiniMap = new System.Windows.Forms.PictureBox();
+			this.entrancesExitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tabExits = new System.Windows.Forms.TabPage();
+			this.panelMap = new MapEditor.MapPanel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitMap)).BeginInit();
@@ -201,7 +203,8 @@
             this.layer2ToolStripMenuItem,
             this.layer3ToolStripMenuItem,
             this.layer4ToolStripMenuItem,
-            this.walkLayerToolStripMenuItem});
+            this.walkLayerToolStripMenuItem,
+            this.entrancesExitsToolStripMenuItem});
 			this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
 			this.layersToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
 			this.layersToolStripMenuItem.Text = "&Layers";
@@ -211,7 +214,7 @@
 			this.layer1ToolStripMenuItem.Checked = true;
 			this.layer1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer1ToolStripMenuItem.Name = "layer1ToolStripMenuItem";
-			this.layer1ToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.layer1ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.layer1ToolStripMenuItem.Text = "Layer &1";
 			this.layer1ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer1ToolStripMenuItem_CheckedChanged);
 			this.layer1ToolStripMenuItem.Click += new System.EventHandler(this.layer1ToolStripMenuItem_Click);
@@ -221,7 +224,7 @@
 			this.layer2ToolStripMenuItem.Checked = true;
 			this.layer2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer2ToolStripMenuItem.Name = "layer2ToolStripMenuItem";
-			this.layer2ToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.layer2ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.layer2ToolStripMenuItem.Text = "Layer &2";
 			this.layer2ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer2ToolStripMenuItem_CheckedChanged);
 			this.layer2ToolStripMenuItem.Click += new System.EventHandler(this.layer2ToolStripMenuItem_Click);
@@ -231,7 +234,7 @@
 			this.layer3ToolStripMenuItem.Checked = true;
 			this.layer3ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer3ToolStripMenuItem.Name = "layer3ToolStripMenuItem";
-			this.layer3ToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.layer3ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.layer3ToolStripMenuItem.Text = "Layer &3";
 			this.layer3ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer3ToolStripMenuItem_CheckedChanged);
 			this.layer3ToolStripMenuItem.Click += new System.EventHandler(this.layer3ToolStripMenuItem_Click);
@@ -241,7 +244,7 @@
 			this.layer4ToolStripMenuItem.Checked = true;
 			this.layer4ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.layer4ToolStripMenuItem.Name = "layer4ToolStripMenuItem";
-			this.layer4ToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.layer4ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.layer4ToolStripMenuItem.Text = "Layer &4";
 			this.layer4ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.layer4ToolStripMenuItem_CheckedChanged);
 			this.layer4ToolStripMenuItem.Click += new System.EventHandler(this.layer4ToolStripMenuItem_Click);
@@ -251,7 +254,7 @@
 			this.walkLayerToolStripMenuItem.Checked = true;
 			this.walkLayerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.walkLayerToolStripMenuItem.Name = "walkLayerToolStripMenuItem";
-			this.walkLayerToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.walkLayerToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
 			this.walkLayerToolStripMenuItem.Text = "&Walk Layer";
 			this.walkLayerToolStripMenuItem.CheckedChanged += new System.EventHandler(this.walkLayerToolStripMenuItem_CheckedChanged);
 			this.walkLayerToolStripMenuItem.Click += new System.EventHandler(this.walkLayerToolStripMenuItem_Click);
@@ -351,33 +354,22 @@
 			this.splitLog.SplitterDistance = 566;
 			this.splitLog.TabIndex = 0;
 			// 
-			// panelMap
-			// 
-			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
-			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMap.Location = new System.Drawing.Point(0, 0);
-			this.panelMap.Name = "panelMap";
-			this.panelMap.Size = new System.Drawing.Size(783, 566);
-			this.panelMap.TabIndex = 3;
-			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
-			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
-			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
-			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
-			// 
 			// tabTools
 			// 
 			this.tabTools.Controls.Add(this.tabTiles);
-			this.tabTools.Controls.Add(this.tabPage2);
+			this.tabTools.Controls.Add(this.tabEntrances);
+			this.tabTools.Controls.Add(this.tabExits);
 			this.tabTools.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabTools.Location = new System.Drawing.Point(0, 193);
 			this.tabTools.Name = "tabTools";
 			this.tabTools.SelectedIndex = 0;
 			this.tabTools.Size = new System.Drawing.Size(193, 439);
 			this.tabTools.TabIndex = 5;
+			this.tabTools.SelectedIndexChanged += new System.EventHandler(this.tabTools_SelectedIndexChanged);
 			// 
 			// tabTiles
 			// 
+			this.tabTiles.BackColor = System.Drawing.SystemColors.Control;
 			this.tabTiles.Controls.Add(this.panelTiles);
 			this.tabTiles.Controls.Add(this.comboBrushSize);
 			this.tabTiles.Controls.Add(this.comboLayers);
@@ -387,7 +379,6 @@
 			this.tabTiles.Size = new System.Drawing.Size(185, 413);
 			this.tabTiles.TabIndex = 0;
 			this.tabTiles.Text = "Tiles";
-			this.tabTiles.UseVisualStyleBackColor = true;
 			// 
 			// panelTiles
 			// 
@@ -436,15 +427,15 @@
 			this.comboLayers.TabIndex = 0;
 			this.comboLayers.SelectedIndexChanged += new System.EventHandler(this.comboLayers_SelectedIndexChanged);
 			// 
-			// tabPage2
+			// tabEntrances
 			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(185, 413);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "tabPage2";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			this.tabEntrances.BackColor = System.Drawing.SystemColors.Control;
+			this.tabEntrances.Location = new System.Drawing.Point(4, 22);
+			this.tabEntrances.Name = "tabEntrances";
+			this.tabEntrances.Padding = new System.Windows.Forms.Padding(3);
+			this.tabEntrances.Size = new System.Drawing.Size(185, 413);
+			this.tabEntrances.TabIndex = 1;
+			this.tabEntrances.Text = "Entrances";
 			// 
 			// picMiniMap
 			// 
@@ -454,6 +445,39 @@
 			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
 			this.picMiniMap.TabIndex = 1;
 			this.picMiniMap.TabStop = false;
+			// 
+			// entrancesExitsToolStripMenuItem
+			// 
+			this.entrancesExitsToolStripMenuItem.Checked = true;
+			this.entrancesExitsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.entrancesExitsToolStripMenuItem.Name = "entrancesExitsToolStripMenuItem";
+			this.entrancesExitsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.entrancesExitsToolStripMenuItem.Text = "&Entrances && Exits";
+			this.entrancesExitsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.entrancesExitsToolStripMenuItem_CheckedChanged);
+			this.entrancesExitsToolStripMenuItem.Click += new System.EventHandler(this.entrancesExitsToolStripMenuItem_Click);
+			// 
+			// tabExits
+			// 
+			this.tabExits.BackColor = System.Drawing.SystemColors.Control;
+			this.tabExits.Location = new System.Drawing.Point(4, 22);
+			this.tabExits.Name = "tabExits";
+			this.tabExits.Size = new System.Drawing.Size(185, 413);
+			this.tabExits.TabIndex = 2;
+			this.tabExits.Text = "Exits";
+			// 
+			// panelMap
+			// 
+			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
+			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMap.Location = new System.Drawing.Point(0, 0);
+			this.panelMap.Name = "panelMap";
+			this.panelMap.Size = new System.Drawing.Size(783, 566);
+			this.panelMap.TabIndex = 3;
+			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
+			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
+			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
+			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
 			// 
 			// MainForm
 			// 
@@ -527,8 +551,10 @@
 		private System.Windows.Forms.Panel panelTiles;
 		private System.Windows.Forms.ComboBox comboBrushSize;
 		private System.Windows.Forms.ComboBox comboLayers;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabEntrances;
 		private System.Windows.Forms.PictureBox picMiniMap;
+		private System.Windows.Forms.ToolStripMenuItem entrancesExitsToolStripMenuItem;
+		private System.Windows.Forms.TabPage tabExits;
     }
 }
 
