@@ -69,8 +69,8 @@ namespace MapEditor
 			try
 			{
 				mapUuid = new Guid(reader.ReadBytes(16));
-				//mapUuid = new Guid("1A31EC2F34338E4DBC0F2BF5BFB70ECF"); //overworld1.map
-				//mapUuid = new Guid("35D873DCB462C94E915DD39C310397DB"); //overworld2.map
+				//mapUuid = new Guid("2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf"); //overworld1.map
+				//mapUuid = new Guid("dc73d835-62b4-4ec9-915d-d39c310397db"); //overworld2.map
 				mapEntranceId = reader.ReadInt32();
 				tileX = reader.ReadInt32();
 				tileY = reader.ReadInt32();

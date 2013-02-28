@@ -148,7 +148,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
+				MessageBox.Show(ex.ToString());
 			}
 		}
 
@@ -530,7 +530,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
+				MessageBox.Show(ex.ToString());
 			}
 		}
 
@@ -752,7 +752,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.ToString());
 			}
 		}
 
@@ -770,7 +770,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.ToString());
 			}
 		}
 
@@ -1074,7 +1074,7 @@ namespace MapEditor
 							}
 							else
 							{
-								int newId = 1;
+								int newId = 0;
 								if (curMap.entrances.Count > 0)
 									newId = curMap.entrances.Keys.Max() + 1;
 								CMapEntrance newEntrance = new CMapEntrance(newId, tileX, tileY);
@@ -1233,7 +1233,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
+				MessageBox.Show(ex.ToString());
 			}
 		}
 		#endregion

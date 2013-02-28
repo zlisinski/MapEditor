@@ -80,7 +80,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.ToString());
 				Application.Exit();
 			}
 		}

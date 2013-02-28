@@ -239,6 +239,9 @@ namespace MapEditor
 		{
 			try
 			{
+				if (!entrances.ContainsKey(0))
+					throw new Exception("Map does not contain an entrance with an id of 0");
+
 				FileStream fileStream = new FileStream(filename, FileMode.Create);
 				BinaryWriter writer = new BinaryWriter(fileStream, Encoding.UTF8);
 

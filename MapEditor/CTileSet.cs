@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MapEditor
 {
@@ -115,7 +116,7 @@ namespace MapEditor
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.ToString());
 			}
 		}
 
