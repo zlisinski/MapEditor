@@ -48,6 +48,7 @@
 			this.layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.walkLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.entrancesExitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.textStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -56,16 +57,20 @@
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.splitMap = new System.Windows.Forms.SplitContainer();
 			this.splitLog = new System.Windows.Forms.SplitContainer();
+			this.panelMap = new MapEditor.MapPanel();
 			this.tabTools = new System.Windows.Forms.TabControl();
 			this.tabTiles = new System.Windows.Forms.TabPage();
 			this.panelTiles = new System.Windows.Forms.Panel();
 			this.comboBrushSize = new System.Windows.Forms.ComboBox();
 			this.comboLayers = new System.Windows.Forms.ComboBox();
 			this.tabEntrances = new System.Windows.Forms.TabPage();
-			this.picMiniMap = new System.Windows.Forms.PictureBox();
-			this.entrancesExitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabExits = new System.Windows.Forms.TabPage();
-			this.panelMap = new MapEditor.MapPanel();
+			this.picMiniMap = new System.Windows.Forms.PictureBox();
+			this.labelEntranceId = new System.Windows.Forms.Label();
+			this.numericEntranceId = new System.Windows.Forms.NumericUpDown();
+			this.buttonUpdateEntrance = new System.Windows.Forms.Button();
+			this.buttonMoveEntrance = new System.Windows.Forms.Button();
+			this.buttonDeleteEntrance = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitMap)).BeginInit();
@@ -78,7 +83,9 @@
 			this.splitLog.SuspendLayout();
 			this.tabTools.SuspendLayout();
 			this.tabTiles.SuspendLayout();
+			this.tabEntrances.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -259,6 +266,16 @@
 			this.walkLayerToolStripMenuItem.CheckedChanged += new System.EventHandler(this.walkLayerToolStripMenuItem_CheckedChanged);
 			this.walkLayerToolStripMenuItem.Click += new System.EventHandler(this.walkLayerToolStripMenuItem_Click);
 			// 
+			// entrancesExitsToolStripMenuItem
+			// 
+			this.entrancesExitsToolStripMenuItem.Checked = true;
+			this.entrancesExitsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.entrancesExitsToolStripMenuItem.Name = "entrancesExitsToolStripMenuItem";
+			this.entrancesExitsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.entrancesExitsToolStripMenuItem.Text = "&Entrances && Exits";
+			this.entrancesExitsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.entrancesExitsToolStripMenuItem_CheckedChanged);
+			this.entrancesExitsToolStripMenuItem.Click += new System.EventHandler(this.entrancesExitsToolStripMenuItem_Click);
+			// 
 			// toolStrip1
 			// 
 			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
@@ -354,6 +371,20 @@
 			this.splitLog.SplitterDistance = 566;
 			this.splitLog.TabIndex = 0;
 			// 
+			// panelMap
+			// 
+			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
+			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMap.Location = new System.Drawing.Point(0, 0);
+			this.panelMap.Name = "panelMap";
+			this.panelMap.Size = new System.Drawing.Size(783, 566);
+			this.panelMap.TabIndex = 3;
+			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
+			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
+			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
+			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
+			// 
 			// tabTools
 			// 
 			this.tabTools.Controls.Add(this.tabTiles);
@@ -430,31 +461,17 @@
 			// tabEntrances
 			// 
 			this.tabEntrances.BackColor = System.Drawing.SystemColors.Control;
+			this.tabEntrances.Controls.Add(this.buttonDeleteEntrance);
+			this.tabEntrances.Controls.Add(this.buttonMoveEntrance);
+			this.tabEntrances.Controls.Add(this.buttonUpdateEntrance);
+			this.tabEntrances.Controls.Add(this.numericEntranceId);
+			this.tabEntrances.Controls.Add(this.labelEntranceId);
 			this.tabEntrances.Location = new System.Drawing.Point(4, 22);
 			this.tabEntrances.Name = "tabEntrances";
 			this.tabEntrances.Padding = new System.Windows.Forms.Padding(3);
 			this.tabEntrances.Size = new System.Drawing.Size(185, 413);
 			this.tabEntrances.TabIndex = 1;
 			this.tabEntrances.Text = "Entrances";
-			// 
-			// picMiniMap
-			// 
-			this.picMiniMap.Dock = System.Windows.Forms.DockStyle.Top;
-			this.picMiniMap.Location = new System.Drawing.Point(0, 0);
-			this.picMiniMap.Name = "picMiniMap";
-			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
-			this.picMiniMap.TabIndex = 1;
-			this.picMiniMap.TabStop = false;
-			// 
-			// entrancesExitsToolStripMenuItem
-			// 
-			this.entrancesExitsToolStripMenuItem.Checked = true;
-			this.entrancesExitsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.entrancesExitsToolStripMenuItem.Name = "entrancesExitsToolStripMenuItem";
-			this.entrancesExitsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-			this.entrancesExitsToolStripMenuItem.Text = "&Entrances && Exits";
-			this.entrancesExitsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.entrancesExitsToolStripMenuItem_CheckedChanged);
-			this.entrancesExitsToolStripMenuItem.Click += new System.EventHandler(this.entrancesExitsToolStripMenuItem_Click);
 			// 
 			// tabExits
 			// 
@@ -465,19 +482,60 @@
 			this.tabExits.TabIndex = 2;
 			this.tabExits.Text = "Exits";
 			// 
-			// panelMap
+			// picMiniMap
 			// 
-			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
-			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMap.Location = new System.Drawing.Point(0, 0);
-			this.panelMap.Name = "panelMap";
-			this.panelMap.Size = new System.Drawing.Size(783, 566);
-			this.panelMap.TabIndex = 3;
-			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
-			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
-			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
-			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
+			this.picMiniMap.Dock = System.Windows.Forms.DockStyle.Top;
+			this.picMiniMap.Location = new System.Drawing.Point(0, 0);
+			this.picMiniMap.Name = "picMiniMap";
+			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
+			this.picMiniMap.TabIndex = 1;
+			this.picMiniMap.TabStop = false;
+			// 
+			// labelEntranceId
+			// 
+			this.labelEntranceId.AutoSize = true;
+			this.labelEntranceId.Location = new System.Drawing.Point(3, 8);
+			this.labelEntranceId.Name = "labelEntranceId";
+			this.labelEntranceId.Size = new System.Drawing.Size(19, 13);
+			this.labelEntranceId.TabIndex = 0;
+			this.labelEntranceId.Text = "Id:";
+			// 
+			// numericEntranceId
+			// 
+			this.numericEntranceId.Location = new System.Drawing.Point(28, 6);
+			this.numericEntranceId.Name = "numericEntranceId";
+			this.numericEntranceId.Size = new System.Drawing.Size(120, 20);
+			this.numericEntranceId.TabIndex = 1;
+			// 
+			// buttonUpdateEntrance
+			// 
+			this.buttonUpdateEntrance.Location = new System.Drawing.Point(6, 32);
+			this.buttonUpdateEntrance.Name = "buttonUpdateEntrance";
+			this.buttonUpdateEntrance.Size = new System.Drawing.Size(75, 23);
+			this.buttonUpdateEntrance.TabIndex = 2;
+			this.buttonUpdateEntrance.Text = "Update";
+			this.buttonUpdateEntrance.UseVisualStyleBackColor = true;
+			this.buttonUpdateEntrance.Click += new System.EventHandler(this.buttonUpdateEntrance_Click);
+			// 
+			// buttonMoveEntrance
+			// 
+			this.buttonMoveEntrance.Location = new System.Drawing.Point(6, 61);
+			this.buttonMoveEntrance.Name = "buttonMoveEntrance";
+			this.buttonMoveEntrance.Size = new System.Drawing.Size(75, 23);
+			this.buttonMoveEntrance.TabIndex = 3;
+			this.buttonMoveEntrance.Text = "Move";
+			this.buttonMoveEntrance.UseVisualStyleBackColor = true;
+			this.buttonMoveEntrance.Click += new System.EventHandler(this.buttonMoveEntrance_Click);
+			// 
+			// buttonDeleteEntrance
+			// 
+			this.buttonDeleteEntrance.Location = new System.Drawing.Point(6, 90);
+			this.buttonDeleteEntrance.Name = "buttonDeleteEntrance";
+			this.buttonDeleteEntrance.Size = new System.Drawing.Size(75, 23);
+			this.buttonDeleteEntrance.TabIndex = 4;
+			this.buttonDeleteEntrance.Text = "Delete";
+			this.buttonDeleteEntrance.UseVisualStyleBackColor = true;
+			this.buttonDeleteEntrance.Click += new System.EventHandler(this.buttonDeleteEntrance_Click);
 			// 
 			// MainForm
 			// 
@@ -509,7 +567,10 @@
 			this.tabTools.ResumeLayout(false);
 			this.tabTiles.ResumeLayout(false);
 			this.tabTiles.PerformLayout();
+			this.tabEntrances.ResumeLayout(false);
+			this.tabEntrances.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -555,6 +616,11 @@
 		private System.Windows.Forms.PictureBox picMiniMap;
 		private System.Windows.Forms.ToolStripMenuItem entrancesExitsToolStripMenuItem;
 		private System.Windows.Forms.TabPage tabExits;
+		private System.Windows.Forms.Button buttonDeleteEntrance;
+		private System.Windows.Forms.Button buttonMoveEntrance;
+		private System.Windows.Forms.Button buttonUpdateEntrance;
+		private System.Windows.Forms.NumericUpDown numericEntranceId;
+		private System.Windows.Forms.Label labelEntranceId;
     }
 }
 

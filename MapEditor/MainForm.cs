@@ -15,6 +15,7 @@ namespace MapEditor
 {
 	public delegate void DLogString(string message);
 	public delegate CMap DCloneCurMap();
+	public delegate bool DYesNoPrompt(string message, string caption);
 
     public partial class MainForm : Form
     {
@@ -27,11 +28,6 @@ namespace MapEditor
 		/// The current map opened for editing.
 		/// </summary>
 		protected CMap curMap = null;
-
-		/// <summary>
-		/// The filename of the current map.
-		/// </summary>
-		protected string curMapFilename = "";
 
 		/// <summary>
 		/// If the map has unsaved changes.
@@ -174,10 +170,10 @@ namespace MapEditor
 			{
 				newTitle.AppendFormat(" - {0}", curMap.name);
 
-				if (curMapFilename == "")
+				if (curMap.filename == "")
 					newTitle.Append(" - unsaved map");
 				else
-					newTitle.AppendFormat(" - {0}", curMapFilename);
+					newTitle.AppendFormat(" - {0}", curMap.filename);
 
 				if (curMapDirty == true)
 					newTitle.Append(" *");
@@ -201,6 +197,13 @@ namespace MapEditor
 				tabEntrancesSelected();
 			else if (curToolsPage == tabExits)
 				tabExitsSelected();
+		}
+
+		private bool yesNoPrompt(string message, string caption)
+		{
+			DialogResult res = MessageBox.Show(this, message, caption, MessageBoxButtons.YesNo);
+
+			return res == DialogResult.Yes;
 		}
 		#endregion
 
@@ -257,13 +260,13 @@ namespace MapEditor
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Trigger saveAs if map has never been saved before.
-			if (curMapFilename == "")
+			if (curMap.filename == "")
 			{
 				saveAsToolStripMenuItem.PerformClick();
 				return;
 			}
 
-			saveMap(curMapFilename);
+			saveMap(curMap.filename);
 		}
 
 		/// <summary>
@@ -625,6 +628,21 @@ namespace MapEditor
 			// Set brush size
 			curBrushSize = 1;
 		}
+
+		private void buttonUpdateEntrance_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonMoveEntrance_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonDeleteEntrance_Click(object sender, EventArgs e)
+		{
+
+		}
 		#endregion
 
 		#region Map Exits Function
@@ -725,7 +743,6 @@ namespace MapEditor
 		private void newMap(string name, int width, int height, CTileSet tileSet, CMonsterRegion region)
 		{
 			curMap = new CMap(name, width, height, tileSet, region);
-			curMapFilename = "";
 			curMapDirty = true;
 			
 			saveToolStripMenuItem.Enabled = true;
@@ -743,7 +760,6 @@ namespace MapEditor
 			try
 			{
 				curMap = new CMap(filename);
-				curMapFilename = filename;
 				curMapDirty = false;
 				
 				saveAsToolStripMenuItem.Enabled = true;
@@ -764,8 +780,7 @@ namespace MapEditor
 		{
 			try
 			{
-				curMap.save(filename);
-				curMapFilename = filename;
+				curMap.save(filename, new DYesNoPrompt(yesNoPrompt));
 				curMapDirty = false;
 			}
 			catch (Exception ex)
@@ -792,7 +807,7 @@ namespace MapEditor
 				saveToolStripMenuItem.PerformClick();
 
 				// User cancelled out of saving a new map
-				if (curMapFilename == "")
+				if (curMap.filename == "")
 					return true;
 
 				curMapDirty = false;
@@ -1071,6 +1086,7 @@ namespace MapEditor
 							if (entrance != null)
 							{
 								logString(string.Format("Entrance exists at {0},{1}", tileX, tileY));
+								numericEntranceId.Value = entrance.id;
 							}
 							else
 							{

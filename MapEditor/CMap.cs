@@ -18,6 +18,11 @@ namespace MapEditor
 		public static readonly int latestVersion = 3;
 
 		/// <summary>
+		/// The map's filename.
+		/// </summary>
+		public string filename { get; protected set; }
+
+		/// <summary>
 		/// Map file format version.
 		/// </summary>
 		public int version { get; protected set; }
@@ -106,8 +111,10 @@ namespace MapEditor
 		/// <param name="width">Width of map.</param>
 		/// <param name="height">Height of map.</param>
 		/// <param name="tileSet">Tileset of map.</param>
+		/// <param name="monsterRegion">MonsterRegion of map.</param>
 		public CMap(string name, int width, int height, CTileSet tileSet, CMonsterRegion monsterRegion)
 		{
+			this.filename = "";
 			this.version = CMap.latestVersion;
 			this.uuid = Guid.NewGuid();
 			this.name = name;
@@ -142,10 +149,12 @@ namespace MapEditor
 		/// Loads the map from a file.
 		/// </summary>
 		/// <param name="filename">The filename to load the map from.</param>
-		public void load(string filename)
+		protected void load(string filename)
 		{
 			try
 			{
+				this.filename = filename;
+
 				FileStream fileStream = new FileStream(filename, FileMode.Open);
 				BinaryReader reader = new BinaryReader(fileStream, Encoding.UTF8);
 
@@ -179,6 +188,10 @@ namespace MapEditor
 			return name;
 		}
 
+		/// <summary>
+		/// Loads a version 1 map.
+		/// </summary>
+		/// <param name="reader">The BinaryReader to read from.</param>
 		protected void loadVersion1(BinaryReader reader)
 		{
 			try
@@ -196,6 +209,11 @@ namespace MapEditor
 			catch { throw; }
 		}
 
+		/// <summary>
+		/// Loads a version 2 map.
+		/// Version 2 added a MonsterRegion to the map, and a monsterRegionId to each cell.
+		/// </summary>
+		/// <param name="reader">The BinaryReader to read from.</param>
 		protected void loadVersion2(BinaryReader reader)
 		{
 			try
@@ -207,13 +225,17 @@ namespace MapEditor
 				tileSet = readTileSet(reader);
 				monsterRegion = readMonsterRegion(reader);
 				entrances = new Dictionary<int, CMapEntrance>(); // Version 2 doesn't have map entrances
-				entrances.Add(1, new CMapEntrance(1, 12, 7));
 				exits = new List<CMapExit>(); // Version 2 doesn't have map exits
 				cells = readCells(reader);
 			}
 			catch { throw; }
 		}
 
+		/// <summary>
+		/// Loads a version 3 map.
+		/// Version 3 added a uuid, entrances, and exits to the map.
+		/// </summary>
+		/// <param name="reader">The BinaryReader to read from.</param>
 		protected void loadVersion3(BinaryReader reader)
 		{
 			try
@@ -234,15 +256,32 @@ namespace MapEditor
 		/// <summary>
 		/// Saves the map to a file.
 		/// </summary>
-		/// <param name="filename">The filename to save to map to.</param>
-		public void save(string filename)
+		/// <param name="newFilename">The filename to save to map to.</param>
+		public void save(string newFilename, DYesNoPrompt dYesNoPrompt = null)
 		{
+			// Save original uuid in case we change it and the save fails
+			Guid originalUuid = this.uuid;
+
+			// Create a temp file to save the map to. If the save succeeds, the temp file will be moved to the path in newFilename
+			string tmpFilename = Path.GetTempFileName();
+
 			try
 			{
+				// Every map must have an entrance with an id of 0
 				if (!entrances.ContainsKey(0))
 					throw new Exception("Map does not contain an entrance with an id of 0");
 
-				FileStream fileStream = new FileStream(filename, FileMode.Create);
+				// Prompt to generate a new uuid if this is a Save As
+				if (newFilename != this.filename && this.filename != "" && dYesNoPrompt != null)
+				{
+					string caption = "Change UUID";
+					string message = "You are saving a copy of this map with another filename.\n\n" +
+						"Do you want to generate a new UUID?";
+					if (dYesNoPrompt(message, caption) == true)
+						this.uuid = Guid.NewGuid();
+				}
+
+				FileStream fileStream = new FileStream(tmpFilename, FileMode.Create);
 				BinaryWriter writer = new BinaryWriter(fileStream, Encoding.UTF8);
 
 				writer.Write(version);
@@ -267,8 +306,24 @@ namespace MapEditor
 
 				writer.Close();
 				fileStream.Close();
+
+				// Move temp file to newFilename
+				File.Copy(tmpFilename, newFilename, true);
+				File.Delete(tmpFilename);
+
+				// Map saved successfully, update filename
+				this.filename = newFilename;
 			}
-			catch { throw; }
+			catch
+			{
+				// Restore the uuid in case we changed it and the save failed
+				this.uuid = originalUuid;
+
+				// Delete temp file
+				File.Delete(tmpFilename);
+
+				throw;
+			}
 		}
 
 		#region File Reader Functions
@@ -365,7 +420,9 @@ namespace MapEditor
 		public object Clone()
 		{
 			CMap newMap = new CMap();
+			newMap.filename = filename;
 			newMap.version = version;
+			newMap.uuid = uuid;
 			newMap.name = name;
 			newMap.width = width;
 			newMap.height = height;
