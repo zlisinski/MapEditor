@@ -32,7 +32,7 @@ namespace MapEditor
 		/// <summary>
 		/// If the map has unsaved changes.
 		/// </summary>
-		protected bool _curMapDirty = false;
+		private bool _curMapDirty = false;
 		protected bool curMapDirty
 		{
 			get { return _curMapDirty; }
@@ -51,8 +51,9 @@ namespace MapEditor
 
 		/// <summary>
 		/// The tile to use as a brush when painting on the map.
+		/// Only valid when the Tiles tool tab is selected.
 		/// </summary>
-		protected CTile curBrush = null;
+		protected CTile curTile = null;
 
 		/// <summary>
 		/// The size of the current tile brush.
@@ -63,6 +64,28 @@ namespace MapEditor
 		/// The current tab in the tools tab control.
 		/// </summary>
 		protected TabPage curToolsPage = null;
+
+		/// <summary>
+		/// The selected map entrance.
+		/// Only valid when the Entrances tool tab is selected.
+		/// </summary>
+		private CMapEntrance _curEntrance = null;
+		protected CMapEntrance curEntrance
+		{
+			get { return _curEntrance; }
+			set { _curEntrance = value; updateCurEntrance(); }
+		}
+
+		/// <summary>
+		/// The selected map exit.
+		/// Only valid when the Exits tool tab is selected.
+		/// </summary>
+		private CMapExit _curExit = null;
+		protected CMapExit curExit
+		{
+			get { return _curExit; }
+			set { _curExit = value; updateCurExit(); }
+		}
 
 		/// <summary>
 		/// Which layers are currently visible.
@@ -197,8 +220,16 @@ namespace MapEditor
 				tabEntrancesSelected();
 			else if (curToolsPage == tabExits)
 				tabExitsSelected();
+
+			redrawMap();
 		}
 
+		/// <summary>
+		/// Shows a Yes or No MessageBox with the provided text.
+		/// </summary>
+		/// <param name="message">The message to display.</param>
+		/// <param name="caption">The caption of the MessgeBox.</param>
+		/// <returns>true if user selected Yes, false if the user selected No.</returns>
 		private bool yesNoPrompt(string message, string caption)
 		{
 			DialogResult res = MessageBox.Show(this, message, caption, MessageBoxButtons.YesNo);
@@ -463,6 +494,10 @@ namespace MapEditor
 		{
 			// Set brush size
 			comboBrushSize_SelectedIndexChanged(comboBrushSize, EventArgs.Empty);
+
+			// Deselect any entrances or exits
+			curEntrance = null;
+			curExit = null;
 		}
 
 		/// <summary>
@@ -569,7 +604,7 @@ namespace MapEditor
 		private void tile_Click(object sender, EventArgs e)
 		{
 			PictureBox curPic = (PictureBox)sender;
-			curBrush = (CTile)curPic.Tag;
+			curTile = (CTile)curPic.Tag;
 
 			foreach (PictureBox pic in panelTiles.Controls)
 			{
@@ -598,24 +633,30 @@ namespace MapEditor
 		/// <param name="e"></param>
 		private void comboBrushSize_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			switch (comboBrushSize.SelectedIndex)
-			{
-				case 0:
-					curBrushSize = 1;
-					break;
-				case 1:
-					curBrushSize = 3;
-					break;
-				case 2:
-					curBrushSize = 5;
-					break;
-				case 3:
-					curBrushSize = 7;
-					break;
-				case 4:
-					curBrushSize = 9;
-					break;
-			}
+			curBrushSize = (comboBrushSize.SelectedIndex * 2) + 1;
+		}
+
+		/// <summary>
+		/// Process map clicks while Tiles tool tab is selected.
+		/// Paints the selected tile onto the map in the selected layer.
+		/// Called from panelMap_MouseClick().
+		/// </summary>
+		/// <param name="x">The tile X location of the click.</param>
+		/// <param name="y">The tile Y location of the click.</param>
+		/// <param name="layer">The layer to change.</param>
+		/// <param name="tileId">The id of the current tile.</param>
+		private void tileMapClicked(int x, int y, int layer, ushort tileId)
+		{
+			// Get cell at click location
+			CMapCell cell = curMap.cells[x, y];
+
+			// Update tile or walkType based on layer
+			if (layer < Globals.layerCount)
+				cell.tiles[layer] = tileId;
+			else if (layer == Globals.layerCount)
+				cell.walkType = (EWalkType)tileId;
+
+			curMapDirty = true;
 		}
 		#endregion
 
@@ -627,21 +668,110 @@ namespace MapEditor
 		{
 			// Set brush size
 			curBrushSize = 1;
+
+			// Deselect any tiles or exits
+			//curTile = null;
+			curExit = null;
+		}
+		
+		/// <summary>
+		/// Process map clicks while Entrances tool tab is selected.
+		/// Clicking a tile with an entance selected that entrance.
+		/// Clicking a tile without an entrance creates a new entrance.
+		/// Called from panelMap_MouseClick().
+		/// </summary>
+		/// <param name="x">The tile X location of the click.</param>
+		/// <param name="y">The tile Y location of the click.</param>
+		private void entranceMapClicked(int x, int y)
+		{
+			// Get entrance at click location
+			CMapEntrance entrance = curMap.getEntranceAt(x, y);
+
+			if (entrance != null)
+			{
+				logString(string.Format("Selected Entrance {0}", entrance.id));
+				curEntrance = entrance;
+			}
+			else
+			{
+				int newId = 0;
+
+				// Get the next unused entrance id
+				if (curMap.entrances.Count > 0)
+					newId = curMap.entrances.Keys.Max() + 1;
+
+				// Create new entrance
+				CMapEntrance newEntrance = new CMapEntrance(newId, x, y);
+				curMap.entrances.Add(newId, newEntrance);
+
+				logString(string.Format("Created new Entrance {0} at {1},{2}", newEntrance.id, x, y));
+
+				curEntrance = newEntrance;
+
+				curMapDirty = true;
+			}
 		}
 
+		/// <summary>
+		/// Called from the setter for curEntrance.
+		/// </summary>
+		private void updateCurEntrance()
+		{
+			if (curEntrance == null)
+			{
+				numericEntranceId.Enabled = false;
+				buttonUpdateEntrance.Enabled = false;
+				buttonDeleteEntrance.Enabled = false;
+			}
+			else
+			{
+				numericEntranceId.Enabled = true;
+				buttonUpdateEntrance.Enabled = true;
+				buttonDeleteEntrance.Enabled = true;
+
+				numericEntranceId.Value = curEntrance.id;
+			}
+		}
+
+		/// <summary>
+		/// Updates the Id of an entrance.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void buttonUpdateEntrance_Click(object sender, EventArgs e)
 		{
+			int newId = (int)numericEntranceId.Value;
 
+			if (curMap.entrances.ContainsKey(newId))
+			{
+				MessageBox.Show(string.Format("There is already an entrance with an id of {0}", newId));
+				return;
+			}
+
+			curMap.entrances.Remove(curEntrance.id);
+			curEntrance.id = newId;
+			curMap.entrances.Add(newId, curEntrance);
+
+			curMapDirty = true;
+
+			redrawMap();
 		}
 
-		private void buttonMoveEntrance_Click(object sender, EventArgs e)
-		{
-
-		}
-
+		/// <summary>
+		/// Deletes an entrance.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void buttonDeleteEntrance_Click(object sender, EventArgs e)
 		{
+			if (yesNoPrompt("Do you want to delete this entrance?", "Delete Entrance"))
+			{
+				curMap.entrances.Remove(curEntrance.id);
 
+				curMapDirty = true;
+
+				redrawMap();
+			}
 		}
 		#endregion
 
@@ -653,7 +783,60 @@ namespace MapEditor
 		{
 			// Set brush size
 			curBrushSize = 1;
+
+			// Deselect any tiles or entrances
+			//curTile = null;
+			curEntrance = null;
 		}
+
+		/// <summary>
+		/// Process map clicks while Exits tool tab is selected.
+		/// Clicking a tile with an exit selected that exit.
+		/// Clicking a tile without an exit creates a new exit.
+		/// Called from panelMap_MouseClick().
+		/// </summary>
+		/// <param name="x">The tile X location of the click.</param>
+		/// <param name="y">The tile Y location of the click.</param>
+		private void exitMapClicked(int x, int y)
+		{
+			// Get exit at click location
+			CMapExit exit = curMap.getExitAt(x, y);
+
+			if (exit != null)
+			{
+				logString(string.Format("Selected Exit at {0},{1}", x, y));
+				curExit = exit;
+			}
+			else
+			{
+				// Create new exit
+				CMapExit newExit = new CMapExit(new Guid(), 0, x, y);
+				curMap.exits.Add(newExit);
+
+				logString(string.Format("Created new Exit at {0},{1}", x, y));
+
+				curExit = newExit;
+
+				curMapDirty = true;
+			}
+		}
+
+		/// <summary>
+		/// Called from the setter for curExit.
+		/// </summary>
+		private void updateCurExit()
+		{
+			if (curExit == null)
+			{
+
+			}
+			else
+			{
+				
+			}
+		}
+
+
 		#endregion
 
 		#region Scroll Bar Functions
@@ -850,6 +1033,9 @@ namespace MapEditor
 
 		private void redrawMap(bool redrawMiniMap = true)
 		{
+			if (curMap == null)
+				return;
+
 			panelMap.Refresh();
 
 			if (redrawMiniMap == true)
@@ -910,10 +1096,10 @@ namespace MapEditor
 								continue;
 
 							// Get the tile to paint
-							CTile curTile = curMap.tileSet.layers[z].getTileFromId(tileId);
+							CTile tile = curMap.tileSet.layers[z].getTileFromId(tileId);
 
 							// Paint tile onto buffer
-							bufferGraphics.DrawImage(curTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
+							bufferGraphics.DrawImage(tile.image, x * tileSize, y * tileSize, tileSize, tileSize);
 						}
 
 						// Draw the walk layer if it is visible
@@ -923,14 +1109,14 @@ namespace MapEditor
 							ushort walkTileId = (ushort)curMap.cells[x + offsetX, y + offsetY].walkType;
 
 							// Skip drawing if the tile is fully transparent
-							if ((EWalkType)walkTileId == EWalkType.NormalWalk)
-								continue;
+							if ((EWalkType)walkTileId != EWalkType.NormalWalk)
+							{
+								// Get the tile to paint
+								CTile walkTile = walkTypeTiles[walkTileId];
 
-							// Get the tile to paint
-							CTile walkTile = walkTypeTiles[walkTileId];
-
-							// Paint tile onto buffer
-							bufferGraphics.DrawImage(walkTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
+								// Paint tile onto buffer
+								bufferGraphics.DrawImage(walkTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
+							}
 						}
 
 						if (drawGrid)
@@ -944,7 +1130,7 @@ namespace MapEditor
 				// Draw entrance and exit squares
 				if (entranceExitLayerVisible)
 				{
-					pen = new Pen(Color.Aqua);
+					//pen = new Pen(Color.Aqua);
 					foreach (int i in curMap.entrances.Keys)
 					{
 						CMapEntrance ent = curMap.entrances[i];
@@ -953,28 +1139,50 @@ namespace MapEditor
 						if (ent.tileX < offsetX || ent.tileX >= endX || ent.tileY < offsetY || ent.tileY >= endY)
 							continue;
 
-						// Draw entrance
-						bufferGraphics.DrawRectangle(pen, (ent.tileX - offsetX) * tileSize, (ent.tileY - offsetY) * tileSize,
+						if (ent == curEntrance)
+							pen = new Pen(Color.Aqua, 3);
+						else
+							pen = new Pen(Color.Aqua, 1);
+
+						Rectangle rect = new Rectangle((ent.tileX - offsetX) * tileSize, (ent.tileY - offsetY) * tileSize,
 							tileSize, tileSize);
+
+						// Draw entrance
+						bufferGraphics.DrawRectangle(pen, rect);
 
 						Font font = new Font("Arial", 10);
 						SolidBrush brush = new SolidBrush(Color.Aqua);
-						RectangleF rect = new RectangleF((ent.tileX - offsetX) * tileSize, (ent.tileY - offsetY) * tileSize,
-							tileSize, tileSize);
 
 						bufferGraphics.DrawString(i.ToString(), font, brush, rect);
+
+						// Highlight the selected entrance
+						if (ent == curEntrance)
+							bufferGraphics.DrawEllipse(pen, rect.X + (rect.Width / 4), rect.Y + (rect.Height / 4), 
+								rect.Width / 2, rect.Height / 2);
 					}
 
-					pen = new Pen(Color.Blue);
+					//pen = new Pen(Color.Blue);
 					foreach (CMapExit exit in curMap.exits)
 					{
 						// Skip if tile is off screen
 						if (exit.tileX < offsetX || exit.tileX >= endX || exit.tileY < offsetY || exit.tileY >= endY)
 							continue;
 
-						// Draw entrance
-						bufferGraphics.DrawRectangle(pen, (exit.tileX - offsetX) * tileSize, (exit.tileY - offsetY) * tileSize,
+						if (exit == curExit)
+							pen = new Pen(Color.Blue, 3);
+						else
+							pen = new Pen(Color.Blue, 1);
+
+						Rectangle rect = new Rectangle((exit.tileX - offsetX) * tileSize, (exit.tileY - offsetY) * tileSize,
 							tileSize, tileSize);
+
+						// Draw exit
+						bufferGraphics.DrawRectangle(pen, rect);
+
+						// Highlight the selected entrance
+						if (exit == curExit)
+							bufferGraphics.DrawEllipse(pen, rect.X + (rect.Width / 4), rect.Y + (rect.Height / 4), 
+								rect.Width / 2, rect.Height / 2);
 					}
 				}
 
@@ -1063,7 +1271,7 @@ namespace MapEditor
 			if (curMap == null || tileX >= curMap.width || tileY >= curMap.height)
 				return;
 
-			// Update all tiles with the current brush
+			// Update all entities within the current brush
 			for (int x = brushStartX; x <= brushEndX; x++)
 			{
 				for (int y = brushStartY; y <= brushEndY; y++)
@@ -1073,48 +1281,19 @@ namespace MapEditor
 					{
 						if (curToolsPage == tabTiles)
 						{
-							CMapCell cell = curMap.cells[x, y];
-
-							if (curLayer < Globals.layerCount)
-								cell.tiles[curLayer] = curBrush.id;
-							else if (curLayer == Globals.layerCount)
-								cell.walkType = (EWalkType)curBrush.id;
+							tileMapClicked(x, y, curLayer, curTile.id);
 						}
 						else if (curToolsPage == tabEntrances)
 						{
-							CMapEntrance entrance = curMap.getEntranceAt(tileX, tileY);
-							if (entrance != null)
-							{
-								logString(string.Format("Entrance exists at {0},{1}", tileX, tileY));
-								numericEntranceId.Value = entrance.id;
-							}
-							else
-							{
-								int newId = 0;
-								if (curMap.entrances.Count > 0)
-									newId = curMap.entrances.Keys.Max() + 1;
-								CMapEntrance newEntrance = new CMapEntrance(newId, tileX, tileY);
-								curMap.entrances.Add(newId, newEntrance);
-							}
+							entranceMapClicked(x, y);
 						}
 						else if (curToolsPage == tabExits)
 						{
-							CMapExit exit = curMap.getExitAt(tileX, tileY);
-							if (exit != null)
-							{
-								logString(string.Format("Exit exists at {0},{1}", tileX, tileY));
-							}
-							else
-							{
-								CMapExit newExit = new CMapExit(new Guid(), 0, tileX, tileY);
-								curMap.exits.Add(newExit);
-							}
+							exitMapClicked(x, y);
 						}
 					}
 				}
 			}
-
-			curMapDirty = true;
 
 			redrawMap();
 		}
@@ -1208,11 +1387,11 @@ namespace MapEditor
 
 							// Get the tile to paint
 							ushort tileId = curMapCopy.cells[x, y].tiles[z];
-							CTile curTile = curMapCopy.tileSet.layers[z].getTileFromId(tileId);
-							Bitmap curTileImage = curTile.image;
+							CTile tile = curMapCopy.tileSet.layers[z].getTileFromId(tileId);
+							Bitmap tileImage = tile.image;
 
 							// Paint tile onto buffer
-							bufferGraphics.DrawImage(curTileImage, x * tileSize, y * tileSize, tileSize, tileSize);
+							bufferGraphics.DrawImage(tileImage, x * tileSize, y * tileSize, tileSize, tileSize);
 						}
 					}
 				}

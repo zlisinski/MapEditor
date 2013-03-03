@@ -64,13 +64,12 @@
 			this.comboBrushSize = new System.Windows.Forms.ComboBox();
 			this.comboLayers = new System.Windows.Forms.ComboBox();
 			this.tabEntrances = new System.Windows.Forms.TabPage();
+			this.buttonDeleteEntrance = new System.Windows.Forms.Button();
+			this.buttonUpdateEntrance = new System.Windows.Forms.Button();
+			this.numericEntranceId = new System.Windows.Forms.NumericUpDown();
+			this.labelEntranceId = new System.Windows.Forms.Label();
 			this.tabExits = new System.Windows.Forms.TabPage();
 			this.picMiniMap = new System.Windows.Forms.PictureBox();
-			this.labelEntranceId = new System.Windows.Forms.Label();
-			this.numericEntranceId = new System.Windows.Forms.NumericUpDown();
-			this.buttonUpdateEntrance = new System.Windows.Forms.Button();
-			this.buttonMoveEntrance = new System.Windows.Forms.Button();
-			this.buttonDeleteEntrance = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitMap)).BeginInit();
@@ -84,8 +83,8 @@
 			this.tabTools.SuspendLayout();
 			this.tabTiles.SuspendLayout();
 			this.tabEntrances.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -462,7 +461,6 @@
 			// 
 			this.tabEntrances.BackColor = System.Drawing.SystemColors.Control;
 			this.tabEntrances.Controls.Add(this.buttonDeleteEntrance);
-			this.tabEntrances.Controls.Add(this.buttonMoveEntrance);
 			this.tabEntrances.Controls.Add(this.buttonUpdateEntrance);
 			this.tabEntrances.Controls.Add(this.numericEntranceId);
 			this.tabEntrances.Controls.Add(this.labelEntranceId);
@@ -472,6 +470,50 @@
 			this.tabEntrances.Size = new System.Drawing.Size(185, 413);
 			this.tabEntrances.TabIndex = 1;
 			this.tabEntrances.Text = "Entrances";
+			// 
+			// buttonDeleteEntrance
+			// 
+			this.buttonDeleteEntrance.Enabled = false;
+			this.buttonDeleteEntrance.Location = new System.Drawing.Point(6, 30);
+			this.buttonDeleteEntrance.Name = "buttonDeleteEntrance";
+			this.buttonDeleteEntrance.Size = new System.Drawing.Size(75, 23);
+			this.buttonDeleteEntrance.TabIndex = 4;
+			this.buttonDeleteEntrance.Text = "Delete";
+			this.buttonDeleteEntrance.UseVisualStyleBackColor = true;
+			this.buttonDeleteEntrance.Click += new System.EventHandler(this.buttonDeleteEntrance_Click);
+			// 
+			// buttonUpdateEntrance
+			// 
+			this.buttonUpdateEntrance.Enabled = false;
+			this.buttonUpdateEntrance.Location = new System.Drawing.Point(106, 3);
+			this.buttonUpdateEntrance.Name = "buttonUpdateEntrance";
+			this.buttonUpdateEntrance.Size = new System.Drawing.Size(75, 23);
+			this.buttonUpdateEntrance.TabIndex = 2;
+			this.buttonUpdateEntrance.Text = "Update";
+			this.buttonUpdateEntrance.UseVisualStyleBackColor = true;
+			this.buttonUpdateEntrance.Click += new System.EventHandler(this.buttonUpdateEntrance_Click);
+			// 
+			// numericEntranceId
+			// 
+			this.numericEntranceId.Enabled = false;
+			this.numericEntranceId.Location = new System.Drawing.Point(28, 4);
+			this.numericEntranceId.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.numericEntranceId.Name = "numericEntranceId";
+			this.numericEntranceId.Size = new System.Drawing.Size(72, 20);
+			this.numericEntranceId.TabIndex = 1;
+			// 
+			// labelEntranceId
+			// 
+			this.labelEntranceId.AutoSize = true;
+			this.labelEntranceId.Location = new System.Drawing.Point(3, 8);
+			this.labelEntranceId.Name = "labelEntranceId";
+			this.labelEntranceId.Size = new System.Drawing.Size(19, 13);
+			this.labelEntranceId.TabIndex = 0;
+			this.labelEntranceId.Text = "Id:";
 			// 
 			// tabExits
 			// 
@@ -490,52 +532,6 @@
 			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
 			this.picMiniMap.TabIndex = 1;
 			this.picMiniMap.TabStop = false;
-			// 
-			// labelEntranceId
-			// 
-			this.labelEntranceId.AutoSize = true;
-			this.labelEntranceId.Location = new System.Drawing.Point(3, 8);
-			this.labelEntranceId.Name = "labelEntranceId";
-			this.labelEntranceId.Size = new System.Drawing.Size(19, 13);
-			this.labelEntranceId.TabIndex = 0;
-			this.labelEntranceId.Text = "Id:";
-			// 
-			// numericEntranceId
-			// 
-			this.numericEntranceId.Location = new System.Drawing.Point(28, 6);
-			this.numericEntranceId.Name = "numericEntranceId";
-			this.numericEntranceId.Size = new System.Drawing.Size(120, 20);
-			this.numericEntranceId.TabIndex = 1;
-			// 
-			// buttonUpdateEntrance
-			// 
-			this.buttonUpdateEntrance.Location = new System.Drawing.Point(6, 32);
-			this.buttonUpdateEntrance.Name = "buttonUpdateEntrance";
-			this.buttonUpdateEntrance.Size = new System.Drawing.Size(75, 23);
-			this.buttonUpdateEntrance.TabIndex = 2;
-			this.buttonUpdateEntrance.Text = "Update";
-			this.buttonUpdateEntrance.UseVisualStyleBackColor = true;
-			this.buttonUpdateEntrance.Click += new System.EventHandler(this.buttonUpdateEntrance_Click);
-			// 
-			// buttonMoveEntrance
-			// 
-			this.buttonMoveEntrance.Location = new System.Drawing.Point(6, 61);
-			this.buttonMoveEntrance.Name = "buttonMoveEntrance";
-			this.buttonMoveEntrance.Size = new System.Drawing.Size(75, 23);
-			this.buttonMoveEntrance.TabIndex = 3;
-			this.buttonMoveEntrance.Text = "Move";
-			this.buttonMoveEntrance.UseVisualStyleBackColor = true;
-			this.buttonMoveEntrance.Click += new System.EventHandler(this.buttonMoveEntrance_Click);
-			// 
-			// buttonDeleteEntrance
-			// 
-			this.buttonDeleteEntrance.Location = new System.Drawing.Point(6, 90);
-			this.buttonDeleteEntrance.Name = "buttonDeleteEntrance";
-			this.buttonDeleteEntrance.Size = new System.Drawing.Size(75, 23);
-			this.buttonDeleteEntrance.TabIndex = 4;
-			this.buttonDeleteEntrance.Text = "Delete";
-			this.buttonDeleteEntrance.UseVisualStyleBackColor = true;
-			this.buttonDeleteEntrance.Click += new System.EventHandler(this.buttonDeleteEntrance_Click);
 			// 
 			// MainForm
 			// 
@@ -569,8 +565,8 @@
 			this.tabTiles.PerformLayout();
 			this.tabEntrances.ResumeLayout(false);
 			this.tabEntrances.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -617,7 +613,6 @@
 		private System.Windows.Forms.ToolStripMenuItem entrancesExitsToolStripMenuItem;
 		private System.Windows.Forms.TabPage tabExits;
 		private System.Windows.Forms.Button buttonDeleteEntrance;
-		private System.Windows.Forms.Button buttonMoveEntrance;
 		private System.Windows.Forms.Button buttonUpdateEntrance;
 		private System.Windows.Forms.NumericUpDown numericEntranceId;
 		private System.Windows.Forms.Label labelEntranceId;
