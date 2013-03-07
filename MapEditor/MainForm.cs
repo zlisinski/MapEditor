@@ -828,14 +828,64 @@ namespace MapEditor
 		{
 			if (curExit == null)
 			{
-
+				comboExitMapName.Enabled = false;
+				numericExitEntranceId.Enabled = false;
+				buttonUpdateExit.Enabled = false;
+				buttonPreviewExit.Enabled = false;
+				buttonDeleteExit.Enabled = false;
 			}
 			else
 			{
-				
+				comboExitMapName.Enabled = true;
+				numericExitEntranceId.Enabled = true;
+				buttonUpdateExit.Enabled = true;
+				buttonPreviewExit.Enabled = true;
+				buttonDeleteExit.Enabled = true;
+
+				comboExitMapName.DataSource = MapList.mapNames;
+				comboExitMapName.SelectedValue = curExit.mapUuid;
+
+				numericExitEntranceId.Value = curExit.mapEntranceId;
 			}
 		}
 
+		private void buttonUpdateExit_Click(object sender, EventArgs e)
+		{
+			int newEntranceId = (int)numericExitEntranceId.Value;
+			Guid newMapUuid = (Guid)comboExitMapName.SelectedValue;
+			string newMapName = ((Tuple<Guid, string>)comboExitMapName.SelectedItem).Item2;
+
+			// TODO: Check that map entrance exists
+			/*if ()
+			{
+				MessageBox.Show(string.Format("There is exit with an id of {0} in map {1}", newEntranceId, newMapName));
+				return;
+			}*/
+
+			curExit.mapEntranceId = newEntranceId;
+			curExit.mapUuid = (Guid)comboExitMapName.SelectedValue;
+
+			curMapDirty = true;
+
+			redrawMap();
+		}
+
+		private void buttonPreviewExit_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonDeleteExit_Click(object sender, EventArgs e)
+		{
+			if (yesNoPrompt("Do you want to delete this exit?", "Delete Exit"))
+			{
+				curMap.exits.Remove(curExit);
+
+				curMapDirty = true;
+
+				redrawMap();
+			}
+		}
 
 		#endregion
 
@@ -1029,6 +1079,10 @@ namespace MapEditor
 
 			// Reset scrollbar values
 			resetScrollBars();
+
+			// Reset selected entrance and exit
+			curEntrance = null;
+			curExit = null;
 		}
 
 		private void redrawMap(bool redrawMiniMap = true)

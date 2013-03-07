@@ -313,6 +313,9 @@ namespace MapEditor
 
 				// Map saved successfully, update filename
 				this.filename = newFilename;
+
+				// Update map list
+				MapList.refreshData();
 			}
 			catch
 			{

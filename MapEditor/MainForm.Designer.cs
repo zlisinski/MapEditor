@@ -57,7 +57,6 @@
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.splitMap = new System.Windows.Forms.SplitContainer();
 			this.splitLog = new System.Windows.Forms.SplitContainer();
-			this.panelMap = new MapEditor.MapPanel();
 			this.tabTools = new System.Windows.Forms.TabControl();
 			this.tabTiles = new System.Windows.Forms.TabPage();
 			this.panelTiles = new System.Windows.Forms.Panel();
@@ -70,6 +69,14 @@
 			this.labelEntranceId = new System.Windows.Forms.Label();
 			this.tabExits = new System.Windows.Forms.TabPage();
 			this.picMiniMap = new System.Windows.Forms.PictureBox();
+			this.comboExitMapName = new System.Windows.Forms.ComboBox();
+			this.labelExitMapName = new System.Windows.Forms.Label();
+			this.labelExitMapEntrance = new System.Windows.Forms.Label();
+			this.buttonUpdateExit = new System.Windows.Forms.Button();
+			this.buttonPreviewExit = new System.Windows.Forms.Button();
+			this.buttonDeleteExit = new System.Windows.Forms.Button();
+			this.numericExitEntranceId = new System.Windows.Forms.NumericUpDown();
+			this.panelMap = new MapEditor.MapPanel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitMap)).BeginInit();
@@ -84,7 +91,9 @@
 			this.tabTiles.SuspendLayout();
 			this.tabEntrances.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).BeginInit();
+			this.tabExits.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericExitEntranceId)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -370,20 +379,6 @@
 			this.splitLog.SplitterDistance = 566;
 			this.splitLog.TabIndex = 0;
 			// 
-			// panelMap
-			// 
-			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
-			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMap.Location = new System.Drawing.Point(0, 0);
-			this.panelMap.Name = "panelMap";
-			this.panelMap.Size = new System.Drawing.Size(783, 566);
-			this.panelMap.TabIndex = 3;
-			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
-			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
-			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
-			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
-			// 
 			// tabTools
 			// 
 			this.tabTools.Controls.Add(this.tabTiles);
@@ -518,6 +513,13 @@
 			// tabExits
 			// 
 			this.tabExits.BackColor = System.Drawing.SystemColors.Control;
+			this.tabExits.Controls.Add(this.numericExitEntranceId);
+			this.tabExits.Controls.Add(this.buttonDeleteExit);
+			this.tabExits.Controls.Add(this.buttonPreviewExit);
+			this.tabExits.Controls.Add(this.buttonUpdateExit);
+			this.tabExits.Controls.Add(this.labelExitMapEntrance);
+			this.tabExits.Controls.Add(this.labelExitMapName);
+			this.tabExits.Controls.Add(this.comboExitMapName);
 			this.tabExits.Location = new System.Drawing.Point(4, 22);
 			this.tabExits.Name = "tabExits";
 			this.tabExits.Size = new System.Drawing.Size(185, 413);
@@ -532,6 +534,96 @@
 			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
 			this.picMiniMap.TabIndex = 1;
 			this.picMiniMap.TabStop = false;
+			// 
+			// comboExitMapName
+			// 
+			this.comboExitMapName.DisplayMember = "Item2";
+			this.comboExitMapName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboExitMapName.Enabled = false;
+			this.comboExitMapName.FormattingEnabled = true;
+			this.comboExitMapName.Location = new System.Drawing.Point(56, 6);
+			this.comboExitMapName.Name = "comboExitMapName";
+			this.comboExitMapName.Size = new System.Drawing.Size(121, 21);
+			this.comboExitMapName.TabIndex = 0;
+			this.comboExitMapName.ValueMember = "Item1";
+			// 
+			// labelExitMapName
+			// 
+			this.labelExitMapName.AutoSize = true;
+			this.labelExitMapName.Location = new System.Drawing.Point(4, 10);
+			this.labelExitMapName.Name = "labelExitMapName";
+			this.labelExitMapName.Size = new System.Drawing.Size(31, 13);
+			this.labelExitMapName.TabIndex = 2;
+			this.labelExitMapName.Text = "Map:";
+			// 
+			// labelExitMapEntrance
+			// 
+			this.labelExitMapEntrance.AutoSize = true;
+			this.labelExitMapEntrance.Location = new System.Drawing.Point(4, 33);
+			this.labelExitMapEntrance.Name = "labelExitMapEntrance";
+			this.labelExitMapEntrance.Size = new System.Drawing.Size(53, 13);
+			this.labelExitMapEntrance.TabIndex = 3;
+			this.labelExitMapEntrance.Text = "Entrance:";
+			// 
+			// buttonUpdateExit
+			// 
+			this.buttonUpdateExit.Enabled = false;
+			this.buttonUpdateExit.Location = new System.Drawing.Point(7, 55);
+			this.buttonUpdateExit.Name = "buttonUpdateExit";
+			this.buttonUpdateExit.Size = new System.Drawing.Size(75, 23);
+			this.buttonUpdateExit.TabIndex = 4;
+			this.buttonUpdateExit.Text = "Update";
+			this.buttonUpdateExit.UseVisualStyleBackColor = true;
+			this.buttonUpdateExit.Click += new System.EventHandler(this.buttonUpdateExit_Click);
+			// 
+			// buttonPreviewExit
+			// 
+			this.buttonPreviewExit.Enabled = false;
+			this.buttonPreviewExit.Location = new System.Drawing.Point(7, 84);
+			this.buttonPreviewExit.Name = "buttonPreviewExit";
+			this.buttonPreviewExit.Size = new System.Drawing.Size(75, 23);
+			this.buttonPreviewExit.TabIndex = 5;
+			this.buttonPreviewExit.Text = "Preview";
+			this.buttonPreviewExit.UseVisualStyleBackColor = true;
+			this.buttonPreviewExit.Click += new System.EventHandler(this.buttonPreviewExit_Click);
+			// 
+			// buttonDeleteExit
+			// 
+			this.buttonDeleteExit.Enabled = false;
+			this.buttonDeleteExit.Location = new System.Drawing.Point(7, 114);
+			this.buttonDeleteExit.Name = "buttonDeleteExit";
+			this.buttonDeleteExit.Size = new System.Drawing.Size(75, 23);
+			this.buttonDeleteExit.TabIndex = 6;
+			this.buttonDeleteExit.Text = "Delete";
+			this.buttonDeleteExit.UseVisualStyleBackColor = true;
+			this.buttonDeleteExit.Click += new System.EventHandler(this.buttonDeleteExit_Click);
+			// 
+			// numericExitEntranceId
+			// 
+			this.numericExitEntranceId.Enabled = false;
+			this.numericExitEntranceId.Location = new System.Drawing.Point(57, 31);
+			this.numericExitEntranceId.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.numericExitEntranceId.Name = "numericExitEntranceId";
+			this.numericExitEntranceId.Size = new System.Drawing.Size(120, 20);
+			this.numericExitEntranceId.TabIndex = 7;
+			// 
+			// panelMap
+			// 
+			this.panelMap.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.panelMap.BackColor = System.Drawing.SystemColors.Control;
+			this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMap.Location = new System.Drawing.Point(0, 0);
+			this.panelMap.Name = "panelMap";
+			this.panelMap.Size = new System.Drawing.Size(783, 566);
+			this.panelMap.TabIndex = 3;
+			this.panelMap.SizeChanged += new System.EventHandler(this.panelMap_SizeChanged);
+			this.panelMap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMap_Paint);
+			this.panelMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseClick);
+			this.panelMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMap_MouseMove);
 			// 
 			// MainForm
 			// 
@@ -566,7 +658,10 @@
 			this.tabEntrances.ResumeLayout(false);
 			this.tabEntrances.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).EndInit();
+			this.tabExits.ResumeLayout(false);
+			this.tabExits.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericExitEntranceId)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -616,6 +711,13 @@
 		private System.Windows.Forms.Button buttonUpdateEntrance;
 		private System.Windows.Forms.NumericUpDown numericEntranceId;
 		private System.Windows.Forms.Label labelEntranceId;
+		private System.Windows.Forms.Label labelExitMapEntrance;
+		private System.Windows.Forms.Label labelExitMapName;
+		private System.Windows.Forms.ComboBox comboExitMapName;
+		private System.Windows.Forms.NumericUpDown numericExitEntranceId;
+		private System.Windows.Forms.Button buttonDeleteExit;
+		private System.Windows.Forms.Button buttonPreviewExit;
+		private System.Windows.Forms.Button buttonUpdateExit;
     }
 }
 
