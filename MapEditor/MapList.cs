@@ -69,6 +69,25 @@ namespace MapEditor
 		}
 
 		/// <summary>
+		/// Loads a map from a UUID.
+		/// </summary>
+		/// <param name="uuid">The UUID of the map to load.</param>
+		/// <returns>A map or null.</returns>
+		public static CMap getMapFromUuid(Guid uuid)
+		{
+			if (mapData == null)
+				refreshData();
+
+			if (mapData.ContainsKey(uuid))
+			{
+				MapData data = mapData[uuid];
+				return new CMap(Globals.mapDir + data.filename);
+			}
+			else
+				return null;
+		}
+
+		/// <summary>
 		/// Reads data from all maps in $MapDir, then calls writeXmp() to write data to $MapDir/maps.xml.
 		/// This should be called after every map save.
 		/// Eventually a map save will update only itself, instead of reading all maps each time one is saved.

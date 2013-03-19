@@ -872,7 +872,9 @@ namespace MapEditor
 
 		private void buttonPreviewExit_Click(object sender, EventArgs e)
 		{
+			CMapExitPreviewForm dialog = new CMapExitPreviewForm(curExit);
 
+			dialog.Show(this);
 		}
 
 		private void buttonDeleteExit_Click(object sender, EventArgs e)
@@ -1439,8 +1441,14 @@ namespace MapEditor
 							if (!layersVisible[z])
 								continue;
 
-							// Get the tile to paint
+							// Get the tile id to paint
 							ushort tileId = curMapCopy.cells[x, y].tiles[z];
+
+							// Skip drawing if the tile is fully transparent
+							if (tileId == 0)
+								continue;
+
+							// Get the tile to paint
 							CTile tile = curMapCopy.tileSet.layers[z].getTileFromId(tileId);
 							Bitmap tileImage = tile.image;
 

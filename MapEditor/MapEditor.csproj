@@ -49,10 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CBattleBackground.cs" />
+    <Compile Include="CLayerVisibility.cs" />
     <Compile Include="CMap.cs" />
     <Compile Include="CMapCell.cs" />
     <Compile Include="CMapEntrance.cs" />
     <Compile Include="CMapExit.cs" />
+    <Compile Include="CMapExitPreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CMapExitPreviewForm.Designer.cs">
+      <DependentUpon>CMapExitPreviewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CMapRenderer.cs" />
     <Compile Include="CMonsterRegion.cs" />
     <Compile Include="CResizeMapForm.cs">
       <SubType>Form</SubType>
@@ -92,6 +100,9 @@
     <Compile Include="CRenameMapForm.Designer.cs">
       <DependentUpon>CRenameMapForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CMapExitPreviewForm.resx">
+      <DependentUpon>CMapExitPreviewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CNewMapForm.resx">
       <DependentUpon>CNewMapForm.cs</DependentUpon>
     </EmbeddedResource>
