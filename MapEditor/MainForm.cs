@@ -256,7 +256,7 @@ namespace MapEditor
 
 			if (res == DialogResult.OK)
 			{
-				newMap(dialog.name, dialog.width, dialog.height, dialog.tileSet, dialog.monsterRegion);
+				newMap(dialog.name, dialog.width, dialog.height, dialog.tileSet, dialog.monsterRegionGroup);
 			}
 		}
 
@@ -975,9 +975,9 @@ namespace MapEditor
 		/// <param name="width">Map width in tiles.</param>
 		/// <param name="height">Map height in tiles.</param>
 		/// <param name="tileSet">Map tileset.</param>
-		private void newMap(string name, int width, int height, CTileSet tileSet, CMonsterRegion region)
+		private void newMap(string name, int width, int height, CTileSet tileSet, CMonsterRegionGroup regionGroup)
 		{
-			curMap = new CMap(name, width, height, tileSet, region);
+			curMap = new CMap(name, width, height, tileSet, regionGroup);
 			curMapDirty = true;
 			
 			saveToolStripMenuItem.Enabled = true;

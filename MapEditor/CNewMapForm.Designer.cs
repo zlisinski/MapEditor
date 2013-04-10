@@ -38,8 +38,8 @@
 			this.comboTileSet = new System.Windows.Forms.ComboBox();
 			this.labelName = new System.Windows.Forms.Label();
 			this.textName = new System.Windows.Forms.TextBox();
-			this.labelMonsterRegion = new System.Windows.Forms.Label();
-			this.comboMonsterRegion = new System.Windows.Forms.ComboBox();
+			this.labelMonsterRegionGroup = new System.Windows.Forms.Label();
+			this.comboMonsterRegionGroup = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numHeight)).BeginInit();
 			this.SuspendLayout();
@@ -162,23 +162,23 @@
 			this.textName.Size = new System.Drawing.Size(199, 20);
 			this.textName.TabIndex = 0;
 			// 
-			// labelMonsterRegion
+			// labelMonsterRegionGroup
 			// 
-			this.labelMonsterRegion.AutoSize = true;
-			this.labelMonsterRegion.Location = new System.Drawing.Point(10, 120);
-			this.labelMonsterRegion.Name = "labelMonsterRegion";
-			this.labelMonsterRegion.Size = new System.Drawing.Size(85, 13);
-			this.labelMonsterRegion.TabIndex = 7;
-			this.labelMonsterRegion.Text = "Monster Region:";
+			this.labelMonsterRegionGroup.AutoSize = true;
+			this.labelMonsterRegionGroup.Location = new System.Drawing.Point(10, 120);
+			this.labelMonsterRegionGroup.Name = "labelMonsterRegionGroup";
+			this.labelMonsterRegionGroup.Size = new System.Drawing.Size(85, 13);
+			this.labelMonsterRegionGroup.TabIndex = 7;
+			this.labelMonsterRegionGroup.Text = "Monster Region:";
 			// 
-			// comboMonsterRegion
+			// comboMonsterRegionGroup
 			// 
-			this.comboMonsterRegion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboMonsterRegion.FormattingEnabled = true;
-			this.comboMonsterRegion.Location = new System.Drawing.Point(101, 117);
-			this.comboMonsterRegion.Name = "comboMonsterRegion";
-			this.comboMonsterRegion.Size = new System.Drawing.Size(199, 21);
-			this.comboMonsterRegion.TabIndex = 8;
+			this.comboMonsterRegionGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboMonsterRegionGroup.FormattingEnabled = true;
+			this.comboMonsterRegionGroup.Location = new System.Drawing.Point(101, 117);
+			this.comboMonsterRegionGroup.Name = "comboMonsterRegionGroup";
+			this.comboMonsterRegionGroup.Size = new System.Drawing.Size(199, 21);
+			this.comboMonsterRegionGroup.TabIndex = 8;
 			// 
 			// CNewMapForm
 			// 
@@ -187,8 +187,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(317, 187);
-			this.Controls.Add(this.comboMonsterRegion);
-			this.Controls.Add(this.labelMonsterRegion);
+			this.Controls.Add(this.comboMonsterRegionGroup);
+			this.Controls.Add(this.labelMonsterRegionGroup);
 			this.Controls.Add(this.textName);
 			this.Controls.Add(this.labelName);
 			this.Controls.Add(this.comboTileSet);
@@ -224,7 +224,7 @@
 		private System.Windows.Forms.ComboBox comboTileSet;
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.TextBox textName;
-		private System.Windows.Forms.Label labelMonsterRegion;
-		private System.Windows.Forms.ComboBox comboMonsterRegion;
+		private System.Windows.Forms.Label labelMonsterRegionGroup;
+		private System.Windows.Forms.ComboBox comboMonsterRegionGroup;
 	}
 }

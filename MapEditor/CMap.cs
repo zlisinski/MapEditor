@@ -53,9 +53,9 @@ namespace MapEditor
 		public CTileSet tileSet { get; protected set; }
 
 		/// <summary>
-		/// MonsterRegion used by map.
+		/// MonsterRegionGroup used by map.
 		/// </summary>
-		public CMonsterRegion monsterRegion { get; protected set; }
+		public CMonsterRegionGroup monsterRegionGroup { get; protected set; }
 
 		/// <summary>
 		/// Entrance tiles in the map.
@@ -111,8 +111,8 @@ namespace MapEditor
 		/// <param name="width">Width of map.</param>
 		/// <param name="height">Height of map.</param>
 		/// <param name="tileSet">Tileset of map.</param>
-		/// <param name="monsterRegion">MonsterRegion of map.</param>
-		public CMap(string name, int width, int height, CTileSet tileSet, CMonsterRegion monsterRegion)
+		/// <param name="monsterRegionGroup">MonsterRegion of map.</param>
+		public CMap(string name, int width, int height, CTileSet tileSet, CMonsterRegionGroup monsterRegionGroup)
 		{
 			this.filename = "";
 			this.version = CMap.latestVersion;
@@ -121,7 +121,7 @@ namespace MapEditor
 			this.width = width;
 			this.height = height;
 			this.tileSet = tileSet;
-			this.monsterRegion = monsterRegion;
+			this.monsterRegionGroup = monsterRegionGroup;
 			this.entrances = new Dictionary<int, CMapEntrance>();
 			this.exits = new List<CMapExit>();
 			
@@ -201,7 +201,7 @@ namespace MapEditor
 				width = readWidth(reader);
 				height = readHeight(reader);
 				tileSet = readTileSet(reader);
-				monsterRegion = new CMonsterRegion(); // Version 1 doesn't have a monster region
+				monsterRegionGroup = new CMonsterRegionGroup(); // Version 1 doesn't have a monster region group
 				entrances = new Dictionary<int, CMapEntrance>(); // Version 1 doesn't have map entrances
 				exits = new List<CMapExit>(); // Version 1 doesn't have map exits
 				cells = readCells(reader);
@@ -211,7 +211,7 @@ namespace MapEditor
 
 		/// <summary>
 		/// Loads a version 2 map.
-		/// Version 2 added a MonsterRegion to the map, and a monsterRegionId to each cell.
+		/// Version 2 added a MonsterRegionGroup to the map, and a monsterRegionId to each cell.
 		/// </summary>
 		/// <param name="reader">The BinaryReader to read from.</param>
 		protected void loadVersion2(BinaryReader reader)
@@ -223,7 +223,7 @@ namespace MapEditor
 				width = readWidth(reader);
 				height = readHeight(reader);
 				tileSet = readTileSet(reader);
-				monsterRegion = readMonsterRegion(reader);
+				monsterRegionGroup = readMonsterRegionGroup(reader);
 				entrances = new Dictionary<int, CMapEntrance>(); // Version 2 doesn't have map entrances
 				exits = new List<CMapExit>(); // Version 2 doesn't have map exits
 				cells = readCells(reader);
@@ -245,7 +245,7 @@ namespace MapEditor
 				width = readWidth(reader);
 				height = readHeight(reader);
 				tileSet = readTileSet(reader);
-				monsterRegion = readMonsterRegion(reader);
+				monsterRegionGroup = readMonsterRegionGroup(reader);
 				entrances = readEntrances(reader);
 				exits = readExits(reader);
 				cells = readCells(reader);
@@ -290,7 +290,7 @@ namespace MapEditor
 				writer.Write(width);
 				writer.Write(height);
 				writer.Write(tileSet.id);
-				writer.Write(monsterRegion.id);
+				writer.Write(monsterRegionGroup.id);
 
 				writer.Write(entrances.Count);
 				foreach (int i in entrances.Keys)
@@ -370,13 +370,13 @@ namespace MapEditor
 			return newTileSet;
 		}
 
-		protected CMonsterRegion readMonsterRegion(BinaryReader reader)
+		protected CMonsterRegionGroup readMonsterRegionGroup(BinaryReader reader)
 		{
-			int monsterRegionId = reader.ReadInt32();
+			int monsterRegionGroupId = reader.ReadInt32();
 
-			CMonsterRegion newMonsterRegion = new CMonsterRegion();
+			CMonsterRegionGroup newMonsterRegionGroup = new CMonsterRegionGroup();
 			
-			return newMonsterRegion;
+			return newMonsterRegionGroup;
 		}
 
 		protected Dictionary<int, CMapEntrance> readEntrances(BinaryReader reader)
@@ -430,7 +430,7 @@ namespace MapEditor
 			newMap.width = width;
 			newMap.height = height;
 			newMap.tileSet = (CTileSet)tileSet.Clone();
-			newMap.monsterRegion = (CMonsterRegion)monsterRegion.Clone();
+			newMap.monsterRegionGroup = (CMonsterRegionGroup)monsterRegionGroup.Clone();
 			
 			newMap.entrances = new Dictionary<int, CMapEntrance>(entrances.Count);
 			foreach (KeyValuePair<int, CMapEntrance> entry in entrances)
