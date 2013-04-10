@@ -33,6 +33,12 @@ namespace MapEditor
 		[XmlAttribute("name")]
 		public string name { get; set; }
 
+		/// <summary>
+		/// Array of monster regions.
+		/// </summary>
+		[XmlElement("monsterRegion")]
+		public CMonsterRegion[] monsterRegions { get; set; }
+
 		public CMonsterRegionGroup() { }
 
 		public override string ToString()

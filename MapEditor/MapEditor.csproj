@@ -61,6 +61,7 @@
       <DependentUpon>CMapExitPreviewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CMapRenderer.cs" />
+    <Compile Include="CMonsterRegion.cs" />
     <Compile Include="CMonsterRegionGroup.cs" />
     <Compile Include="CResizeMapForm.cs">
       <SubType>Form</SubType>

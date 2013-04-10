@@ -33,13 +33,13 @@ namespace MapEditor
 		public string filename { get; set; }
 
 		/// <summary>
-		/// X offset of the image within a sprite file. NYI.
+		/// X offset of the image within a sprite file.
 		/// </summary>
 		[XmlAttribute("xOffset")]
 		public int xOffset { get; set; }
 
 		/// <summary>
-		/// Y offset of the image within a sprite file. NYI.
+		/// Y offset of the image within a sprite file.
 		/// </summary>
 		[XmlAttribute("yOffset")]
 		public int yOffset { get; set; }

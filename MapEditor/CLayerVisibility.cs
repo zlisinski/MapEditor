@@ -9,6 +9,7 @@ namespace MapEditor
 	{
 		public bool[] layersVisible;
 		public bool walkLayerVisible;
+		public bool monsterRegionLayerVisible;
 		public bool entranceExitLayerVisible;
 
 		public CLayerVisibility()
@@ -17,13 +18,15 @@ namespace MapEditor
 			for (int i = 0; i < layersVisible.Length; i++)
 				layersVisible[i] = true;
 			walkLayerVisible = true;
+			monsterRegionLayerVisible = true;
 			entranceExitLayerVisible = true;
 		}
 
-		public CLayerVisibility(bool[] layersVisible, bool walkLayerVisible, bool entranceExitLayerVisible)
+		public CLayerVisibility(bool[] layersVisible, bool walkLayerVisible, bool monsterRegionLayerVisible, bool entranceExitLayerVisible)
 		{
 			this.layersVisible = layersVisible.Select(x => x).ToArray();
 			this.walkLayerVisible = walkLayerVisible;
+			this.monsterRegionLayerVisible = monsterRegionLayerVisible;
 			this.entranceExitLayerVisible = entranceExitLayerVisible;
 		}
 
@@ -31,6 +34,7 @@ namespace MapEditor
 		{
 			layersVisible = copy.layersVisible.Select(x => x).ToArray();
 			walkLayerVisible = copy.walkLayerVisible;
+			monsterRegionLayerVisible = copy.monsterRegionLayerVisible;
 			entranceExitLayerVisible = copy.entranceExitLayerVisible;
 		}
 	}

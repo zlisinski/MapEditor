@@ -68,14 +68,15 @@
 			this.numericEntranceId = new System.Windows.Forms.NumericUpDown();
 			this.labelEntranceId = new System.Windows.Forms.Label();
 			this.tabExits = new System.Windows.Forms.TabPage();
-			this.picMiniMap = new System.Windows.Forms.PictureBox();
-			this.comboExitMapName = new System.Windows.Forms.ComboBox();
-			this.labelExitMapName = new System.Windows.Forms.Label();
-			this.labelExitMapEntrance = new System.Windows.Forms.Label();
-			this.buttonUpdateExit = new System.Windows.Forms.Button();
-			this.buttonPreviewExit = new System.Windows.Forms.Button();
-			this.buttonDeleteExit = new System.Windows.Forms.Button();
 			this.numericExitEntranceId = new System.Windows.Forms.NumericUpDown();
+			this.buttonDeleteExit = new System.Windows.Forms.Button();
+			this.buttonPreviewExit = new System.Windows.Forms.Button();
+			this.buttonUpdateExit = new System.Windows.Forms.Button();
+			this.labelExitMapEntrance = new System.Windows.Forms.Label();
+			this.labelExitMapName = new System.Windows.Forms.Label();
+			this.comboExitMapName = new System.Windows.Forms.ComboBox();
+			this.picMiniMap = new System.Windows.Forms.PictureBox();
+			this.monsterRegionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelMap = new MapEditor.MapPanel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -92,8 +93,8 @@
 			this.tabEntrances.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).BeginInit();
 			this.tabExits.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericExitEntranceId)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -219,6 +220,7 @@
             this.layer3ToolStripMenuItem,
             this.layer4ToolStripMenuItem,
             this.walkLayerToolStripMenuItem,
+            this.monsterRegionsToolStripMenuItem,
             this.entrancesExitsToolStripMenuItem});
 			this.layersToolStripMenuItem.Name = "layersToolStripMenuItem";
 			this.layersToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
@@ -445,7 +447,8 @@
             "Layer 2",
             "Layer 3",
             "Layer 4",
-            "Walk Layer"});
+            "Walk Layer",
+            "Monster Regions"});
 			this.comboLayers.Location = new System.Drawing.Point(3, 3);
 			this.comboLayers.Name = "comboLayers";
 			this.comboLayers.Size = new System.Drawing.Size(179, 21);
@@ -526,14 +529,69 @@
 			this.tabExits.TabIndex = 2;
 			this.tabExits.Text = "Exits";
 			// 
-			// picMiniMap
+			// numericExitEntranceId
 			// 
-			this.picMiniMap.Dock = System.Windows.Forms.DockStyle.Top;
-			this.picMiniMap.Location = new System.Drawing.Point(0, 0);
-			this.picMiniMap.Name = "picMiniMap";
-			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
-			this.picMiniMap.TabIndex = 1;
-			this.picMiniMap.TabStop = false;
+			this.numericExitEntranceId.Enabled = false;
+			this.numericExitEntranceId.Location = new System.Drawing.Point(57, 31);
+			this.numericExitEntranceId.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.numericExitEntranceId.Name = "numericExitEntranceId";
+			this.numericExitEntranceId.Size = new System.Drawing.Size(120, 20);
+			this.numericExitEntranceId.TabIndex = 7;
+			// 
+			// buttonDeleteExit
+			// 
+			this.buttonDeleteExit.Enabled = false;
+			this.buttonDeleteExit.Location = new System.Drawing.Point(7, 114);
+			this.buttonDeleteExit.Name = "buttonDeleteExit";
+			this.buttonDeleteExit.Size = new System.Drawing.Size(75, 23);
+			this.buttonDeleteExit.TabIndex = 6;
+			this.buttonDeleteExit.Text = "Delete";
+			this.buttonDeleteExit.UseVisualStyleBackColor = true;
+			this.buttonDeleteExit.Click += new System.EventHandler(this.buttonDeleteExit_Click);
+			// 
+			// buttonPreviewExit
+			// 
+			this.buttonPreviewExit.Enabled = false;
+			this.buttonPreviewExit.Location = new System.Drawing.Point(7, 84);
+			this.buttonPreviewExit.Name = "buttonPreviewExit";
+			this.buttonPreviewExit.Size = new System.Drawing.Size(75, 23);
+			this.buttonPreviewExit.TabIndex = 5;
+			this.buttonPreviewExit.Text = "Preview";
+			this.buttonPreviewExit.UseVisualStyleBackColor = true;
+			this.buttonPreviewExit.Click += new System.EventHandler(this.buttonPreviewExit_Click);
+			// 
+			// buttonUpdateExit
+			// 
+			this.buttonUpdateExit.Enabled = false;
+			this.buttonUpdateExit.Location = new System.Drawing.Point(7, 55);
+			this.buttonUpdateExit.Name = "buttonUpdateExit";
+			this.buttonUpdateExit.Size = new System.Drawing.Size(75, 23);
+			this.buttonUpdateExit.TabIndex = 4;
+			this.buttonUpdateExit.Text = "Update";
+			this.buttonUpdateExit.UseVisualStyleBackColor = true;
+			this.buttonUpdateExit.Click += new System.EventHandler(this.buttonUpdateExit_Click);
+			// 
+			// labelExitMapEntrance
+			// 
+			this.labelExitMapEntrance.AutoSize = true;
+			this.labelExitMapEntrance.Location = new System.Drawing.Point(4, 33);
+			this.labelExitMapEntrance.Name = "labelExitMapEntrance";
+			this.labelExitMapEntrance.Size = new System.Drawing.Size(53, 13);
+			this.labelExitMapEntrance.TabIndex = 3;
+			this.labelExitMapEntrance.Text = "Entrance:";
+			// 
+			// labelExitMapName
+			// 
+			this.labelExitMapName.AutoSize = true;
+			this.labelExitMapName.Location = new System.Drawing.Point(4, 10);
+			this.labelExitMapName.Name = "labelExitMapName";
+			this.labelExitMapName.Size = new System.Drawing.Size(31, 13);
+			this.labelExitMapName.TabIndex = 2;
+			this.labelExitMapName.Text = "Map:";
 			// 
 			// comboExitMapName
 			// 
@@ -547,69 +605,24 @@
 			this.comboExitMapName.TabIndex = 0;
 			this.comboExitMapName.ValueMember = "Item1";
 			// 
-			// labelExitMapName
+			// picMiniMap
 			// 
-			this.labelExitMapName.AutoSize = true;
-			this.labelExitMapName.Location = new System.Drawing.Point(4, 10);
-			this.labelExitMapName.Name = "labelExitMapName";
-			this.labelExitMapName.Size = new System.Drawing.Size(31, 13);
-			this.labelExitMapName.TabIndex = 2;
-			this.labelExitMapName.Text = "Map:";
+			this.picMiniMap.Dock = System.Windows.Forms.DockStyle.Top;
+			this.picMiniMap.Location = new System.Drawing.Point(0, 0);
+			this.picMiniMap.Name = "picMiniMap";
+			this.picMiniMap.Size = new System.Drawing.Size(193, 193);
+			this.picMiniMap.TabIndex = 1;
+			this.picMiniMap.TabStop = false;
 			// 
-			// labelExitMapEntrance
+			// monsterRegionsToolStripMenuItem
 			// 
-			this.labelExitMapEntrance.AutoSize = true;
-			this.labelExitMapEntrance.Location = new System.Drawing.Point(4, 33);
-			this.labelExitMapEntrance.Name = "labelExitMapEntrance";
-			this.labelExitMapEntrance.Size = new System.Drawing.Size(53, 13);
-			this.labelExitMapEntrance.TabIndex = 3;
-			this.labelExitMapEntrance.Text = "Entrance:";
-			// 
-			// buttonUpdateExit
-			// 
-			this.buttonUpdateExit.Enabled = false;
-			this.buttonUpdateExit.Location = new System.Drawing.Point(7, 55);
-			this.buttonUpdateExit.Name = "buttonUpdateExit";
-			this.buttonUpdateExit.Size = new System.Drawing.Size(75, 23);
-			this.buttonUpdateExit.TabIndex = 4;
-			this.buttonUpdateExit.Text = "Update";
-			this.buttonUpdateExit.UseVisualStyleBackColor = true;
-			this.buttonUpdateExit.Click += new System.EventHandler(this.buttonUpdateExit_Click);
-			// 
-			// buttonPreviewExit
-			// 
-			this.buttonPreviewExit.Enabled = false;
-			this.buttonPreviewExit.Location = new System.Drawing.Point(7, 84);
-			this.buttonPreviewExit.Name = "buttonPreviewExit";
-			this.buttonPreviewExit.Size = new System.Drawing.Size(75, 23);
-			this.buttonPreviewExit.TabIndex = 5;
-			this.buttonPreviewExit.Text = "Preview";
-			this.buttonPreviewExit.UseVisualStyleBackColor = true;
-			this.buttonPreviewExit.Click += new System.EventHandler(this.buttonPreviewExit_Click);
-			// 
-			// buttonDeleteExit
-			// 
-			this.buttonDeleteExit.Enabled = false;
-			this.buttonDeleteExit.Location = new System.Drawing.Point(7, 114);
-			this.buttonDeleteExit.Name = "buttonDeleteExit";
-			this.buttonDeleteExit.Size = new System.Drawing.Size(75, 23);
-			this.buttonDeleteExit.TabIndex = 6;
-			this.buttonDeleteExit.Text = "Delete";
-			this.buttonDeleteExit.UseVisualStyleBackColor = true;
-			this.buttonDeleteExit.Click += new System.EventHandler(this.buttonDeleteExit_Click);
-			// 
-			// numericExitEntranceId
-			// 
-			this.numericExitEntranceId.Enabled = false;
-			this.numericExitEntranceId.Location = new System.Drawing.Point(57, 31);
-			this.numericExitEntranceId.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-			this.numericExitEntranceId.Name = "numericExitEntranceId";
-			this.numericExitEntranceId.Size = new System.Drawing.Size(120, 20);
-			this.numericExitEntranceId.TabIndex = 7;
+			this.monsterRegionsToolStripMenuItem.Checked = true;
+			this.monsterRegionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.monsterRegionsToolStripMenuItem.Name = "monsterRegionsToolStripMenuItem";
+			this.monsterRegionsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+			this.monsterRegionsToolStripMenuItem.Text = "&Monster Regions";
+			this.monsterRegionsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.monsterRegionsToolStripMenuItem_CheckedChanged);
+			this.monsterRegionsToolStripMenuItem.Click += new System.EventHandler(this.monsterRegionsToolStripMenuItem_Click);
 			// 
 			// panelMap
 			// 
@@ -660,8 +673,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericEntranceId)).EndInit();
 			this.tabExits.ResumeLayout(false);
 			this.tabExits.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericExitEntranceId)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.picMiniMap)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -718,6 +731,7 @@
 		private System.Windows.Forms.Button buttonDeleteExit;
 		private System.Windows.Forms.Button buttonPreviewExit;
 		private System.Windows.Forms.Button buttonUpdateExit;
+		private System.Windows.Forms.ToolStripMenuItem monsterRegionsToolStripMenuItem;
     }
 }
 

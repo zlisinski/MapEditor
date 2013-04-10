@@ -98,6 +98,11 @@ namespace MapEditor
 		protected bool walkLayerVisible = true;
 
 		/// <summary>
+		/// Is the monster region layer visible.
+		/// </summary>
+		protected bool monsterRegionLayerVisible = true;
+
+		/// <summary>
 		/// Is the entrance and exit layer visible.
 		/// </summary>
 		protected bool entranceExitLayerVisible = true;
@@ -116,6 +121,11 @@ namespace MapEditor
 		/// Tile images for walk types.
 		/// </summary>
 		protected CTile[] walkTypeTiles = new CTile[Enum.GetNames(typeof(EWalkType)).Length];
+
+		/// <summary>
+		/// Tile images for monster regions.
+		/// </summary>
+		protected CTile[] monsterRegionTiles;
 
 		/// <summary>
 		/// Worker thread for updating the minimap.
@@ -411,6 +421,22 @@ namespace MapEditor
 		}
 
 		/// <summary>
+		/// Toggle monster regions visibility.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void monsterRegionsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			monsterRegionsToolStripMenuItem.Checked = !monsterRegionsToolStripMenuItem.Checked;
+		}
+
+		private void monsterRegionsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			monsterRegionLayerVisible = monsterRegionsToolStripMenuItem.Checked;
+			redrawMap();
+		}
+
+		/// <summary>
 		/// Toggle entrances and exits visibility.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -535,6 +561,9 @@ namespace MapEditor
 					case 4:
 						walkLayerToolStripMenuItem.Checked = true;
 						break;
+					case 5:
+						monsterRegionsToolStripMenuItem.Checked = true;
+						break;
 				}
 
 				// Remove all tiles from previous layer
@@ -562,6 +591,15 @@ namespace MapEditor
 						i++;
 					}
 				}
+				else if (curLayer == Globals.layerCount + 1)
+				{
+					foreach (CTile tile in monsterRegionTiles)
+					{
+						PictureBox pic = createPictureBoxFromTile(tile, i);
+						panelTiles.Controls.Add(pic);
+						i++;
+					}
+				}
 
 				// Select the first tile when changing layers
 				tile_Click(panelTiles.Controls[0], EventArgs.Empty);
@@ -577,7 +615,7 @@ namespace MapEditor
 		/// </summary>
 		/// <param name="tile">The tile to create from.</param>
 		/// <param name="index">The index used for positioning.</param>
-		/// <returns></returns>
+		/// <returns>The PictureBox for the tile.</returns>
 		private PictureBox createPictureBoxFromTile(CTile tile, int index)
 		{
 			try
@@ -655,6 +693,8 @@ namespace MapEditor
 				cell.tiles[layer] = tileId;
 			else if (layer == Globals.layerCount)
 				cell.walkType = (EWalkType)tileId;
+			else if (layer == Globals.layerCount + 1)
+				cell.monsterRegionId = tileId;
 
 			curMapDirty = true;
 		}
@@ -1076,6 +1116,24 @@ namespace MapEditor
 			else
 				comboLayers.SelectedIndex = 0;
 
+			// Load monster region tiles
+			const int maxMonsterRegions = 13;
+			string monsterRegionImagesFilename = "monsterregions.png";
+			int monsterRegionCount = curMap.monsterRegionGroup.monsterRegions.Length;
+			CMonsterRegionGroup regionGroup = curMap.monsterRegionGroup;
+
+			if (monsterRegionCount > maxMonsterRegions)
+				throw new Exception(string.Format("There aren't enough colors set for monster group {0}. There are only {1} colors set.",
+						regionGroup.name, maxMonsterRegions));
+
+			monsterRegionTiles = new CTile[monsterRegionCount];
+			for (ushort i = 0; i < monsterRegionCount; i++)
+			{
+				CMonsterRegion region = regionGroup.monsterRegions[i];
+				string tileName = region.name;
+				monsterRegionTiles[i] = new CTile(i, tileName, monsterRegionImagesFilename, i, 0);
+			}
+
 			// Redraw the map
 			redrawMap();
 
@@ -1172,6 +1230,23 @@ namespace MapEditor
 
 								// Paint tile onto buffer
 								bufferGraphics.DrawImage(walkTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
+							}
+						}
+
+						// Draw the monster region layer if it is visible
+						if (monsterRegionLayerVisible)
+						{
+							// Get the tile id to paint
+							ushort regionTileId = (ushort)curMap.cells[x + offsetX, y + offsetY].monsterRegionId;
+
+							// Skip drawing if the tile is fully transparent
+							if (regionTileId != 0)
+							{
+								// Get the tile to paint
+								CTile regionTile = monsterRegionTiles[regionTileId];
+
+								// Paint tile onto buffer
+								bufferGraphics.DrawImage(regionTile.image, x * tileSize, y * tileSize, tileSize, tileSize);
 							}
 						}
 

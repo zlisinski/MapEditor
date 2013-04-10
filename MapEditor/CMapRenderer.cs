@@ -13,6 +13,7 @@ namespace MapEditor
 		protected CMapEntrance curEntrance;
 		protected CMapExit curExit;
 		protected static CTile[] walkTypeTiles = new CTile[Enum.GetNames(typeof(EWalkType)).Length];
+		protected CTile[] monsterRegionTiles;
 
 		public CMapRenderer(CMap map)
 		{
@@ -90,6 +91,24 @@ namespace MapEditor
 				// Local var to save some typing
 				int ts = Globals.tileSize;
 
+				// Load monster region tiles
+				const int maxMonsterRegions = 13;
+				string monsterRegionImagesFilename = "monsterregions.png";
+				int monsterRegionCount = map.monsterRegionGroup.monsterRegions.Length;
+				CMonsterRegionGroup regionGroup = map.monsterRegionGroup;
+
+				if (monsterRegionCount > maxMonsterRegions)
+					throw new Exception(string.Format("There aren't enough colors set for monster group {0}. There are only {1} colors set.",
+							regionGroup.name, maxMonsterRegions));
+
+				monsterRegionTiles = new CTile[monsterRegionCount];
+				for (ushort i = 0; i < monsterRegionCount; i++)
+				{
+					CMonsterRegion region = regionGroup.monsterRegions[i];
+					string tileName = region.name;
+					monsterRegionTiles[i] = new CTile(i, tileName, monsterRegionImagesFilename, i, 0);
+				}
+
 				// Calculate the start and end tiles that contain the source rectangle
 				int tileStartX = (int)(sourceX / ts);
 				int tileStartY = (int)(sourceY / ts);
@@ -150,6 +169,23 @@ namespace MapEditor
 
 								// Paint tile onto buffer
 								bufferGraphics.DrawImage(walkTile.image, x * ts, y * ts, ts, ts);
+							}
+						}
+
+						// Draw the monster region layer if it is visible
+						if (layers.monsterRegionLayerVisible)
+						{
+							// Get the tile id to paint
+							ushort regionTileId = (ushort)map.cells[x, y].monsterRegionId;
+
+							// Skip drawing if the tile is fully transparent
+							if (regionTileId != 0)
+							{
+								// Get the tile to paint
+								CTile regionTile = monsterRegionTiles[regionTileId];
+
+								// Paint tile onto buffer
+								bufferGraphics.DrawImage(regionTile.image, x * ts, y * ts, ts, ts);
 							}
 						}
 					}

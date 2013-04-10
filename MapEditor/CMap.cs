@@ -374,7 +374,10 @@ namespace MapEditor
 		{
 			int monsterRegionGroupId = reader.ReadInt32();
 
-			CMonsterRegionGroup newMonsterRegionGroup = new CMonsterRegionGroup();
+			CMonsterRegionGroup newMonsterRegionGroup = MonsterRegionGroups.instance[monsterRegionGroupId];
+
+			if (newMonsterRegionGroup == null)
+				throw new Exception(string.Format("Couldn't find monster region group with id {0}", monsterRegionGroupId));
 			
 			return newMonsterRegionGroup;
 		}
