@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tileSet version="1" id="1" name="town">
+    <battleBackground id="0" name="none" />
+	<battleBackground id="1" name="town" filename="town.png" />
+	<layer id="0">
+		<group name="foo0">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+		</group>
+		<group name="dirt" battleBackground="1">
+			<tile id="1" name="dirt" filename="town.png" xOffset="0" yOffset="0" />
+			<tile id="2" name="cliff00" filename="town.png" xOffset="0" yOffset="5" />
+			<tile id="3" name="cliff01" filename="town.png" xOffset="1" yOffset="5" />
+			<tile id="4" name="cliff02" filename="town.png" xOffset="2" yOffset="5" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="5" name="cliff10" filename="town.png" xOffset="0" yOffset="6" />
+			<tile id="6" name="cliff11" filename="town.png" xOffset="1" yOffset="6" />
+			<tile id="7" name="cliff12" filename="town.png" xOffset="2" yOffset="6" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="8" name="cliff20" filename="town.png" xOffset="0" yOffset="7" />
+			<tile id="9" name="cliff21" filename="town.png" xOffset="1" yOffset="7" />
+			<tile id="10" name="cliff22" filename="town.png" xOffset="2" yOffset="7" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="11" name="cliff30" filename="town.png" xOffset="0" yOffset="8" />
+			<tile id="12" name="cliff31" filename="town.png" xOffset="1" yOffset="8" />
+			<tile id="13" name="cliff32" filename="town.png" xOffset="2" yOffset="8" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+		</group>
+	</layer>
+	<layer id="1">
+		<group name="foo1">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+		</group>
+		<group name="tree">
+			<tile id="1" name="treebase1" filename="town.png" xOffset="2" yOffset="4" />
+			<tile id="2" name="treebase2" filename="town.png" xOffset="3" yOffset="4" />
+			<tile id="3" name="treebase3" filename="town.png" xOffset="4" yOffset="4" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+		</group>
+		<group name="bluetent">
+			<tile id="4" name="bluetent10" filename="town.png" xOffset="6" yOffset="1" />
+			<tile id="5" name="bluetent11" filename="town.png" xOffset="7" yOffset="1" />
+			<tile id="6" name="bluetent12" filename="town.png" xOffset="8" yOffset="1" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="7" name="bluetent20" filename="town.png" xOffset="6" yOffset="2" />
+			<tile id="8" name="bluetent21" filename="town.png" xOffset="7" yOffset="2" />
+			<tile id="9" name="bluetent22" filename="town.png" xOffset="8" yOffset="2" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="10" name="bluetent30" filename="town.png" xOffset="6" yOffset="3" />
+			<tile id="11" name="bluetent31" filename="town.png" xOffset="7" yOffset="3" />
+			<tile id="12" name="bluetent32" filename="town.png" xOffset="8" yOffset="3" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+		</group>
+		<group name="redtent">
+			<tile id="13" name="redtent10" filename="town.png" xOffset="9" yOffset="1" />
+			<tile id="14" name="redtent11" filename="town.png" xOffset="10" yOffset="1" />
+			<tile id="15" name="redtent12" filename="town.png" xOffset="11" yOffset="1" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="16" name="redtent20" filename="town.png" xOffset="9" yOffset="2" />
+			<tile id="17" name="redtent21" filename="town.png" xOffset="10" yOffset="2" />
+			<tile id="18" name="redtent22" filename="town.png" xOffset="11" yOffset="2" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="19" name="redtent30" filename="town.png" xOffset="9" yOffset="3" />
+			<tile id="20" name="redtent31" filename="town.png" xOffset="10" yOffset="3" />
+			<tile id="21" name="redtent32" filename="town.png" xOffset="11" yOffset="3" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" />
+		</group>
+	</layer>
+	<layer id="2">
+		<group name="foo1">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+	</layer>
+	<layer id="3">
+		<group name="foo1">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="tree">
+			<tile id="1" name="tree00" filename="town.png" xOffset="1" yOffset="0" />
+			<tile id="2" name="tree01" filename="town.png" xOffset="2" yOffset="0" />
+			<tile id="3" name="tree02" filename="town.png" xOffset="3" yOffset="0" />
+			<tile id="4" name="tree03" filename="town.png" xOffset="4" yOffset="0" />
+			<tile id="5" name="tree04" filename="town.png" xOffset="5" yOffset="0" />
+			<tile id="6" name="tree10" filename="town.png" xOffset="1" yOffset="1" />
+			<tile id="7" name="tree11" filename="town.png" xOffset="2" yOffset="1" />
+			<tile id="8" name="tree12" filename="town.png" xOffset="3" yOffset="1" />
+			<tile id="9" name="tree13" filename="town.png" xOffset="4" yOffset="1" />
+			<tile id="10" name="tree14" filename="town.png" xOffset="5" yOffset="1" />
+			<tile id="11" name="tree20" filename="town.png" xOffset="1" yOffset="2" />
+			<tile id="12" name="tree21" filename="town.png" xOffset="2" yOffset="2" />
+			<tile id="13" name="tree22" filename="town.png" xOffset="3" yOffset="2" />
+			<tile id="14" name="tree23" filename="town.png" xOffset="4" yOffset="2" />
+			<tile id="15" name="tree24" filename="town.png" xOffset="5" yOffset="2" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="16" name="tree32" filename="town.png" xOffset="3" yOffset="3" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="bluetent">
+			<tile id="17" name="bluetent01" filename="town.png" xOffset="6" yOffset="0" />
+			<tile id="18" name="bluetent02" filename="town.png" xOffset="7" yOffset="0" />
+			<tile id="19" name="bluetent03" filename="town.png" xOffset="8" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="redtent">
+			<tile id="20" name="redtent01" filename="town.png" xOffset="9" yOffset="0" />
+			<tile id="21" name="redtent02" filename="town.png" xOffset="10" yOffset="0" />
+			<tile id="22" name="redtent03" filename="town.png" xOffset="11" yOffset="0" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+	</layer>
+</tileSet>

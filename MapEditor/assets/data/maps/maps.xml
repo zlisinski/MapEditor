@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<maps>
+	<map uuid="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" name="overworld1" filename="overworld1.map">
+		<entrances>
+			<entrance id="0" x="8" y="7" />
+			<entrance id="1" x="12" y="7" />
+		</entrances>
+		<exits>
+			<exit map="42eb3848-f32a-4edb-8d3c-5160c0cef435" entance="0" x="7" y="6" />
+			<exit map="42eb3848-f32a-4edb-8d3c-5160c0cef435" entance="0" x="6" y="6" />
+			<exit map="42eb3848-f32a-4edb-8d3c-5160c0cef435" entance="0" x="5" y="6" />
+			<exit map="42eb3848-f32a-4edb-8d3c-5160c0cef435" entance="0" x="7" y="5" />
+			<exit map="42eb3848-f32a-4edb-8d3c-5160c0cef435" entance="0" x="7" y="4" />
+			<exit map="42eb3848-f32a-4edb-8d3c-5160c0cef435" entance="0" x="7" y="3" />
+		</exits>
+	</map>
+	<map uuid="dc73d835-62b4-4ec9-915d-d39c310397db" name="overworld-plains2" filename="overworld2.map">
+		<entrances>
+			<entrance id="0" x="2" y="2" />
+		</entrances>
+		<exits>
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="1" y="1" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="1" y="0" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="0" y="0" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="0" y="1" />
+		</exits>
+	</map>
+	<map uuid="d1d0f1f8-c122-425d-b188-27735215567b" name="test1" filename="test1.map">
+		<entrances>
+			<entrance id="0" x="8" y="7" />
+		</entrances>
+		<exits>
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="7" y="6" />
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="6" y="6" />
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="5" y="6" />
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="4" y="6" />
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="7" y="5" />
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="7" y="4" />
+			<exit map="71378484-6c66-44ec-9f2c-d1e34fc28c22" entance="0" x="7" y="3" />
+		</exits>
+	</map>
+	<map uuid="71378484-6c66-44ec-9f2c-d1e34fc28c22" name="test2" filename="test2.map">
+		<entrances>
+			<entrance id="0" x="9" y="15" />
+		</entrances>
+		<exits>
+			<exit map="d1d0f1f8-c122-425d-b188-27735215567b" entance="0" x="7" y="16" />
+			<exit map="d1d0f1f8-c122-425d-b188-27735215567b" entance="0" x="8" y="16" />
+			<exit map="d1d0f1f8-c122-425d-b188-27735215567b" entance="0" x="9" y="16" />
+			<exit map="d1d0f1f8-c122-425d-b188-27735215567b" entance="0" x="11" y="16" />
+			<exit map="d1d0f1f8-c122-425d-b188-27735215567b" entance="0" x="12" y="16" />
+			<exit map="d1d0f1f8-c122-425d-b188-27735215567b" entance="0" x="10" y="16" />
+		</exits>
+	</map>
+	<map uuid="42eb3848-f32a-4edb-8d3c-5160c0cef435" name="town1" filename="town1.map">
+		<entrances>
+			<entrance id="0" x="9" y="15" />
+		</entrances>
+		<exits>
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="7" y="16" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="8" y="16" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="9" y="16" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="11" y="16" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="12" y="16" />
+			<exit map="2fec311a-3334-4d8e-bc0f-2bf5bfb70ecf" entance="0" x="10" y="16" />
+		</exits>
+	</map>
+</maps>

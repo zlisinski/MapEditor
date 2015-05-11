@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<monsterRegionGroup version="1" id="0" name="overworld-plains">
+    <monsterRegion id="0" name="none">
+    </monsterRegion>
+	<monsterRegion id="1" name="grass">
+	    <monsterGroup name="2centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	    </monsterGroup>
+	    <monsterGroup name="3centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="1" x="144" y="83" />
+	    </monsterGroup>
+	    <monsterGroup name="2centipedes1beetle" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="2" x="144" y="102" />
+	    </monsterGroup>
+	    <monsterGroup name="1spider" weight="2">
+	        <monster id="3" x="32" y="16" />
+	    </monsterGroup>
+	</monsterRegion>
+	<monsterRegion id="2" name="forest">
+	    <monsterGroup name="2centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	    </monsterGroup>
+	    <monsterGroup name="3centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="1" x="144" y="83" />
+	    </monsterGroup>
+	    <monsterGroup name="2centipedes1beetle" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="2" x="144" y="102" />
+	    </monsterGroup>
+	    <monsterGroup name="1spider" weight="30">
+	        <monster id="3" x="32" y="16" />
+	    </monsterGroup>
+	</monsterRegion>
+	<monsterRegion id="3" name="dirt">
+	    <monsterGroup name="2centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	    </monsterGroup>
+	    <monsterGroup name="3centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="1" x="144" y="83" />
+	    </monsterGroup>
+	    <monsterGroup name="2centipedes1beetle" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="2" x="144" y="102" />
+	    </monsterGroup>
+	    <monsterGroup name="1spider" weight="2">
+	        <monster id="3" x="32" y="16" />
+	    </monsterGroup>
+	</monsterRegion>
+</monsterRegionGroup>

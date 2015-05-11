@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tileSet version="1" id="0" name="overworld-plains">
+    <battleBackground id="0" name="none" />
+	<battleBackground id="1" name="grass" filename="grass.png" />
+	<battleBackground id="2" name="forest" filename="forest.png" />
+	<battleBackground id="3" name="dirt" filename="dirt.png" />
+	<battleBackground id="4" name="bridge" filename="bridge.png" />
+	<layer id="0">
+		<group name="foo0">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="grass" battleBackground="1">
+			<tile id="1" name="grass" filename="overworld-plains.png" xOffset="15" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="dirt" battleBackground="3">
+			<tile id="2" name="dirt-tl" filename="overworld-plains.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="3" name="dirt-t" filename="overworld-plains.png" xOffset="1" yOffset="0" trans="FF00FF" />
+			<tile id="4" name="dirt-tr" filename="overworld-plains.png" xOffset="2" yOffset="0" trans="FF00FF" />
+			<tile id="5" name="dirt-i" filename="overworld-plains.png" xOffset="3" yOffset="0" trans="FF00FF" />
+			<tile id="6" name="dirt-itl" filename="overworld-plains.png" xOffset="4" yOffset="0" trans="FF00FF" />
+			<tile id="7" name="dirt-l" filename="overworld-plains.png" xOffset="0" yOffset="1" trans="FF00FF" />
+			<tile id="8" name="dirt-m" filename="overworld-plains.png" xOffset="1" yOffset="1" trans="FF00FF" />
+			<tile id="9" name="dirt-r" filename="overworld-plains.png" xOffset="2" yOffset="1" trans="FF00FF" />
+			<tile id="10" name="dirt-itr" filename="overworld-plains.png" xOffset="3" yOffset="1" trans="FF00FF" />
+			<tile id="11" name="dirt-ibr" filename="overworld-plains.png" xOffset="4" yOffset="1" trans="FF00FF" />
+			<tile id="12" name="dirt-bl" filename="overworld-plains.png" xOffset="0" yOffset="2" trans="FF00FF" />
+			<tile id="13" name="dirt-b" filename="overworld-plains.png" xOffset="1" yOffset="2" trans="FF00FF" />
+			<tile id="14" name="dirt-br" filename="overworld-plains.png" xOffset="2" yOffset="2" trans="FF00FF" />
+			<tile id="15" name="dirt-ibl" filename="overworld-plains.png" xOffset="3" yOffset="2" trans="FF00FF" />
+			<tile id="16" name="dirt-it" filename="overworld-plains.png" xOffset="4" yOffset="2" trans="FF00FF" />
+			<tile id="17" name="dirt-ir" filename="overworld-plains.png" xOffset="0" yOffset="3" trans="FF00FF" />
+			<tile id="18" name="dirt-ib" filename="overworld-plains.png" xOffset="1" yOffset="3" trans="FF00FF" />
+			<tile id="19" name="dirt-il" filename="overworld-plains.png" xOffset="2" yOffset="3" trans="FF00FF" />
+			<tile id="20" name="dirt-itrbl" filename="overworld-plains.png" xOffset="3" yOffset="3" trans="FF00FF" />
+			<tile id="21" name="dirt-itlbr" filename="overworld-plains.png" xOffset="4" yOffset="3" trans="FF00FF" />
+		</group>
+		<group name="forest" battleBackground="2">
+			<tile id="22" name="forest-tl" filename="overworld-plains.png" xOffset="5" yOffset="0" trans="FF00FF" />
+			<tile id="23" name="forest-t" filename="overworld-plains.png" xOffset="6" yOffset="0" trans="FF00FF" />
+			<tile id="24" name="forest-tr" filename="overworld-plains.png" xOffset="7" yOffset="0" trans="FF00FF" />
+			<tile id="25" name="forest-i" filename="overworld-plains.png" xOffset="8" yOffset="0" trans="FF00FF" />
+			<tile id="26" name="forest-itl" filename="overworld-plains.png" xOffset="9" yOffset="0" trans="FF00FF" />
+			<tile id="27" name="forest-l" filename="overworld-plains.png" xOffset="5" yOffset="1" trans="FF00FF" />
+			<tile id="28" name="forest-m" filename="overworld-plains.png" xOffset="6" yOffset="1" trans="FF00FF" />
+			<tile id="29" name="forest-r" filename="overworld-plains.png" xOffset="7" yOffset="1" trans="FF00FF" />
+			<tile id="30" name="forest-itr" filename="overworld-plains.png" xOffset="8" yOffset="1" trans="FF00FF" />
+			<tile id="31" name="forest-ibr" filename="overworld-plains.png" xOffset="9" yOffset="1" trans="FF00FF" />
+			<tile id="32" name="forest-bl" filename="overworld-plains.png" xOffset="5" yOffset="2" trans="FF00FF" />
+			<tile id="33" name="forest-b" filename="overworld-plains.png" xOffset="6" yOffset="2" trans="FF00FF" />
+			<tile id="34" name="forest-br" filename="overworld-plains.png" xOffset="7" yOffset="2" trans="FF00FF" />
+			<tile id="35" name="forest-ibl" filename="overworld-plains.png" xOffset="8" yOffset="2" trans="FF00FF" />
+			<tile id="36" name="forest-it" filename="overworld-plains.png" xOffset="9" yOffset="2" trans="FF00FF" />
+			<tile id="37" name="forest-ir" filename="overworld-plains.png" xOffset="5" yOffset="3" trans="FF00FF" />
+			<tile id="38" name="forest-ib" filename="overworld-plains.png" xOffset="6" yOffset="3" trans="FF00FF" />
+			<tile id="39" name="forest-il" filename="overworld-plains.png" xOffset="7" yOffset="3" trans="FF00FF" />
+			<tile id="40" name="forest-itrbl" filename="overworld-plains.png" xOffset="8" yOffset="3" trans="FF00FF" />
+			<tile id="41" name="forest-itlbr" filename="overworld-plains.png" xOffset="9" yOffset="3" trans="FF00FF" />
+		</group>
+		<group name="longgrass" battleBackground="1">
+			<tile id="42" name="longgrass-tl" filename="overworld-plains.png" xOffset="10" yOffset="0" trans="FF00FF" />
+			<tile id="43" name="longgrass-t" filename="overworld-plains.png" xOffset="11" yOffset="0" trans="FF00FF" />
+			<tile id="44" name="longgrass-tr" filename="overworld-plains.png" xOffset="12" yOffset="0" trans="FF00FF" />
+			<tile id="45" name="longgrass-i" filename="overworld-plains.png" xOffset="13" yOffset="0" trans="FF00FF" />
+			<tile id="46" name="longgrass-itl" filename="overworld-plains.png" xOffset="14" yOffset="0" trans="FF00FF" />
+			<tile id="47" name="longgrass-l" filename="overworld-plains.png" xOffset="10" yOffset="1" trans="FF00FF" />
+			<tile id="48" name="longgrass-m" filename="overworld-plains.png" xOffset="11" yOffset="1" trans="FF00FF" />
+			<tile id="49" name="longgrass-r" filename="overworld-plains.png" xOffset="12" yOffset="1" trans="FF00FF" />
+			<tile id="50" name="longgrass-itr" filename="overworld-plains.png" xOffset="13" yOffset="1" trans="FF00FF" />
+			<tile id="51" name="longgrass-ibr" filename="overworld-plains.png" xOffset="14" yOffset="1" trans="FF00FF" />
+			<tile id="52" name="longgrass-bl" filename="overworld-plains.png" xOffset="10" yOffset="2" trans="FF00FF" />
+			<tile id="53" name="longgrass-b" filename="overworld-plains.png" xOffset="11" yOffset="2" trans="FF00FF" />
+			<tile id="54" name="longgrass-br" filename="overworld-plains.png" xOffset="12" yOffset="2" trans="FF00FF" />
+			<tile id="55" name="longgrass-ibl" filename="overworld-plains.png" xOffset="13" yOffset="2" trans="FF00FF" />
+			<tile id="56" name="longgrass-it" filename="overworld-plains.png" xOffset="14" yOffset="2" trans="FF00FF" />
+			<tile id="57" name="longgrass-ir" filename="overworld-plains.png" xOffset="10" yOffset="3" trans="FF00FF" />
+			<tile id="58" name="longgrass-ib" filename="overworld-plains.png" xOffset="11" yOffset="3" trans="FF00FF" />
+			<tile id="59" name="longgrass-il" filename="overworld-plains.png" xOffset="12" yOffset="3" trans="FF00FF" />
+			<tile id="60" name="longgrass-itrbl" filename="overworld-plains.png" xOffset="13" yOffset="3" trans="FF00FF" />
+			<tile id="61" name="longgrass-itlbr" filename="overworld-plains.png" xOffset="14" yOffset="3" trans="FF00FF" />
+		</group>
+		<group name="water" battleBackground="1">
+			<tile id="62" name="water-tl" filename="overworld-plains.png" xOffset="0" yOffset="4" trans="FF00FF" />
+			<tile id="63" name="water-t" filename="overworld-plains.png" xOffset="1" yOffset="4" trans="FF00FF" />
+			<tile id="64" name="water-tr" filename="overworld-plains.png" xOffset="2" yOffset="4" trans="FF00FF" />
+			<tile id="65" name="water-i" filename="overworld-plains.png" xOffset="3" yOffset="4" trans="FF00FF" />
+			<tile id="66" name="water-itl" filename="overworld-plains.png" xOffset="4" yOffset="4" trans="FF00FF" />
+			<tile id="67" name="water-l" filename="overworld-plains.png" xOffset="0" yOffset="5" trans="FF00FF" />
+			<tile id="68" name="water-m" filename="overworld-plains.png" xOffset="1" yOffset="5" trans="FF00FF" />
+			<tile id="69" name="water-r" filename="overworld-plains.png" xOffset="2" yOffset="5" trans="FF00FF" />
+			<tile id="70" name="water-itr" filename="overworld-plains.png" xOffset="3" yOffset="5" trans="FF00FF" />
+			<tile id="71" name="water-ibr" filename="overworld-plains.png" xOffset="4" yOffset="5" trans="FF00FF" />
+			<tile id="72" name="water-bl" filename="overworld-plains.png" xOffset="0" yOffset="6" trans="FF00FF" />
+			<tile id="73" name="water-b" filename="overworld-plains.png" xOffset="1" yOffset="6" trans="FF00FF" />
+			<tile id="74" name="water-br" filename="overworld-plains.png" xOffset="2" yOffset="6" trans="FF00FF" />
+			<tile id="75" name="water-ibl" filename="overworld-plains.png" xOffset="3" yOffset="6" trans="FF00FF" />
+			<tile id="76" name="water-it" filename="overworld-plains.png" xOffset="4" yOffset="6" trans="FF00FF" />
+			<tile id="77" name="water-ir" filename="overworld-plains.png" xOffset="0" yOffset="7" trans="FF00FF" />
+			<tile id="78" name="water-ib" filename="overworld-plains.png" xOffset="1" yOffset="7" trans="FF00FF" />
+			<tile id="79" name="water-il" filename="overworld-plains.png" xOffset="2" yOffset="7" trans="FF00FF" />
+			<tile id="80" name="water-itrbl" filename="overworld-plains.png" xOffset="3" yOffset="7" trans="FF00FF" />
+			<tile id="81" name="water-itlbr" filename="overworld-plains.png" xOffset="4" yOffset="7" trans="FF00FF" />
+		</group>
+		<group name="mountains" battleBackground="1">
+			<tile id="82" name="mountains-tl" filename="overworld-plains.png" xOffset="5" yOffset="4" trans="FF00FF" />
+			<tile id="83" name="mountains-t" filename="overworld-plains.png" xOffset="6" yOffset="4" trans="FF00FF" />
+			<tile id="84" name="mountains-tr" filename="overworld-plains.png" xOffset="7" yOffset="4" trans="FF00FF" />
+			<tile id="85" name="mountains-i" filename="overworld-plains.png" xOffset="8" yOffset="4" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="87" name="mountains-l" filename="overworld-plains.png" xOffset="5" yOffset="5" trans="FF00FF" />
+			<tile id="88" name="mountains-m" filename="overworld-plains.png" xOffset="6" yOffset="5" trans="FF00FF" />
+			<tile id="89" name="mountains-r" filename="overworld-plains.png" xOffset="7" yOffset="5" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="92" name="mountains-bl" filename="overworld-plains.png" xOffset="5" yOffset="6" trans="FF00FF" />
+			<tile id="93" name="mountains-b" filename="overworld-plains.png" xOffset="6" yOffset="6" trans="FF00FF" />
+			<tile id="94" name="mountains-br" filename="overworld-plains.png" xOffset="7" yOffset="6" trans="FF00FF" />
+		</group>
+	</layer>
+	<layer id="1">
+		<group name="foo1">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="bridge" battleBackground="4">
+			<tile id="1" name="bridge01" filename="overworld-plains.png" xOffset="0" yOffset="13" trans="000000" />
+			<tile id="2" name="bridge02" filename="overworld-plains.png" xOffset="1" yOffset="13" trans="000000" />
+			<tile id="3" name="bridge03" filename="overworld-plains.png" xOffset="5" yOffset="13" trans="000000" />
+			<tile id="4" name="bridge04" filename="overworld-plains.png" xOffset="6" yOffset="13" trans="000000" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="5" name="bridge11" filename="overworld-plains.png" xOffset="0" yOffset="14" trans="000000" />
+			<tile id="6" name="bridge12" filename="overworld-plains.png" xOffset="1" yOffset="14" trans="000000" />
+			<tile id="7" name="bridge13" filename="overworld-plains.png" xOffset="5" yOffset="14" trans="000000" />
+			<tile id="8" name="bridge14" filename="overworld-plains.png" xOffset="6" yOffset="14" trans="000000" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="9" name="bridge21" filename="overworld-plains.png" xOffset="0" yOffset="15" trans="000000" />
+			<tile id="10" name="bridge22" filename="overworld-plains.png" xOffset="1" yOffset="15" trans="000000" />
+			<tile id="11" name="bridge23" filename="overworld-plains.png" xOffset="5" yOffset="15" trans="000000" />
+			<tile id="12" name="bridge24" filename="overworld-plains.png" xOffset="6" yOffset="15" trans="000000" />
+		</group>
+		<group name="town1">
+			<tile id="13" name="town101" filename="overworld-plains.png" xOffset="7" yOffset="12" trans="FFFFFF" />
+			<tile id="14" name="town102" filename="overworld-plains.png" xOffset="8" yOffset="12" trans="FFFFFF" />
+			<tile id="15" name="town103" filename="overworld-plains.png" xOffset="9" yOffset="12" trans="FFFFFF" />
+			<tile id="16" name="town104" filename="overworld-plains.png" xOffset="10" yOffset="12" trans="FFFFFF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="17" name="town111" filename="overworld-plains.png" xOffset="7" yOffset="13" trans="FFFFFF" />
+			<tile id="18" name="town112" filename="overworld-plains.png" xOffset="8" yOffset="13" trans="FFFFFF" />
+			<tile id="19" name="town113" filename="overworld-plains.png" xOffset="9" yOffset="13" trans="FFFFFF" />
+			<tile id="20" name="town114" filename="overworld-plains.png" xOffset="10" yOffset="13" trans="FFFFFF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="21" name="town121" filename="overworld-plains.png" xOffset="7" yOffset="14" trans="FFFFFF" />
+			<tile id="22" name="town122" filename="overworld-plains.png" xOffset="8" yOffset="14" trans="FFFFFF" />
+			<tile id="23" name="town123" filename="overworld-plains.png" xOffset="9" yOffset="14" trans="FFFFFF" />
+			<tile id="24" name="town124" filename="overworld-plains.png" xOffset="10" yOffset="14" trans="FFFFFF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="25" name="town131" filename="overworld-plains.png" xOffset="7" yOffset="15" trans="FFFFFF" />
+			<tile id="26" name="town132" filename="overworld-plains.png" xOffset="8" yOffset="15" trans="FFFFFF" />
+			<tile id="27" name="town133" filename="overworld-plains.png" xOffset="9" yOffset="15" trans="FFFFFF" />
+			<tile id="28" name="town134" filename="overworld-plains.png" xOffset="10" yOffset="15" trans="FFFFFF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="stonhenge">
+			<tile id="29" name="stonehenge01" filename="overworld-plains.png" xOffset="11" yOffset="14" trans="FFFFFF" />
+			<tile id="30" name="stonehenge02" filename="overworld-plains.png" xOffset="12" yOffset="14" trans="FFFFFF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="31" name="stonehenge11" filename="overworld-plains.png" xOffset="11" yOffset="15" trans="FFFFFF" />
+			<tile id="32" name="stonehenge12" filename="overworld-plains.png" xOffset="12" yOffset="15" trans="FFFFFF" />
+		</group>
+	</layer>
+	<layer id="2">
+		<group name="foo1">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+	</layer>
+	<layer id="3">
+		<group name="foo1">
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+		</group>
+		<group name="bridge">
+			<tile id="1" name="bridge01" filename="overworld-plains.png" xOffset="0" yOffset="11" trans="000000" />
+			<tile id="2" name="bridge02" filename="overworld-plains.png" xOffset="1" yOffset="11" trans="000000" />
+			<tile id="3" name="bridge03" filename="overworld-plains.png" xOffset="5" yOffset="11" trans="000000" />
+			<tile id="4" name="bridge04" filename="overworld-plains.png" xOffset="6" yOffset="11" trans="000000" />
+			<tile id="0" name="transparent" filename="transparent.png" xOffset="0" yOffset="0" trans="FF00FF" />
+			<tile id="5" name="bridge11" filename="overworld-plains.png" xOffset="0" yOffset="12" trans="000000" />
+			<tile id="6" name="bridge12" filename="overworld-plains.png" xOffset="1" yOffset="12" trans="000000" />
+			<tile id="7" name="bridge13" filename="overworld-plains.png" xOffset="5" yOffset="12" trans="000000" />
+			<tile id="8" name="bridge14" filename="overworld-plains.png" xOffset="6" yOffset="12" trans="000000" />
+		</group>
+	</layer>
+</tileSet>

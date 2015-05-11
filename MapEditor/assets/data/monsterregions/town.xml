@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<monsterRegionGroup version="1" id="1" name="town">
+    <monsterRegion id="0" name="none">
+    </monsterRegion>
+    <monsterRegion id="1" name="town">
+	    <monsterGroup name="2centipedes" weight="10">
+	       <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	    </monsterGroup>
+	    <monsterGroup name="3centipedes" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="1" x="144" y="83" />
+	    </monsterGroup>
+	    <monsterGroup name="2centipedes1beetle" weight="10">
+	        <monster id="1" x="32" y="150" />
+	        <monster id="1" x="32" y="16" />
+	        <monster id="2" x="144" y="102" />
+	    </monsterGroup>
+	    <monsterGroup name="1spider" weight="2">
+	        <monster id="3" x="32" y="16" />
+	    </monsterGroup>
+	</monsterRegion>
+</monsterRegionGroup>

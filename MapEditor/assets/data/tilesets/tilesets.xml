@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tileSets>
+	<tileSet id="0" name="overworld-plains" />
+	<tileSet id="1" name="town" />
+</tileSets>
